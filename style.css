@@ -206,20 +206,13 @@ nav{
 
 
 header {
+
     background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6)), url(images/Bg.jpg);
-    height: 100vh;
+    min-height: 100vh;
     background-repeat: no-repeat;
     background-position: left;
     background-size: cover;
 }
-/* .banner {
-
-    background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6)), url(images/Bg.jpg);
-    min-height: 500px;
-    background-repeat: no-repeat;
-    background-position: left;
-    background-size: cover;
-} */
 
 /*banner in the home page*/
  /*  .banner{
@@ -229,36 +222,114 @@ header {
     background-size: cover;
 } */
 
-section.intro {
+section.about1 {
     display:flex;
-    position: relative;
-    top:16%;
-    left:8%;
+    height: 60vh;
+    align-items: center;
+    justify-content: space-between;
 }
     
 .left-about{
     width: 40%;
-    height: auto;
 }
 
 .left-about h1 {
-    font-size: 54px;
-    color:red;
-    text-align: center;
+    font-size: 40px;
 }
-.left-about h2 {
-    font-size: 38px;
-    color: rgb(255, 3, 3);
-    text-align: center;
+
+.left-about h1{
+    color: rgb(255, 255, 255);
+    text-align: left;
 }
+.left-about h1:hover {
+    color: rgb(255, 0, 0);
+}
+.left-about h1,p{
+    padding: 0 0 0 40px;
+}
+
 .left-about P{
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 400;
     line-height: 31.5px;
     margin: 10px 0;
     color: whitesmoke;
 }
-.right-about{
-    max-width: 300px;
-    margin: 0 40px 0 30px;
+#img_align {
+    width: 95%;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.right-about {
+    width: 40%;
+    height: 10%;
+}
+
+.card {
+    position: relative;
+    width: 500px;
+    height: 300px;
+    margin: 20px;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: .6s ease;
+}
+
+.imgBx img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+.contentBx {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #333;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+    transform: rotateY(180deg);
+}
+
+.contentBx div {
+    transform-style: preserve-3d;
+    padding: 20px;
+    background: whitesmoke;
+    transform: translateZ(100px);
+}
+
+.contentBx div,
+h2 {
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.contentBx div,
+p {
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+}
+
+.card:hover .box {
+    transform: rotateY(180deg);
 }
