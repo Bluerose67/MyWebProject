@@ -10,7 +10,6 @@ body {
     font-family: montserrat;
     background: white;
     height: 100vh;
-    overflow: hidden;
 }
 .container{
     display: flex;
@@ -205,13 +204,20 @@ nav{
 
 
 header {
-
     background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6)), url(images/Bg.jpg);
-    min-height: 100vh;
+    height: 100vh;
     background-repeat: no-repeat;
     background-position: left;
     background-size: cover;
 }
+/* .banner {
+
+    background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6)), url(images/Bg.jpg);
+    min-height: 500px;
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: cover;
+} */
 
 /*banner in the home page*/
  /*  .banner{
