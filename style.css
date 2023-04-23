@@ -137,11 +137,6 @@ nav{
     
     
 }
-.left a h1{
-    padding: 10px 0;
-    color:red;
-    font-size: 30px;
-}
 
 .right{
     padding: 5px 0 5px 0;
@@ -197,8 +192,33 @@ nav{
 
 /*nav bar ends here */
 
+/* arrow button starts here */
 
+*{
+    scroll-behavior: smooth;
+}
 
+.scrolltop .button {
+    border-radius: 30%;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    border-style: none;
+    background-color: #ff0000;
+    width: 38px;
+    height: 38px;
+    line-height: 60px;
+    text-align: center;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    transition: background-color .3s;
+    opacity: .5s; visibility: .5s;
+    /* opacity: 0; */
+    z-index: 10;
+}
+
+/* arrow button ends here */
 header {
 
     background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6)), url(images/Bg.jpg);
@@ -207,14 +227,6 @@ header {
     background-position: left;
     background-size: cover;
 }
-
-/*banner in the home page*/
- /*  .banner{
-    background-image: url(banner.jpg);
-    background-repeat: no-repeat;
-    height: 35vh;
-    background-size: cover;
-} */
 
 section.about1 {
     width: 40%;
@@ -518,6 +530,23 @@ section.events .content3:hover {
     font-size: 16px;
     outline: none;
 }
+.row1 input.verify:invalid{
+    border: 1px solid red;
+    animation: shake 0.2s 2;
+}
+@keyframes shake{
+    25%{
+        translate: 6px 0;
+    }
+    50% {
+        translate: -6px 0;
+    }
+         
+    75% {
+        translate: 6px 0;
+    }
+                
+}
 
 .row1 textarea{
     width: 50%;
@@ -547,18 +576,23 @@ section.events .content3:hover {
     background-color: #7CB9E8;
     transition: .3s;
 }
-
-footer{
-    background: #4a4747;
+section.cont {
+    position: relative;
+    top: -3px;
+    height: 10px;
+}
+.fot_img img {
+    margin-bottom: -1px;
+    width: 100%;
+    height: auto;
 }
 
 section.end {
     display: flex;
     justify-content: space-between;
-    align-items:center;
+    align-items: center;
     height: 40vh;
-    padding: 70px 0 0 0;
-    margin: 0 65px 0 85px;
+    background: #434e53;
 }
 
 .left1 {
@@ -600,10 +634,12 @@ section.end .right1 p{
     padding: 10px;
 }
 
-.last{
-    margin: 0 80px 0 0;
-    padding:35px 0 0px 0;
-    
+.last {
+    padding: 35px 0 0px 0;
+    background: #434e53;
+    position: relative;
+    top: -3px;
+    height: -1px;
 }
 .last p{
     text-align: right;
