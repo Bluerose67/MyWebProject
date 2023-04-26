@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
 }
 
 body {
@@ -87,7 +88,8 @@ form .text {
     width: 100%;
 }
 
-/*.pass{
+.pass{
+    width: fit-content;
     margin: -5px 0 20px 5px;
     color: #a6a6a6;
     cursor: pointer;
@@ -95,7 +97,7 @@ form .text {
 
 .pass:hover{
     text-decoration: underline;
-}*/
+}
 
 input [type="button"] {
     width: 100%;
@@ -161,10 +163,10 @@ nav{
 
 /*color of class menu items*/
 .menu-items {
-    line-height: 1.5em;
+    line-height: 1.6em;
     color: #ffffff00;
-    text-shadow: 0 0 #ffffff, 0 1.5em red;
-    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', 'sans-serif';
+    text-shadow: 0 0 #ffffff, 0 1.6em red;
+    /* font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', 'sans-serif'; */
     font-size: 17px;
     overflow: hidden;
     transition: .3s;
@@ -250,11 +252,13 @@ section.about2 {
 }
 
 .about1 .left-about h1{
-    width: 40%;
+    width: 50%;
     font-size: 30px;
     color: rgb(255, 255, 255);
     text-align: left;
+    letter-spacing: 1px;
     margin: 0 0 0 50px;
+    font-family: 'poppins', sans-serif;
 }
 .left-about h1:hover {
     color: rgb(255, 0, 0);
@@ -359,10 +363,12 @@ section.about2 {
 
  .featured_event .content h1 {
     font-size: 45px;
+    font-family: sans-serif;
 }
 
- .featured_event .content p {
+.featured_event .content p {
     font-size: 16px;
+    font-family: sans-serif;
 }
 /* Feature event section end */
 

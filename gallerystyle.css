@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: sans-serif;
 }
 
 header {
@@ -50,10 +51,10 @@ nav {
 
 /*color of class menu items*/
 .menu-items {
-    line-height: 1.5em;
+    line-height: 1.6em;
     color: #ffffff00;
-    text-shadow: 0 0 #ffffff, 0 1.5em red;
-    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', 'sans-serif';
+    text-shadow: 0 0 #ffffff, 0 1.6em red;
+    /* font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', 'sans-serif'; */
     font-size: 17px;
     overflow: hidden;
     transition: .3s;
@@ -210,6 +211,7 @@ section .title{
 section .title h1{
     font-size: 3em;
     font-weight: bolder;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
     padding: 0 0 30px 0;
     border-bottom: 3px solid black;
     border-radius: 1px;
@@ -217,27 +219,29 @@ section .title h1{
     text-align: center;
 }
 section .title h1 span{
-    font-weight: 50;
+    font-weight: lighter;
 
 }
-.images {
+.wrapper_box {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    background: cover;
 }
-.images img{
+.wrapper {
     width: 400px;
-    height: 300px;
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 10px;
-    box-shadow: 4px 7px 0 #00000042;
-    cursor: pointer;
-    margin: 10px;
-    transition: 400ms;
+    height: 500px;
+    overflow: hidden;
+    margin: 20px;
+    border-radius: 20px;
 }
-.images img:hover{
-    transform: scale(1.03);
+.wrapper img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 400ms;
+}
+.wrapper:hover img{
+    transform: scale(1.2);
 }
 
