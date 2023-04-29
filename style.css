@@ -123,6 +123,21 @@ input[type="submit"]:hover {
 
 }
 
+p.error {
+    background: #ff0000;
+
+    color: #6b6767;
+
+    padding: 10px;
+
+    width: 95%;
+
+    border-radius: 5px;
+
+    margin: 20px auto;
+
+}
+
 /*Home page starts here*/
 
 /*Nav Bar starts here*/

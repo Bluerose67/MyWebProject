@@ -1,0 +1,83 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.dashboard {
+    width: 100%;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+section.sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 200px;
+    /* position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0; */
+    background-color: #636c79;
+    overflow: hidden;
+    padding-top: 16px;
+}
+
+
+
+/* Style links on mouse-over */
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+/* Style the main content */
+.main {
+    margin-left: 160px;
+    /* Same as the width of the sidenav */
+    padding: 0px 10px;
+}
+
+.icon1 {
+    width: 20px;
+    height: 20px;
+}
+
+/* Style sidebar links */
+.icon2 a,
+.icon3 a,
+.icon4 a,
+.icon5 a {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 75px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #b1b8bb;
+    /* display: block; */
+}
+
+/* .icon2 a,
+.icon3 a,
+.icon4 a,
+.icon5 a {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+} */
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    margin: 0 10px 0 0;
+}

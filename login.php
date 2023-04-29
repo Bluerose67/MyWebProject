@@ -51,6 +51,13 @@ include("connect.php");
           </div>
           <p class="pass">Forgot password ?</p>
           <input type="submit" value="Login" class="login-button" />
+          <?php if (isset($_GET['error'])) { ?>
+
+            <p class="error">
+              <?php echo $_GET['error']; ?>
+            </p>
+
+          <?php } ?>
         </form>
       </div>
     </div>

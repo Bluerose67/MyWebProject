@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('connect.php');
 if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];
@@ -12,10 +13,13 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     if ($count == 1) {
         header("Location: index.php");
     } else {
-        echo '<script>
-                        window.location.href = "login.php";
-                        alert("Login failed. Invalid username or password!!")
-                    </script>';
+        echo ("Invalid username or password!!");
+        header("Location: login.php?error=Login failed. Invalid username or password!!");
     }
+
+    $_SESSION['username'] = $row['username'];
+
+    $_SESSION['password'] = $row['password'];
+
 }
 ?>
