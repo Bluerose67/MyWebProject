@@ -198,7 +198,7 @@ nav{
     border-radius: 40px;
     border: 0;
     cursor: pointer;
-    background-color: red;
+    background-color: #F85151;
     font-weight: 900;
     font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', 'sans-serif';
 }
@@ -221,7 +221,7 @@ nav{
     cursor: pointer;
     display: inline-block;
     border-style: none;
-    background-color: #ff0000;
+    background-color: #F85151;
     width: 38px;
     height: 38px;
     line-height: 60px;
@@ -276,7 +276,7 @@ section.about2 {
     font-family: 'poppins', sans-serif;
 }
 .left-about h1:hover {
-    color: rgb(255, 0, 0);
+    color: #F85151;
 }
 
 .about1 .left-about p{
@@ -408,7 +408,7 @@ section.events .content1{
     display: flex;
     width: 40%;
     color: #ffffff;
-    background: red;
+    background: #F85151;
     transition: .5s;
     margin: 80px;
     border-radius: 10px;
@@ -432,7 +432,7 @@ section.events .content2 {
     display: flex;
     width: 40%;
     color: #ffffff;
-    background: red;
+    background: #F85151;
     transition: .5s;
     margin: 80px;
     border-radius: 10px;
@@ -457,7 +457,7 @@ section.events .content3 {
     display: flex;
     width: 40%;
     color: #ffffff;
-    background: red;
+    background: #F85151;
     transition: .5s;
     margin: 80px;
     border-radius: 10px;
@@ -486,12 +486,12 @@ section.events .content3 {
     cursor: pointer;
     outline: none;
     background: white;
-    color: red;
+    color: #F85151;
     justify-content: center;
 }
 .div2 .btn:hover {
     color: white;
-    background-color: red;
+    background-color: #F85151;
 }
 
 section.events .content1:hover{
@@ -552,7 +552,7 @@ section.events .content3:hover {
     outline: none;
 }
 .row1 input.verify:invalid{
-    border: 1px solid red;
+    border: 1px solid #F85151;
     animation: shake 0.2s 2;
 }
 @keyframes shake{
@@ -588,7 +588,7 @@ section.events .content3:hover {
     border: 0;
     cursor: pointer;
     color: white;
-    background-color: red;
+    background-color: #F85151;
     font-weight: 900;
     font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', 'sans-serif'
 }

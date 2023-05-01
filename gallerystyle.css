@@ -53,7 +53,7 @@ nav {
 .menu-items {
     line-height: 1.6em;
     color: #ffffff00;
-    text-shadow: 0 0 #ffffff, 0 1.6em red;
+    text-shadow: 0 0 #ffffff, 0 1.6em #F85151;
     /* font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', 'sans-serif'; */
     font-size: 17px;
     overflow: hidden;
@@ -62,7 +62,7 @@ nav {
 
 /*on hover text color change to red */
 .menu-items:hover {
-    text-shadow: 0 -1.5em #000, 0 0 red;
+    text-shadow: 0 -1.5em #000, 0 0 #F85151;
 }
 
 /*login button on nav bar*/
@@ -71,7 +71,7 @@ nav {
     border-radius: 40px;
     border: 0;
     cursor: pointer;
-    background-color: red;
+    background-color: #F85151;
     font-weight: 900;
     font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', 'sans-serif';
 }
@@ -94,7 +94,7 @@ nav {
     cursor: pointer;
     display: inline-block;
     border-style: none;
-    background-color: #ff0000;
+    background-color: #F85151;
     width: 38px;
     height: 38px;
     line-height: 60px;
@@ -118,8 +118,8 @@ section.about1 {
 }
 
 .about1 .left-about{
-    border: 1px solid red;
-    background: red;
+    border: 1px solid #F85151;
+    background: #F85151;
     border-radius: 10px;
     padding: 0 50px;
 }

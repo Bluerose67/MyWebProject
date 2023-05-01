@@ -19,7 +19,7 @@ include("connect.php");
     <!-- nav bar starts here -->
     <nav id="nav">
       <div class="left">
-        <a href="index.php"> <img src="images/Logo1.png" alt="Logo" /></a>
+        <a href="index.php"> <img src="images/Logo11.png" alt="Logo" /></a>
       </div>
       <div class="right">
         <ul class="nav-menu">
