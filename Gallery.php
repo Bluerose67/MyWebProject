@@ -18,7 +18,7 @@ include("connect.php");
   <header>
     <nav>
       <div class="left">
-        <a href="index.php"> <img src="images/Logo1.png" alt="Logo" /></a>
+        <a href="index.php"> <img src="images/newLogo.png" alt="Logo" /></a>
       </div>
       <div class="right">
         <ul class="nav-menu">
@@ -28,7 +28,7 @@ include("connect.php");
           <li>
             <a href="index.php#Featuredevent" class="menu-items"> Events</a>
           </li>
-          <li><a href="" class="menu-items"> Gallery</a></li>
+          <li><a href="Gallery.php" class="menu-items"> Gallery</a></li>
           <li>
             <a href="index.php#contact" class="menu-items"> Contact</a>
           </li>
@@ -107,7 +107,7 @@ include("connect.php");
     <section class="cont">
       <section class="end">
         <div class="left1">
-          <img src="images/Logo1.png" alt="Logo" class="img" />
+          <img src="images/newLogo.png" alt="Logo" class="img" />
           <p>Simply connecting the memories and people</p>
         </div>
 
