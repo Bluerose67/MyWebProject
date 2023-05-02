@@ -17,30 +17,30 @@
         <section class="sidebar"><!-- sidebar begins -->
 
             <div class="icon1">
-                <a href="#index.php"><img src="../images/newlogo.png" alt="Logo1">
+                <a href="../Landing_pages/index.php"><img src="../images/newlogo.png" alt="Logo1">
                 </a>
             </div>
 
             <div class="icon2">
-                <a href="#dashboard"> <span class="material-symbols-outlined">dashboard</span>
+                <a href="Dashboard.php"> <span class="material-symbols-outlined">dashboard</span>
                     <p> Dashboard </p>
                 </a>
             </div>
 
             <div class="icon3">
-                <a href="#Dashboard_profile"> <span class="material-symbols-outlined"> person</span>
+                <a href="Dashboard_profile.php"> <span class="material-symbols-outlined"> person</span>
                     <p>Profile</p>
                 </a>
             </div>
 
             <div class="icon4">
-                <a href="#Dashboard_alumni"> <span class="material-symbols-outlined">groups</span>
+                <a href="Dashboard_alumni.php"> <span class="material-symbols-outlined">groups</span>
                     <p>View Alumni </p>
                 </a>
             </div>
 
             <div class="icon5">
-                <a href="#Dashboard_events"> <span class="material-symbols-outlined">event </span>
+                <a href="Dashboard_events.php"> <span class="material-symbols-outlined">event </span>
                     <p> View Events </p>
                 </a>
             </div>
@@ -48,7 +48,7 @@
         </section><!-- sidebar ends -->
 
 
-        <section class="main"><!-- main section begins -->
+        <section class="right"><!-- main section begins -->
             <div class="left-text">
                 <h1>Dashboard</h1>
             </div>
