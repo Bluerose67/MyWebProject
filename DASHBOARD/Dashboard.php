@@ -17,10 +17,9 @@
         <section class="sidebar"><!-- sidebar begins -->
 
             <div class="icon1">
-                <a href="#index.php"><img src="images/newlogo.png" alt="Logo1">
+                <a href="../Landing_pages/index.php"><img src="../images/newlogo.png" alt="Logo1">
                 </a>
             </div>
-
             <div class="icon2">
                 <a href="#dashboard"> <span class="material-symbols-outlined">dashboard</span>
                     <p> Dashboard </p>
@@ -48,13 +47,23 @@
         </section><!-- sidebar ends -->
 
 
-        <section class="main"><!-- main section begins -->
-            <div class="notification">
-                <span class="material-symbols-outlined" title="Notification">notifications</span>
+        <section class="right"><!-- main section begins -->
+            <div class="left-text">
+                <h1>Dashboard</h1>
             </div>
-            <span class="material-symbols-outlined" title="logout">
-                logout
-            </span>
+            <div class="notification_logout">
+                <div class="notification_icon">
+                    <button class="notification_btn" title="Notification">
+                        <a href="#"> <span class="material-symbols-outlined">notifications</span>
+                        </a>
+                    </button>
+                </div>
+                <div class="logout_icon">
+                    <button class="logout_btn" title="logout">
+                        <a href="logout.php"> <span class="material-symbols-outlined"> logout </span> </a>
+                    </button>
+                </div>
+            </div>
 
         </section><!-- main sections ends -->
 

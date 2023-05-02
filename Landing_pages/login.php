@@ -1,5 +1,5 @@
 <?
-include("connect.php");
+include("../connect.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,9 +11,9 @@ include("connect.php");
 
 <body>
   <header>
-    <nav>
+    <nav> <!-- nav bar begins -->
       <div class="left">
-        <a href="index.php"> <img src="images/newLogo.png" alt="Logo" /></a>
+        <a href="index.php"> <img src="../images/newLogo.png" alt="Logo" /></a>
       </div>
       <div class="right">
         <ul class="nav-menu">
@@ -28,17 +28,17 @@ include("connect.php");
             <a href="index.php#contact" class="menu-items"> Contact</a>
           </li>
           <li>
-            <button class="login-btn">
+            <!-- <button class="login-btn">
               <a href="login.php" style="color: #e9f4fb">Login</a>
-            </button>
+            </button> -->
           </li>
         </ul>
       </div>
-    </nav>
+    </nav> <!-- nav bar ends -->
     <div class="container">
       <div class="center">
         <h1>Login</h1>
-        <form action="login_fetch.php" method="post">
+        <form action="../login_fetch.php" method="post">
           <div class="text">
             <input type="text" name="username" required />
             <span> </span>

@@ -1,5 +1,5 @@
 <?
-include("connect.php");
+include("../connect.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +19,7 @@ include("connect.php");
     <!-- nav bar starts here -->
     <nav id="nav">
       <div class="left">
-        <a href="index.php"> <img src="images/newLogo.png" alt="Logo" /></a>
+        <a href="index.php"> <img src="../images/newLogo.png" alt="Logo" /></a>
       </div>
       <div class="right">
         <ul class="nav-menu">
@@ -60,7 +60,7 @@ include("connect.php");
         <div class="card">
           <div class="box">
             <div class="imgBx">
-              <img src="images/alumni2.jpg" alt="Logo" id="img_align" />
+              <img src="../images/alumni2.jpg" alt="Logo" id="img_align" />
             </div>
             <div class="contentBx">
               <div>
@@ -78,7 +78,7 @@ include("connect.php");
         <div class="card">
           <div class="box">
             <div class="imgBx">
-              <img src="images/alumni3.jpg" alt="Logo" id="img_align" />
+              <img src="../images/alumni3.jpg" alt="Logo" id="img_align" />
             </div>
             <div class="contentBx">
               <div>
@@ -96,7 +96,7 @@ include("connect.php");
         <div class="card">
           <div class="box">
             <div class="imgBx">
-              <img src="images/alumni.jpg" alt="Logo" id="img_align" />
+              <img src="../images/alumni.jpg" alt="Logo" id="img_align" />
             </div>
             <div class="contentBx">
               <div>
@@ -188,11 +188,11 @@ include("connect.php");
 
   <!-- Footer starts here -->
   <footer class="fot_img">
-    <img src="images/footer-default-mobile-dark.svg" alt="" />
+    <img src="../images/footer-default-mobile-dark.svg" alt="" />
     <section class="cont">
       <section class="end">
         <div class="left1">
-          <img src="images/newLogo.png" alt="Logo" class="img" />
+          <img src="../images/newLogo.png" alt="Logo" class="img" />
           <p>Simply connecting the memories and people</p>
         </div>
 
@@ -227,7 +227,7 @@ include("connect.php");
   </footer>
   <!-- footer ends here -->
 
-  <script src="index.js"></script>
+  <script src="../js/index.js"></script>
 </body>
 
 </html>

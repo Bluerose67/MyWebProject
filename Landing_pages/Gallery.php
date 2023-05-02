@@ -1,5 +1,5 @@
 <?
-include("connect.php");
+include("../connect.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +18,7 @@ include("connect.php");
   <header>
     <nav>
       <div class="left">
-        <a href="index.php"> <img src="images/newLogo.png" alt="Logo" /></a>
+        <a href="index.php"> <img src="../images/newLogo.png" alt="Logo" /></a>
       </div>
       <div class="right">
         <ul class="nav-menu">
@@ -62,52 +62,52 @@ include("connect.php");
   <!-- Image section begins here -->
   <section class="wrapper_box">
     <div class="wrapper">
-      <a href=""> <img src="images/pic1.jpg" alt="" /></a>
+      <a href=""> <img src="../images/pic1.jpg" alt="" /></a>
     </div>
     <div class="wrapper">
-      <a href=""> <img src="images/pic2.jpg" alt="" /></a>
+      <a href=""> <img src="../images/pic2.jpg" alt="" /></a>
     </div>
     <div class="wrapper">
-      <a href=""> <img src="images/pic3.jpg" alt="" /></a>
+      <a href=""> <img src="../images/pic3.jpg" alt="" /></a>
     </div>
     <div class="wrapper">
-      <a href=""> <img src="images/pic4.jpg" alt="" /></a>
+      <a href=""> <img src="../images/pic4.jpg" alt="" /></a>
     </div>
     <div class="wrapper">
-      <a href=""> <img src="images/pic5.jpg" alt="" /></a>
+      <a href=""> <img src="../images/pic5.jpg" alt="" /></a>
     </div>
     <div class="wrapper">
-      <a href=""> <img src="images/pic6.jpg" alt="" /></a>
+      <a href=""> <img src="../images/pic6.jpg" alt="" /></a>
     </div>
     <div class="wrapper">
-      <a href=""> <img src="images/pic7.jpg" alt="" /></a>
+      <a href=""> <img src="../images/pic7.jpg" alt="" /></a>
     </div>
     <div class="wrapper">
-      <a href=""> <img src="images/pic8.jpg" alt="" /></a>
+      <a href=""> <img src="../images/pic8.jpg" alt="" /></a>
     </div>
     <div class="wrapper">
-      <a href=""> <img src="images/pic9.jpg" alt="" /></a>
+      <a href=""> <img src="../images/pic9.jpg" alt="" /></a>
     </div>
     <div class="wrapper">
-      <a href=""> <img src="images/pic10.jpg" alt="" /></a>
+      <a href=""> <img src="../images/pic10.jpg" alt="" /></a>
     </div>
     <div class="wrapper">
-      <a href=""> <img src="images/pic11.jpg" alt="" /></a>
+      <a href=""> <img src="../images/pic11.jpg" alt="" /></a>
     </div>
     <div class="wrapper">
-      <a href=""> <img src="images/pic12.jpg" alt="" /></a>
+      <a href=""> <img src="../images/pic12.jpg" alt="" /></a>
     </div>
     <div class="wrapper">
-      <a href=""> <img src="images/pic13.jpg" alt="" /></a>
+      <a href=""> <img src="../images/pic13.jpg" alt="" /></a>
     </div>
   </section>
   <!-- Footer begins here -->
   <footer class="fot_img">
-    <img src="images/footer-default-mobile-dark.svg" alt="" />
+    <img src="../images/footer-default-mobile-dark.svg" alt="" />
     <section class="cont">
       <section class="end">
         <div class="left1">
-          <img src="images/newLogo.png" alt="Logo" class="img" />
+          <img src="../images/newLogo.png" alt="Logo" class="img" />
           <p>Simply connecting the memories and people</p>
         </div>
 
@@ -140,7 +140,7 @@ include("connect.php");
       </div>
     </section>
   </footer>
-  <script src="index.js"></script>
+  <script src="../js/index.js"></script>
 </body>
 
 </html>

@@ -11,15 +11,13 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $count = mysqli_num_rows($result);
 
     if ($count == 1) {
-        header("Location: index.php");
+        $_SESSION['username'] = $row['username'];
+        $_SESSION['password'] = $row['password'];
+
+        header("Location: DASHBOARD/Dashboard.php");
     } else {
         echo ("Invalid username or password!!");
-        header("Location: login.php?error=Login failed. Invalid username or password!!");
+        header("Location: Landing_pages/login.php?error=Login failed. Invalid username or password!!");
     }
-
-    $_SESSION['username'] = $row['username'];
-
-    $_SESSION['password'] = $row['password'];
-
 }
 ?>

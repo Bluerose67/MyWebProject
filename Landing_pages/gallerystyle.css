@@ -115,7 +115,7 @@ nav {
 /* arrow button ends here */
 header {
 
-    background: linear-gradient(rgb(32 31 31 / 66%), rgb(0 0 0 / 40%)), url(images/gallerycover.jpg);
+    background: linear-gradient(rgb(32 31 31 / 66%), rgb(0 0 0 / 40%)), url(../images/gallerycover.jpg);
     min-height: 70vh;
     background-repeat: no-repeat;
     background-position: left;

@@ -1,0 +1,114 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+}
+.dashboard {
+    width: 100%;
+    height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+}
+
+section.sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 200px;
+    background-color: #333;
+    overflow: hidden;
+    padding-top: 16px;
+}
+
+
+
+/* Style links on mouse-over */
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+/* Style the main content */
+.right {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 70px;
+        flex-wrap: wrap;
+        align-items: center;
+        background-color: #efecec;
+        border-bottom: 1px solid #e0dddd;
+}
+.left-text h1{
+    padding: 0 0 0 20px;
+     font-family: 'poppins', sans-serif;
+     color: #F85151;
+}
+
+/* Style sidebar links */
+.icon2 a,
+.icon3 a,
+.icon4 a,
+.icon5 a {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 55px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    color: #b1b8bb;
+    /* display: block; */
+}
+
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    margin: 0 10px 0 0;
+}
+
+.notification_logout{
+    display: flex;
+    float: right;
+    align-content: center;
+    flex-wrap: wrap;
+    height: 60px;
+}
+.notification_icon{
+    margin-right: 10px;
+}
+.logout_icon{
+    margin: 0 10px 0 10px;
+}
+.notification_btn{
+    border-radius: 30%;
+    border-style: none;
+    background-color: #F85151;
+    text-align: center;
+    padding-left: 8px;
+}
+.logout_btn {
+    border-radius: 30%;
+    border-style: none;
+    background-color: #F85151;
+    text-align: center;
+    padding-left: 8px;
+}
+.notification_btn a{
+    color: #ffffff;
+    
+}
+.logout_btn a {
+    color: #ffffff;
+    align-items: center;
+}
