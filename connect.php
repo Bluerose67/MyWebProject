@@ -8,8 +8,9 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 //mysqli_connect function is used to connect the application to the database
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-} else {
-    // echo "connection Successful";
-    header("Location: login_fetch.php");
 }
+// else {
+//     // echo "connection Successful";
+//     header("Location: login_fetch.php");
+// }
 ?>

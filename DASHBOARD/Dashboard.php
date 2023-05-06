@@ -1,7 +1,8 @@
 <?php
 session_start();
-if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
-
+if (!isset($_SESSION['username'])) {
+    header("Location: ../Landing_pages/login.php");
+} else {
     ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -27,8 +28,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
                 </div>
                 <div>
                     <p>
-                        <?php echo "welcome" . $_SESSION['username'];
-                        echo "<br> password" . $_SESSION['password']; ?>
+                        <?php echo "Welcome " . $_SESSION['username']; ?>
                     </p>
                 </div>
                 <div class="icon2">
@@ -70,9 +70,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
                         </button>
                     </div>
                     <div class="logout_icon">
-                        <button class="logout_btn" title="logout">
-                            <a href="logout.php"> <span class="material-symbols-outlined"> logout </span> </a>
-                        </button>
+                        <form action="../logout.php">
+                            <button class="logout_btn" title="logout">
+                                <span class="material-symbols-outlined"> logout </span>
+                            </button>
+                        </form>
                     </div>
                 </div>
 
@@ -85,13 +87,5 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
 
     </html>
     <?php
-
-} else {
-
-    header("Location: ../Landing_pages/login.php");
-
-    exit();
-
 }
-
 ?>
