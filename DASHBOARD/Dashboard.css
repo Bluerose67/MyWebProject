@@ -29,7 +29,10 @@ section.sidebar {
 }
 
 /* Style the main content */
-.right {
+section.main{
+    width: 100%;
+}
+.right-upper {
         display: flex;
         justify-content: space-between;
         width: 100%;

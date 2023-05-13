@@ -53,30 +53,86 @@ if (!isset($_SESSION['username'])) {
 
             </section><!-- sidebar ends -->
 
-
-            <section class="right"><!-- main section begins -->
-                <div class="left-text">
-                    <h1>Dashboard</h1>
-                </div>
-                <div class="notification_logout">
-                    <div class="notification_icon">
-                        <button class="notification_btn" title="Notification">
-                            <a href="#"> <span class="material-symbols-outlined">notifications</span>
-                            </a>
-                        </button>
+            <section class="main">
+                <section class="right-upper"><!-- main-upper section begins -->
+                    <div class="left-text">
+                        <h1>Dashboard</h1>
                     </div>
-                    <div class="logout_icon">
-                        <form action="../logout.php">
-                            <button class="logout_btn" title="logout">
-                                <span class="material-symbols-outlined"> logout </span>
+                    <div class="notification_logout">
+                        <div class="notification_icon">
+                            <button class="notification_btn" title="Notification">
+                                <a href="#"> <span class="material-symbols-outlined">notifications</span>
+                                </a>
                             </button>
-                        </form>
+                        </div>
+                        <div class="logout_icon">
+                            <form action="../logout.php">
+                                <button class="logout_btn" title="logout">
+                                    <span class="material-symbols-outlined"> logout </span>
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                </section><!-- main-upper sections ends -->
+                <section class="right-lower">
+                    <?php
+                    include "../connect.php";
 
-            </section><!-- main sections ends -->
+                    $sql = "SELECT * FROM alumni_registration";
 
+                    $result = mysqli_query($conn, $sql);
 
+                    if (mysqli_num_rows($result) > 0) {
+                        // output data of each row
+                        $i = 0;
+                        // Looping through the results
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $records[$i] = array(
+                                "id" => $row['id'],
+                                "name" => $row['name'],
+                                "email" => $row['email'],
+                                "password" => $row['password'],
+                                "image" => $row['image'],
+                            );
+                            $i++;
+                        }
+                    }
+                    //connection close
+                    mysqli_close($conn);
+                    ?>
+                    <a href="../alumni_registration/index.php">
+                        <h3>Add new Alumni</h3>
+                    </a>
+                    <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Image</th>
+                        </tr>
+                        <?php foreach ($records as $record) { ?>
+                            <tr>
+                                <td>
+                                    <?= $record['id'] ?>
+                                </td>
+                                <td>
+                                    <?= $record['name'] ?>
+                                </td>
+                                <td>
+                                    <?= $record['email'] ?>
+                                </td>
+                                <td>
+                                    <?= $record['image'] ?>
+                                </td>
+                                <td>
+                                    <a href="../alumni_registration/update_form.php?id=<?= $record['id'] ?>">Edit</a>
+                                    <a href="../alumni_registration/delete.php?id=<?= $record['id'] ?>">Delete</a>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </table>
+                </section>
+            </section>
         </div><!-- dashboard ends -->
     </body>
 

@@ -66,6 +66,7 @@ include("../connect.php");
         img_Gallery.innerHTML += "<div class='wrapper'> <a href=''> <img src='../images/" + i + ".jpg' alt='' /></a> </div>";
       }
     </script>
+    <!-- Image Section ends here -->
 
   </section>
   <!-- Footer begins here -->
