@@ -32,64 +32,36 @@ mysqli_close($conn);
     <title>
         Update alumni data
     </title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <form method="POST" action="update.php">
-        <table>
-            <tr>
-                <td>
-                    SN
-                </td>
-                <td>
-                    <input type="hidden" name="id" value="<?php echo $record['id'] ?>" />
-                    <input type="text" placeholder="Enter id" name="id" id="id" value="<?php echo $record['id'] ?>"
-                        required />
-                </td>
-            </tr>
-            <tr>
-                <td>Name</td>
-                <td>
-                    <input type="text" name="Name" value="<?= $record['name'] ?>" placeholder="Enter your Name"
-                        required />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Email
-                </td>
-                <td>
-                    <input type="Email" name="Email" value="<?= $record['email'] ?>" placeholder="Enter your Email"
-                        required />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button type="submit">Update</button>
-                </td>
-                <td>
-                    <a href="Display.php"> Go back </a>
-                </td>
-            </tr>
-        </table>
-    </form>
+    <div class="container">
+        <div class="center">
+            <h1>Update Alumni Details</h1>
+            <form action="update.php" method="post">
+                <input type="hidden" name="id" value="<?php echo $record['id'] ?>" />
+                <div class="text">
+                    <input type="text" name="name" value="<?= $record['name'] ?>" required />
+                    <span> </span>
+                    <label>Name</label>
+                </div>
+                <div class="text">
+                    <input type="email" name="email" value="<?= $record['email'] ?>" required />
+                    <span> </span>
+                    <label>Email</label>
+                </div>
+                <div class="text1">
+                    <!-- <label>Image</label> -->
+                    <input type="file" name="image" value="<?= $record['image'] ?>" />
+                    <span> </span>
+                </div>
+                <input type="submit" value="Update" class="login-button" />
+                <!-- <span> </span> -->
+                <button class="display-button"><a href="../DASHBOARD/Dashboard_alumni.php"> Go back </a> </button>
+            </form>
+        </div>
+    </div>
 </body>
-
-<style>
-    form {
-        width: 500px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    input {
-        width: 270px;
-    }
-
-    textarea {
-        width: 270px;
-        height: 60px;
-    }
-</style>
 
 </html>

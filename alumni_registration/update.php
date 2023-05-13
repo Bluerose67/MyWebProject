@@ -9,7 +9,7 @@ if ($_POST) {
     if (mysqli_query($conn, $sql)) {
         // echo "Record updated successfully.";
         mysqli_close($conn);
-        header('Location: Display.php');
+        header('Location: ../DASHBOARD/Dashboard_alumni.php');
     } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }

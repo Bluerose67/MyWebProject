@@ -5,8 +5,8 @@ if ($_POST) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $image = $_POST['image'];
-    $sql = "INSERT into alumni_registration(id,Name,email, password, image)
-        VALUES ('$id','$name', '$email','$password','$image')";
+    $sql = "INSERT into alumni_registration(name,email, password, image)
+        VALUES ('$name', '$email','$password','$image')";
     if (mysqli_query($conn, $sql)) {
         header("location: ../DASHBOARD/Dashboard_alumni.php");
     } else {

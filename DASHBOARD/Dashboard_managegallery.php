@@ -4,6 +4,22 @@ if (!isset($_SESSION['username'])) {
     header("Location: ../Landing_pages/login.php");
 } else {
     ?>
+    <?php
+    $dir = "../images/gallery/"; // set your gallery folder name
+    if (isset($_GET['del'])) {
+        unlink($dir . '/' . $_GET['del']);
+    }
+
+    if (isset($_POST['fileupload'])) {
+        $dirfile = $dir . basename($_FILES['file']['name']);
+        if (move_uploaded_file($_FILES['file']['tmp_name'], $dirfile)) {
+            echo "File uploaded successfully!";
+        } else {
+            echo "Sorry, file not uploaded, please try again!";
+        }
+    }
+    ?>
+
     <!DOCTYPE html>
     <html lang="en">
 
@@ -51,7 +67,7 @@ if (!isset($_SESSION['username'])) {
                     </a>
                 </div>
                 <div class="icon6">
-                    <a href="Dashboard_managegallery.php"> <span class="material-symbols-outlined">imagesmode </span>
+                    <a href="Dashboard_managegallery.php"> <span class="material-symbols-outlined">imagesmode</span>
                         <p> Manage Gallery </p>
                     </a>
                 </div>
@@ -59,10 +75,11 @@ if (!isset($_SESSION['username'])) {
             </section><!-- sidebar ends -->
 
             <section class="main">
-                <section class="right-upper"><!-- main-upper section begins -->
+                <section class="right-upper"> <!-- main section begins -->
                     <div class="left-text">
                         <h1>Dashboard</h1>
                     </div>
+
                     <div class="right_about">
                         <div>
                             <p>
@@ -80,6 +97,7 @@ if (!isset($_SESSION['username'])) {
                                 </a>
                             </button>
                         </div>
+
                         <div class="logout_icon">
                             <form action="../logout.php">
                                 <button class="logout_btn" title="logout">
@@ -88,72 +106,60 @@ if (!isset($_SESSION['username'])) {
                             </form>
                         </div>
                     </div>
-                </section><!-- main-upper sections ends -->
+
+                </section><!-- main sections ends -->
                 <section class="right-lower">
+                    <div class="container">
+                        <div class="center">
+                            <h1>Upload Images</h1>
+                            <form action="" method="post" enctype="multipart/form-data">
+                                <input type="hidden" value="1" name="fileupload">
+                                <div class="text">
+                                    <div class="label1">
+                                        <label>Select a File</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="file" class="form-control" name="file" required autofocus>
+                                    </div>
+                                    <span> </span>
+                                </div>
+                                <input type="submit" value="Upload" class="login-button" />
+                            </form>
+                        </div>
+                    </div>
+                    <section>
+                        <div class="title">
+                            <h1>Digital <span> Gallery </span></h1>
+                        </div>
+                    </section>
+                    <!-- Image section begins here -->
+                    <section class="wrapper_box" id="img_Gallery">
+                        <?php
+                        $dir = "../images/gallery/"; // image folder name
+                        if (is_dir($dir)) {
+                            if ($dh = opendir($dir)) {
+                                while (($file = readdir($dh)) !== false) {
+                                    if ($file == "." or $file == "..") {
+                                    } else {
+                                        ?> <!---- its a loop [change the folder name on img path]----->
+                    <div class='wrapper'>
+                        <a href=''>
+                            <img src="../images/gallery/<?php echo $file; ?>">
+                        </a>
+                    </div>
                     <?php
-                    include "../connect.php";
+                                    }
+                                }
+                                closedir($dh);
+                            }
+                        } ?>
+    </div>
+    </div>
 
-                    $sql = "SELECT * FROM alumni_registration";
-
-                    $result = mysqli_query($conn, $sql);
-
-                    if (mysqli_num_rows($result) > 0) {
-                        // output data of each row
-                        $i = 0;
-                        // Looping through the results
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $records[$i] = array(
-                                "id" => $row['id'],
-                                "name" => $row['name'],
-                                "email" => $row['email'],
-                                "password" => $row['password'],
-                                "image" => $row['image'],
-                            );
-                            $i++;
-                        }
-                    }
-                    //connection close
-                    mysqli_close($conn);
-                    ?>
-                    <button class="add-button">
-                        <a href="../alumni_registration/registration.php">Add new Alumni</a>
-                    </button>
-                    <table>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Image</th>
-                        </tr>
-                        <?php foreach ($records as $record) { ?>
-                            <tr>
-                                <td>
-                                    <?= $record['id'] ?>
-                                </td>
-                                <td>
-                                    <?= $record['name'] ?>
-                                </td>
-                                <td>
-                                    <?= $record['email'] ?>
-                                </td>
-                                <td>
-                                    <?= $record['image'] ?>
-                                </td>
-                                <td class="change-buttons">
-                                    <button class="edit-button">
-                                        <a href="../alumni_registration/update_form.php?id=<?= $record['id'] ?>">Edit</a>
-                                    </button>
-
-                                    <button class="edit-button">
-                                        <a href="../alumni_registration/delete.php?id=<?= $record['id'] ?>">Delete</a>
-                                    </button>
-                                </td>
-                            </tr>
-                        <?php } ?>
-                    </table>
-                </section>
-            </section>
-        </div><!-- dashboard ends -->
+    </section>
+    </section>
+    </div><!-- dashboard ends -->
     </body>
 
     </html>

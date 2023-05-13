@@ -61,11 +61,25 @@ include("../connect.php");
   </section>
   <!-- Image section begins here -->
   <section class="wrapper_box" id="img_Gallery">
-    <script type="text/javascript">
-      for (i = 1; i <= 13; i++) {
-        img_Gallery.innerHTML += "<div class='wrapper'> <a href=''> <img src='../images/" + i + ".jpg' alt='' /></a> </div>";
+    <?php
+    $dir = "../images/gallery/"; // image folder name
+    if (is_dir($dir)) {
+      if ($dh = opendir($dir)) {
+        while (($file = readdir($dh)) !== false) {
+          if ($file == "." or $file == "..") {
+          } else {
+            ?> <!---- its a loop [change the folder name on img path]----->
+    <div class='wrapper'>
+      <a href=''>
+        <img src="../images/gallery/<?php echo $file; ?>">
+      </a>
+    </div>
+    <?php
+          }
+        }
+        closedir($dh);
       }
-    </script>
+    } ?>
     <!-- Image Section ends here -->
 
   </section>

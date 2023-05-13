@@ -26,11 +26,7 @@ if (!isset($_SESSION['username'])) {
                     <a href="../Landing_pages/index.php"><img src="../images/newlogo.png" alt="Logo1">
                     </a>
                 </div>
-                <div>
-                    <p>
-                        <?php echo "Welcome " . $_SESSION['username']; ?>
-                    </p>
-                </div>
+
                 <div class="icon2">
                     <a href="Dashboard.php"> <span class="material-symbols-outlined">dashboard</span>
                         <p> Dashboard </p>
@@ -54,15 +50,30 @@ if (!isset($_SESSION['username'])) {
                         <p> View Events </p>
                     </a>
                 </div>
+                <div class="icon6">
+                    <a href="Dashboard_managegallery.php"> <span class="material-symbols-outlined">imagesmode </span>
+                        <p> Manage Gallery </p>
+                    </a>
+                </div>
 
             </section><!-- sidebar ends -->
 
 
-            <section class="right"><!-- main section begins -->
+            <section class="right-upper"><!-- main section begins -->
                 <div class="left-text">
                     <h1>Dashboard</h1>
                 </div>
-                <div class="notification_logout">
+                <div class="right_about">
+                    <div>
+                        <p>
+                            <?php echo $_SESSION['username']; ?>
+                        </p>
+                    </div>
+
+                    <div class="profile">
+                        <img src="../images/avatar.jpg" alt="Avatar" class="avatar">
+                    </div>
+
                     <div class="notification_icon">
                         <button class="notification_btn" title="Notification">
                             <a href="#"> <span class="material-symbols-outlined">notifications</span>
