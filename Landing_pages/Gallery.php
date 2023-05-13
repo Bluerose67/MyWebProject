@@ -60,46 +60,13 @@ include("../connect.php");
     </div>
   </section>
   <!-- Image section begins here -->
-  <section class="wrapper_box">
-    <div class="wrapper">
-      <a href=""> <img src="../images/pic1.jpg" alt="" /></a>
-    </div>
-    <div class="wrapper">
-      <a href=""> <img src="../images/pic2.jpg" alt="" /></a>
-    </div>
-    <div class="wrapper">
-      <a href=""> <img src="../images/pic3.jpg" alt="" /></a>
-    </div>
-    <div class="wrapper">
-      <a href=""> <img src="../images/pic4.jpg" alt="" /></a>
-    </div>
-    <div class="wrapper">
-      <a href=""> <img src="../images/pic5.jpg" alt="" /></a>
-    </div>
-    <div class="wrapper">
-      <a href=""> <img src="../images/pic6.jpg" alt="" /></a>
-    </div>
-    <div class="wrapper">
-      <a href=""> <img src="../images/pic7.jpg" alt="" /></a>
-    </div>
-    <div class="wrapper">
-      <a href=""> <img src="../images/pic8.jpg" alt="" /></a>
-    </div>
-    <div class="wrapper">
-      <a href=""> <img src="../images/pic9.jpg" alt="" /></a>
-    </div>
-    <div class="wrapper">
-      <a href=""> <img src="../images/pic10.jpg" alt="" /></a>
-    </div>
-    <div class="wrapper">
-      <a href=""> <img src="../images/pic11.jpg" alt="" /></a>
-    </div>
-    <div class="wrapper">
-      <a href=""> <img src="../images/pic12.jpg" alt="" /></a>
-    </div>
-    <div class="wrapper">
-      <a href=""> <img src="../images/pic13.jpg" alt="" /></a>
-    </div>
+  <section class="wrapper_box" id="img_Gallery">
+    <script type="text/javascript">
+      for (i = 1; i <= 13; i++) {
+        img_Gallery.innerHTML += "<div class='wrapper'> <a href=''> <img src='../images/" + i + ".jpg' alt='' /></a> </div>";
+      }
+    </script>
+
   </section>
   <!-- Footer begins here -->
   <footer class="fot_img">
