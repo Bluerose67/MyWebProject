@@ -154,11 +154,9 @@ if (!isset($_SESSION['username'])) {
                                 closedir($dh);
                             }
                         } ?>
-    </div>
-    </div>
+                </section>
+            </section>
 
-    </section>
-    </section>
     </div><!-- dashboard ends -->
     </body>
 

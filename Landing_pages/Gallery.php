@@ -1,4 +1,4 @@
-<?
+<?php
 include("../connect.php");
 ?>
 <!DOCTYPE html>
@@ -67,22 +67,53 @@ include("../connect.php");
       if ($dh = opendir($dir)) {
         while (($file = readdir($dh)) !== false) {
           if ($file == "." or $file == "..") {
-          } else {
-            ?> <!---- its a loop [change the folder name on img path]----->
+          } else { ?> <!---- its a loop [change the folder name on img path]----->
     <div class='wrapper'>
-      <a href=''>
-        <img src="../images/gallery/<?php echo $file; ?>">
-      </a>
+      <img src="../images/gallery/<?php echo $file; ?>" onclick="openModal();currentSlide(1)" class="hover-shadow">
     </div>
+    <?php } ?>
     <?php
-          }
         }
-        closedir($dh);
       }
+      closedir($dh);
     } ?>
     <!-- Image Section ends here -->
 
   </section>
+  <!-- The Modal/Lightbox -->
+  <div id="myModal" class="modal">
+    <span class="close cursor" onclick="closeModal()" title="Close">&times;</span>
+    <div class="modal-content">
+
+      <?php
+      $dir = "../images/gallery/"; // image folder name
+      if (is_dir($dir)) {
+        if ($dh = opendir($dir)) {
+          while (($file = readdir($dh)) !== false) {
+            if ($file == "." or $file == "..") {
+            } else {
+              ?> <!---- its a loop [change the folder name on img path]----->
+      <div class='mySlides'>
+        <img src="../images/gallery/<?php echo $file; ?>">
+      </div>
+      <?php
+            }
+          }
+          closedir($dh);
+        }
+      } ?>
+
+      <!-- Next/previous controls -->
+      <a class="prev" onclick="plusSlides(-1)" title="Prev">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)" title="next">&#10095;</a>
+
+      <!-- Caption text -->
+      <!-- <div class="caption-container">
+                <p id="caption"></p>
+            </div> -->
+
+    </div>
+  </div>
   <!-- Footer begins here -->
   <footer class="fot_img">
     <img src="../images/footer-default-mobile-dark.svg" alt="" />

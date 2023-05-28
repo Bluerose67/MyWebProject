@@ -124,6 +124,7 @@ if (!isset($_SESSION['username'])) {
                             <th>Name</th>
                             <th>Email</th>
                             <th>Image</th>
+                            <th>Action</th>
                         </tr>
                         <?php foreach ($records as $record) { ?>
                             <tr>
@@ -144,8 +145,8 @@ if (!isset($_SESSION['username'])) {
                                         <a href="../alumni_registration/update_form.php?id=<?= $record['id'] ?>">Edit</a>
                                     </button>
 
-                                    <button class="edit-button">
-                                        <a href="../alumni_registration/delete.php?id=<?= $record['id'] ?>">Delete</a>
+                                    <button class="edit-button" onclick="delete" id="myBtn">
+                                        Delete
                                     </button>
                                 </td>
                             </tr>
@@ -154,6 +155,36 @@ if (!isset($_SESSION['username'])) {
                 </section>
             </section>
         </div><!-- dashboard ends -->
+        <script>
+            // const value = document.querySelector("#myBtn");
+            // let input;
+
+            // // Prompt the user for input when the page loads
+
+            // value.addEventListener("click", () => {
+            //     input = prompt("Do you want to delete?");
+            //     // Check if the input is 'yes'
+            //     if (input && input.toLowerCase() === 'yes') {
+            //         // Do something if the input is 'yes'
+            //         window.location.href = "../alumni_registration/delete.php?id=";
+            //     }
+            // });
+
+            const buttons = document.querySelectorAll("#myBtn");
+            let input;
+
+            buttons.forEach(button => {
+                button.addEventListener("click", () => {
+                    input = prompt("Do you want to delete? If yes type yes.");
+                    // Check if the input is 'yes'
+                    if (input && input.toLowerCase() === 'yes') {
+                        // Do something if the input is 'yes'
+                        window.location.href = "../alumni_registration/delete.php?id= <?= $record['id'] ?>";
+                    }
+                });
+            });
+
+        </script>
     </body>
 
     </html>
