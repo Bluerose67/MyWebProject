@@ -5,7 +5,7 @@ if (isset($_GET['id'])) {
     $sql = "DELETE from alumni_registration where id = $id";
     if (mysqli_query($conn, $sql)) {
         echo "Record deleted successfully.";
-        echo "<br /> <a href='../DASHBOARD/Dashboard_alumni.php'>Go back</a>";
+        echo "<br /> <a href='../DB_Admin/Dashboard_alumni.php'>Go back</a>";
     } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }

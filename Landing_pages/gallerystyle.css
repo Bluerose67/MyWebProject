@@ -302,8 +302,7 @@ section .title h1 span{
 
 /* Hide the slides by default */
 .mySlides {
-    /* display: none; */
-    height: 100vh;
+    height: 89vh;
     overflow: hidden;
     margin: 20px;
     border-radius: 20px;

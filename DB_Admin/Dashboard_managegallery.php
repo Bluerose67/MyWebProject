@@ -13,7 +13,7 @@ if (!isset($_SESSION['username'])) {
     if (isset($_POST['fileupload'])) {
         $dirfile = $dir . basename($_FILES['file']['name']);
         if (move_uploaded_file($_FILES['file']['tmp_name'], $dirfile)) {
-            echo "File uploaded successfully!";
+            // echo "File uploaded successfully!";
         } else {
             echo "Sorry, file not uploaded, please try again!";
         }
@@ -34,6 +34,7 @@ if (!isset($_SESSION['username'])) {
     </head>
 
     <body>
+
         <div class="dashboard"> <!-- dashboard begins -->
 
             <section class="sidebar"><!-- sidebar begins -->
@@ -57,13 +58,13 @@ if (!isset($_SESSION['username'])) {
 
                 <div class="icon4">
                     <a href="Dashboard_alumni.php"> <span class="material-symbols-outlined">groups</span>
-                        <p>View Alumni </p>
+                        <p>Manage Alumni </p>
                     </a>
                 </div>
 
                 <div class="icon5">
                     <a href="Dashboard_events.php"> <span class="material-symbols-outlined">event </span>
-                        <p> View Events </p>
+                        <p> Manage Events </p>
                     </a>
                 </div>
                 <div class="icon6">
@@ -108,7 +109,12 @@ if (!isset($_SESSION['username'])) {
                     </div>
 
                 </section><!-- main sections ends -->
-                <section class="right-lower">
+                <section class="right-lower" id="right_lower">
+                    <div class="scrolltop">
+                        <button class="button" onclick="scrollToTopOfElement('right_lower')">
+                            <span class="material-symbols-outlined"> north </span>
+                        </button>
+                    </div>
                     <div class="container">
                         <div class="center">
                             <h1>Upload Images</h1>
@@ -158,6 +164,7 @@ if (!isset($_SESSION['username'])) {
             </section>
 
     </div><!-- dashboard ends -->
+        <script src="../js/index.js"></script>
     </body>
 
     </html>

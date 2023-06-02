@@ -2,7 +2,7 @@
 session_start();
 include("../connect.php");
 if (isset($_SESSION['username'])) {
-  header("Location: ../DASHBOARD/Dashboard.php");
+  header("Location: ../DB_Admin/Dashboard.php");
 } else {
   ?>
 

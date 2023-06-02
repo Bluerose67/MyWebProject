@@ -14,43 +14,73 @@ include('../connect.php');
 </head>
 
 <body>
-
     <div class="container">
         <div class="center">
             <h1>Register New Alumni</h1>
             <form action="insert.php" method="post">
                 <div class="text">
-                    <input type="text" name="name" required />
+
+                    <input type="text" id="username" name="username" required>
                     <span> </span>
-                    <label>Name</label>
+                    <label for="username">Username</label>
+                </div>
+
+                <div class="text">
+
+                    <input type="email" id="email" name="email" required>
+                    <span> </span>
+                    <label for="email">Email</label>
+                </div>
+
+                <div class="text">
+
+                    <input type="text" id="password" name="password" required>
+                    <span> </span>
+                    <label for="address">Password</label>
                 </div>
                 <div class="text">
-                    <input type="email" name="email" required />
+
+                    <input type="text" id="address" name="address" required>
                     <span> </span>
-                    <label>Email</label>
+                    <label for="address">Address</label>
                 </div>
+
                 <div class="text">
-                    <input type="text" name="password" required />
+
+                    <input type="date" id="DOB" name="DOB" required>
                     <span> </span>
-                    <label>Password</label>
+                    <label for="DOB">Date of Birth</label>
                 </div>
+
+                <div class="text">
+
+                    <input type="tel" id="phone" name="phone" required>
+                    <span> </span>
+                    <label for="phone">Phone</label>
+                </div>
+
                 <div class="text1">
-                    <input type="file" name="image" />
-                    <span> </span>
-                    <!-- <label>Choose Avatar photo</label> -->
+
+                    <select id="role" name="role" class="display-button" onchange="showAdditionalFields()">
+                        <option value="">Select Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="student">Student</option>
+                        <!-- Add more role options as needed -->
+                    </select>
+                    <!-- <span> </span>
+                    <label for="role">Role</label> -->
                 </div>
+
+                <div id="additionalFieldsContainer"></div>
+
                 <input type="submit" value="Register" />
-                <button class="display-button"> <a href="../DASHBOARD/Dashboard_alumni.php">Display Records</a>
+                <button class="display-button"> <a href="../DB_Admin/Dashboard_alumni.php">Display Records</a>
                 </button>
-                <?php
-                if (isset($_SESSION["error"])) {
-                    $error = $_SESSION["error"];
-                    echo "<span>$error</span>";
-                }
-                ?>
             </form>
         </div>
     </div>
+    <script src="script.js">
+    </script>
 </body>
 
 </html>

@@ -41,13 +41,13 @@ if (!isset($_SESSION['username'])) {
 
                 <div class="icon4">
                     <a href="Dashboard_alumni.php"> <span class="material-symbols-outlined">groups</span>
-                        <p>View Alumni </p>
+                        <p>Manage Alumni </p>
                     </a>
                 </div>
 
                 <div class="icon5">
                     <a href="Dashboard_events.php"> <span class="material-symbols-outlined">event </span>
-                        <p> View Events </p>
+                        <p> Manage Events </p>
                     </a>
                 </div>
                 <div class="icon6">
@@ -88,7 +88,6 @@ if (!isset($_SESSION['username'])) {
                         </form>
                     </div>
                 </div>
-
 
             </section><!-- main sections ends -->
 

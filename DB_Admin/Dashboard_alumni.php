@@ -41,13 +41,13 @@ if (!isset($_SESSION['username'])) {
 
                 <div class="icon4">
                     <a href="Dashboard_alumni.php"> <span class="material-symbols-outlined">groups</span>
-                        <p>View Alumni </p>
+                        <p>Manage Alumni </p>
                     </a>
                 </div>
 
                 <div class="icon5">
                     <a href="Dashboard_events.php"> <span class="material-symbols-outlined">event </span>
-                        <p> View Events </p>
+                        <p> Manage Events </p>
                     </a>
                 </div>
                 <div class="icon6">
@@ -89,11 +89,14 @@ if (!isset($_SESSION['username'])) {
                         </div>
                     </div>
                 </section><!-- main-upper sections ends -->
-                <section class="right-lower">
+                <section class="right-lower1">
+
                     <?php
                     include "../connect.php";
 
-                    $sql = "SELECT * FROM alumni_registration";
+                    $sql = "SELECT * FROM users 
+                    JOIN admins on admins.user_id= users.user_id
+                    JOIN role on users.user_id=role.user_id where role= 'admin'";
 
                     $result = mysqli_query($conn, $sql);
 
@@ -103,11 +106,13 @@ if (!isset($_SESSION['username'])) {
                         // Looping through the results
                         while ($row = mysqli_fetch_assoc($result)) {
                             $records[$i] = array(
-                                "id" => $row['id'],
-                                "name" => $row['name'],
+                                "admin_id" => $row['admin_id'],
+                                "user_name" => $row['user_name'],
                                 "email" => $row['email'],
-                                "password" => $row['password'],
-                                "image" => $row['image'],
+                                "address" => $row['address'],
+                                "DOB" => $row['DOB'],
+                                "phone_no" => $row['phone_no'],
+                                "department" => $row['department'],
                             );
                             $i++;
                         }
@@ -118,68 +123,74 @@ if (!isset($_SESSION['username'])) {
                     <button class="add-button">
                         <a href="../alumni_registration/registration.php">Add new Alumni</a>
                     </button>
-                    <table>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Image</th>
-                            <th>Action</th>
-                        </tr>
-                        <?php foreach ($records as $record) { ?>
-                            <tr>
-                                <td>
-                                    <?= $record['id'] ?>
-                                </td>
-                                <td>
-                                    <?= $record['name'] ?>
-                                </td>
-                                <td>
-                                    <?= $record['email'] ?>
-                                </td>
-                                <td>
-                                    <?= $record['image'] ?>
-                                </td>
-                                <td class="change-buttons">
-                                    <button class="edit-button">
-                                        <a href="../alumni_registration/update_form.php?id=<?= $record['id'] ?>">Edit</a>
-                                    </button>
+                    <h1 class="heading">List Of All Admins</h1>
+                    <div class="container1">
+                        <div class="center1">
+                            <table>
+                                <tr>
+                                    <th>Admin ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>DOB</th>
+                                    <th>Contact</th>
+                                    <th>Department</th>
+                                    <th>Action</th>
+                                </tr>
+                                <?php foreach ($records as $record) { ?>
+                                    <tr>
+                                        <td>
+                                            <?= $record['admin_id'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $record['user_name'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $record['email'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $record['address'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $record['DOB'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $record['phone_no'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $record['department'] ?>
+                                        </td>
+                                        <td class="change-buttons">
 
-                                    <button class="edit-button" onclick="delete" id="myBtn">
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        <?php } ?>
-                    </table>
+                                            <!-- <div class="td-container"> -->
+                                            <button class="icon-button">&#x22EE;</button>
+                                            <div class="dropdown-menu">
+                                                <button class="edit-button">
+                                                    <a
+                                                        href="../alumni_registration/update_form.php?id=<?= $record['admin_id'] ?>">Edit</a>
+                                                </button>
+                                                <button class="edit-button" onclick="delete" id="myBtn">Delete</button>
+                                            </div>
+                                            <!-- </div> -->
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </table>
+                        </div>
+                    </div>
                 </section>
             </section>
         </div><!-- dashboard ends -->
         <script>
-            // const value = document.querySelector("#myBtn");
-            // let input;
-
-            // // Prompt the user for input when the page loads
-
-            // value.addEventListener("click", () => {
-            //     input = prompt("Do you want to delete?");
-            //     // Check if the input is 'yes'
-            //     if (input && input.toLowerCase() === 'yes') {
-            //         // Do something if the input is 'yes'
-            //         window.location.href = "../alumni_registration/delete.php?id=";
-            //     }
-            // });
-
             const buttons = document.querySelectorAll("#myBtn");
-            let input;
-
             buttons.forEach(button => {
                 button.addEventListener("click", () => {
-                    input = prompt("Do you want to delete? If yes type yes.");
-                    // Check if the input is 'yes'
+                    let input = prompt("Do you want to delete? If yes type yes.");
+
+                    // Check if the input is 'yes'                 
                     if (input && input.toLowerCase() === 'yes') {
-                        // Do something if the input is 'yes'
-                        window.location.href = "../alumni_registration/delete.php?id= <?= $record['id'] ?>";
+                        // Do something if the input is 'yes'                     
+                        window.location.href = "../alumni_registration/delete.php?id= <?= $record['alumni_id'] ?>";
                     }
                 });
             });

@@ -58,7 +58,7 @@ mysqli_close($conn);
                 </div>
                 <input type="submit" value="Update" class="login-button" />
                 <!-- <span> </span> -->
-                <button class="display-button"><a href="../DASHBOARD/Dashboard_alumni.php"> Go back </a> </button>
+                <button class="display-button"><a href="../DB_Admin/Dashboard_alumni.php"> Go back </a> </button>
             </form>
         </div>
     </div>

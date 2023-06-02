@@ -40,3 +40,17 @@ function showSlides(n) {
   slides[slideIndex-1].style.display = "flex";
 
 }
+
+// function scrollToSection(right_lower) {
+//     const section = document.querySelector(`.${right_lower}`);
+//     if (section) {
+//         section.scrollIntoView({ behavior: 'smooth' });
+//     }
+// }
+
+function scrollToTopOfElement(right_lower) {
+  const element = document.getElementById(right_lower);
+  if (element) {
+    element.scrollTop = 0;
+  }
+}
