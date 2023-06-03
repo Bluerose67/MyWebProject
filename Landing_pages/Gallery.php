@@ -12,6 +12,7 @@ include("../connect.php");
   <link rel="stylesheet" href="gallerystyle.css" />
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -114,45 +115,53 @@ include("../connect.php");
 
     </div>
   </div>
-  <!-- Footer begins here -->
-  <footer class="fot_img">
-    <img src="../images/footer-default-mobile-dark.svg" alt="" />
-    <section class="cont">
-      <section class="end">
-        <div class="left1">
-          <img src="../images/newLogo.png" alt="Logo" class="img" />
-          <p>Simply connecting the memories and people</p>
-        </div>
-
-        <div class="right1">
-          <p>Get in touch with us</p>
-          <div class="container5">
-            <div class="icon1">
-              <span class="material-symbols-outlined"> location_on </span>
-              <p>Alka hospital, Lalitpur 44600</p>
-              <br />
-            </div>
-            <div class="icon2">
-              <span class="material-symbols-outlined"> Phone_In_Talk </span>
-              <p>+977-01-5912727, 4538566</p>
-              <br />
-            </div>
-            <div class="icon3">
-              <span class="material-symbols-outlined"> mail </span>
-              <p>info@achsnepal.edu.np</p>
-              <br />
-            </div>
+  <!-- Footer begins here ------------------------------------------------------------------------------------------------------------->
+  <footer class="footer">
+    <div class="footer_containerleft">
+      <img src="../images/newLogo.png" alt="Logo" class="img" />
+    </div>
+    <div class="footer_containerright">
+      <div class="row">
+        <div class="footer-col">
+          <h4> Alumni Hub</h4>
+          <ul>
+            <li>
+              <a href="#"> About Us</a>
+            </li>
+            <li>
+              <a href="#"> Contact</a>
+            </li>
+          </ul>
+        </div> <!-- footer-col -->
+        <div class="footer-col">
+          <h4> Get Help </h4>
+          <ul>
+            <li class="register_style">
+              <p>Are you an alumni? Do you want to</p>
+              <a href="#"> register ?</a>
+            </li>
+          </ul>
+        </div> <!-- footer-col -->
+        <div class="footer-col">
+          <h4> Follow US</h4>
+          <div class="social-links">
+            <a href="#"> <i class="fab fa-facebook-f"></i></a>
+            <a href="#"> <i class="fab fa-instagram"></i></a>
+            <a href="#"> <i class="fab fa-linkedin-in"></i></a>
+            <a href="#"> <i class="fab fa-twitter"></i></a>
           </div>
-        </div>
-      </section>
-      <div class="last">
-        <p>
-          Made by Team BlueRose with
-          <span class="material-symbols-outlined"> favorite </span>.
-        </p>
+        </div> <!-- footer-col ends -->
+      </div> <!-- row -->
+      <div class="copyright1">
+        <p> 2023 BlueRose. All rights reserved.</p>
+        <p>Use of this site constitutes acceptance of our User Agreement and privacy policy.</p>
+        <p>The Material on this site may not be reproduced, distributed, transmitted, cached or otherwise used, except
+          with the prior written permission of BlueRose.</p>
       </div>
-    </section>
+    </div> <!-- footer_containerright -->
+
   </footer>
+  <!-- footer ends here ---------------------------------------------------------------------------------------- -->
   <script src="../js/index.js"></script>
 </body>
 

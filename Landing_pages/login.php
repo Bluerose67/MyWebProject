@@ -12,6 +12,7 @@ if (isset($_SESSION['username'])) {
   <head>
     <title>Login Page</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   </head>
 
   <body>
@@ -50,7 +51,8 @@ if (isset($_SESSION['username'])) {
               <label>Username</label>
             </div>
             <div class="text">
-              <input type="password" name="password" required />
+              <input type="password" name="password" id="passwordInput" required />
+              <i class="toggle-password fas fa-eye-slash"></i>
               <span> </span>
               <label>Password</label>
             </div>
@@ -66,6 +68,67 @@ if (isset($_SESSION['username'])) {
         </div>
       </div>
     </header>
+
+    <footer class="footer"> <!-- footer starts here -->
+      <div class="footer_containerleft">
+        <img src="../images/newLogo.png" alt="Logo" class="img" />
+      </div>
+      <div class="footer_containerright">
+        <div class="row">
+          <div class="footer-col">
+            <h4> Alumni Hub</h4>
+            <ul>
+              <li>
+                <a href="#"> About Us</a>
+              </li>
+              <li>
+                <a href="#"> Contact</a>
+              </li>
+            </ul>
+          </div> <!-- footer-col -->
+          <div class="footer-col">
+            <h4> Get Help </h4>
+            <ul>
+              <li class="register_style">
+                <p>Are you an alumni? Do you want to</p>
+                <a href="#"> register ?</a>
+              </li>
+            </ul>
+          </div> <!-- footer-col -->
+          <div class="footer-col">
+            <h4> Follow US</h4>
+            <div class="social-links">
+              <a href="#"> <i class="fab fa-facebook-f"></i></a>
+              <a href="#"> <i class="fab fa-instagram"></i></a>
+              <a href="#"> <i class="fab fa-linkedin-in"></i></a>
+              <a href="#"> <i class="fab fa-twitter"></i></a>
+            </div>
+          </div> <!-- footer-col -->
+        </div> <!-- row -->
+        <div class="copyright1">
+          <p> 2023 BlueRose. All rights reserved.</p>
+          <p>Use of this site constitutes acceptance of our User Agreement and privacy policy.</p>
+          <p>The Material on this site may not be reproduced, distributed, transmitted, cached or otherwise used, except
+            with the prior written permission of BlueRose.</p>
+        </div>
+      </div> <!-- footer_containerright -->
+
+    </footer> <!-- footer ends here -->
+    <script>
+      const eyeIcon = document.querySelector(".toggle-password");
+      const passwordInput = document.querySelector("#passwordInput");
+
+      eyeIcon.addEventListener("click", () => {
+        //toggle the input type between password and text
+        passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+
+        //update the eye icon class based on the input type
+        // eyeIcon.className = `fa-solid fa-eye${passwordInput.type === "password" ? "" : "-slash"}`;
+        eyeIcon.classList.toggle("fa-eye-slash");
+        eyeIcon.classList.toggle("fa-eye");
+
+      });
+    </script>
   </body>
 
   </html>

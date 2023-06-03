@@ -12,6 +12,7 @@ include("../connect.php");
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -40,11 +41,17 @@ include("../connect.php");
         <span class="material-symbols-outlined"> north </span>
       </button>
     </div>
+    <!-- nav bar ends here ------------------------------------------------------------------------------------->
+  </header>
+  <!-- header ends here --------------------------------------------------------------------------------------------------------->
 
-    <!-- nav bar ends here -->
-    <section class="about1" id="aboutus">
+  <!-- About section starts here ---------------------------------------------------------------------------------->
+  <section class="aboutus" id="aboutus">
+    <div class="heading">
+      <h1>About AlumniHub</h1>
+    </div>
+    <section class="about1">
       <div class="left-about">
-        <h1>About AlumniHub</h1>
         <p>
           AlumniHub is a web-based application system that aims to connect all
           the alumni so that their precious memories with the high
@@ -55,7 +62,7 @@ include("../connect.php");
       </div>
     </section>
 
-    <section class="about2">
+    <section class="about2"> <!-- about2 section begins------------------------- -->
       <div class="left-about">
         <div class="card">
           <div class="box">
@@ -110,122 +117,166 @@ include("../connect.php");
           </div>
         </div>
       </div>
-    </section>
-  </header>
-  <!-- header ends here -->
-
-  <!-- Event section starts -->
-  <section class="featured_event" id="Featuredevent">
-    <div class="content">
-      <h1>Featured Events</h1>
-      <p>Following Events and Meets for the alumni has been featured.</p>
-      <div class="icon">
-        <span class="material-symbols-outlined"> location_on </span>
-        <p>Alka hospital, Lalitpur 44600</p>
-      </div>
-    </div>
+    </section> <!-- about2 section ends------------------------- -->
   </section>
+  <!-- About section ends here -------------------------------------------------------------------------------------------->
 
-  <section class="events">
-    <div class="content1">
-      <div class="div1">
-        <h1>
-          15 <br />
-          APRIL
-        </h1>
+
+  <!-- Event section starts -------------------------------------------------------------------------------------------------->
+  <section class="event_section">
+
+    <section class="featured_event" id="Featuredevent">
+      <div class="content">
+        <h1>Featured Events</h1>
+        <p>Following Events and Meets for the alumni has been featured.</p>
+        <div class="icon">
+          <span class="material-symbols-outlined"> location_on </span>
+          <p>Alka hospital, Lalitpur 44600</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="events">
+      <div class="content1">
+        <div class="div1">
+          <h1>
+            15 <br />
+            APRIL
+          </h1>
+        </div>
+
+        <div class="div2">
+          <p>Annual Meetup & Scholarship Presentation</p>
+          <input type="button" value="Learn More" class="btn" />
+        </div>
       </div>
 
-      <div class="div2">
-        <p>Annual Meetup & Scholarship Presentation</p>
-        <input type="button" value="Learn More" class="btn" />
-      </div>
-    </div>
+      <div class="content2">
+        <div class="div1">
+          <h1>
+            19 <br />
+            JULY
+          </h1>
+        </div>
 
-    <div class="content2">
-      <div class="div1">
-        <h1>
-          19 <br />
-          JULY
-        </h1>
-      </div>
-
-      <div class="div2">
-        <p>Web-Development Club Discussion: "New Gen dev"</p>
-        <input type="button" value="Learn More" class="btn" />
-      </div>
-    </div>
-
-    <div class="content3">
-      <div class="div1">
-        <h1>
-          12 <br />
-          August
-        </h1>
+        <div class="div2">
+          <p>Web-Development Club Discussion: "New Gen dev"</p>
+          <input type="button" value="Learn More" class="btn" />
+        </div>
       </div>
 
-      <div class="div2">
-        <p>Annual Sports Meet and Festa</p>
-        <input type="button" value="Learn More" class="btn" />
+      <div class="content3">
+        <div class="div1">
+          <h1>
+            12 <br />
+            August
+          </h1>
+        </div>
+
+        <div class="div2">
+          <p>Annual Sports Meet and Festa</p>
+          <input type="button" value="Learn More" class="btn" />
+        </div>
       </div>
-    </div>
+    </section>
+    <section class="more_info">
+      <div class="event_message">
+        <p class="p1"> Making efforts on oragnizing different events helps everyone to realize the diversity of
+          events.</p>
+        <p class="p2"> That is why we make efforts on giving our Alumni the best thrill of their lifetime.</p>
+      </div>
+    </section>
   </section>
   <!-- Event section ends here -->
 
-  <!-- Contact section starts here -->
+  <!-- Contact section starts here ---------------------------------------------------------------------------------------------->
 
   <section class="contact" id="contact">
-    <div class="row1">
+    <section class="clip_path">
       <h1>Contact Us</h1>
-      <form action="" method="post">
-        <input type="text" class="verify" placeholder="Enter your Name (a-z)" pattern="[a-z]*" />
-        <input type="email" placeholder="Enter your Email eg: abs@gmail.com" required />
-        <textarea placeholder="Enter your message"></textarea>
-        <button type="submit" class="send_btn">Send</button>
-      </form>
-    </div>
-  </section>
-  <!-- Contact section ends here -->
-
-  <!-- Footer starts here -->
-  <footer class="fot_img">
-    <img src="../images/footer-default-mobile-dark.svg" alt="" />
-    <section class="cont">
-      <section class="end">
-        <div class="left1">
-          <img src="../images/newLogo.png" alt="Logo" class="img" />
-          <p>Simply connecting the memories and people</p>
-        </div>
-
-        <div class="right1">
-          <p>Get in touch with us</p>
-          <div class="container5">
-            <div class="icon1">
-              <span class="material-symbols-outlined"> location_on </span>
-              <p>Alka hospital, Lalitpur 44600</p>
-              <br />
-            </div>
-            <div class="icon2">
-              <span class="material-symbols-outlined"> Phone_In_Talk </span>
-              <p>+977-01-5912727, 4538566</p>
-              <br />
-            </div>
-            <div class="icon3">
-              <span class="material-symbols-outlined"> mail </span>
-              <p>info@achsnepal.edu.np</p>
-              <br />
-            </div>
-          </div>
-        </div>
-      </section>
-      <div class="last">
-        <p>
-          Made by Team BlueRose with
-          <span class="material-symbols-outlined"> favorite </span>.
-        </p>
-      </div>
     </section>
+    <div class="contact_section"> <!-- contact section begins -->
+      <div class="row1">
+        <form action="" method="post">
+          <p> Send us a Message </p>
+          <input type="text" class="verify" placeholder="Enter your Name (a-z)" pattern="[a-z]*" />
+          <input type="email" placeholder="Enter your Email eg: abs@gmail.com" required />
+          <textarea placeholder="Enter your message"></textarea>
+          <button type="submit" class="send_btn">Send</button>
+        </form>
+      </div>
+      <div class="contact-col">
+        <h4>Get in touch with us</h4>
+        <ul>
+          <li>
+            <span class="material-symbols-outlined"> location_on </span>
+            <p>Alka hospital, Lalitpur 44600</p>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <span class="material-symbols-outlined"> Phone_In_Talk </span>
+            <p>+977-01-5912727, 4538566</p>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <span class="material-symbols-outlined"> mail </span>
+            <p>info@achsnepal.edu.np</p>
+          </li>
+        </ul>
+      </div>
+    </div> <!-- contact_section ends -->
+  </section>
+  <!-- Contact section ends here ----------------------------------------------------------------------------------------------->
+
+  <!-- footer section starts ---------------------------------------------------------------------------------------------------- -->
+  <footer class="footer">
+    <div class="footer_containerleft">
+      <img src="../images/newLogo.png" alt="Logo" class="img" />
+    </div>
+    <div class="footer_containerright">
+      <div class="row">
+        <div class="footer-col">
+          <h4> Alumni Hub</h4>
+          <ul>
+            <li>
+              <a href="#"> About Us</a>
+            </li>
+            <li>
+              <a href="#"> Contact</a>
+            </li>
+          </ul>
+        </div> <!-- footer-col -->
+        <div class="footer-col">
+          <h4> Get Help </h4>
+          <ul>
+            <li class="register_style">
+              <p>Are you an alumni? Do you want to</p>
+              <a href="#"> register ?</a>
+            </li>
+          </ul>
+        </div> <!-- footer-col -->
+        <div class="footer-col">
+          <h4> Follow US</h4>
+          <div class="social-links">
+            <a href="#"> <i class="fab fa-facebook-f"></i></a>
+            <a href="#"> <i class="fab fa-instagram"></i></a>
+            <a href="#"> <i class="fab fa-linkedin-in"></i></a>
+            <a href="#"> <i class="fab fa-twitter"></i></a>
+          </div>
+        </div> <!-- footer-col ends -->
+      </div> <!-- row -->
+      <div class="copyright1">
+        <p> 2023 BlueRose. All rights reserved.</p>
+        <p>Use of this site constitutes acceptance of our User Agreement and privacy policy.</p>
+        <p>The Material on this site may not be reproduced, distributed, transmitted, cached or otherwise used, except
+          with the prior written permission of BlueRose.</p>
+      </div>
+    </div> <!-- footer_containerright -->
+
   </footer>
-  <!-- footer ends here -->
+  <!-- footer section starts  ---------------------------------------------------------------------------------------->
 
   <script src="../js/index.js"></script>
 </body>

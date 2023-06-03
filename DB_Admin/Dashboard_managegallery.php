@@ -76,7 +76,8 @@ if (!isset($_SESSION['username'])) {
             </section><!-- sidebar ends -->
 
             <section class="main">
-                <section class="right-upper"> <!-- main section begins -->
+                <!-- main section begins here ------------------------------------------------------------>
+                <section class="right-upper">
                     <div class="left-text">
                         <h1>Dashboard</h1>
                     </div>
@@ -116,6 +117,9 @@ if (!isset($_SESSION['username'])) {
                         </button>
                     </div>
                     <div class="container">
+                        <div class="wrapper1">
+                            <img src="../images/upload.png" alt="Choose Image" id="img">
+                        </div>
                         <div class="center">
                             <h1>Upload Images</h1>
                             <form action="" method="post" enctype="multipart/form-data">
@@ -126,11 +130,15 @@ if (!isset($_SESSION['username'])) {
                                     </div>
 
                                     <div>
-                                        <input type="file" class="form-control" name="file" required autofocus>
+                                        <input type="file" id="input" class="form-control" name="file" required autofocus>
                                     </div>
                                     <span> </span>
                                 </div>
                                 <input type="submit" value="Upload" class="login-button" />
+                                <input type="submit" value="Reset" id="resetBtn" class="login-button" />
+
+                                <p> To upload a image, files selected must be of format</p>
+                                <p class="image_type"> .Png, .jpeg, .jpg</p>
                             </form>
                         </div>
                     </div>
@@ -147,23 +155,57 @@ if (!isset($_SESSION['username'])) {
                             if ($dh = opendir($dir)) {
                                 while (($file = readdir($dh)) !== false) {
                                     if ($file == "." or $file == "..") {
-                                    } else {
-                                        ?> <!---- its a loop [change the folder name on img path]----->
+                                    } else { ?> <!---- its a loop [change the folder name on img path]----->
                     <div class='wrapper'>
-                        <a href=''>
-                            <img src="../images/gallery/<?php echo $file; ?>">
-                        </a>
+                        <img src="../images/gallery/<?php echo $file; ?>" onclick="openModal();currentSlide(1)"
+                            class="hover-shadow">
                     </div>
+                    <?php } ?>
                     <?php
-                                    }
                                 }
-                                closedir($dh);
                             }
+                            closedir($dh);
                         } ?>
-                </section>
-            </section>
+                    <!-- Image Section ends here -->
 
-    </div><!-- dashboard ends -->
+                    </section>
+                    <!-- The Modal/Lightbox -->
+                    <div id="myModal" class="modal">
+                        <span class="close cursor" onclick="closeModal()" title="Close">&times;</span>
+                        <div class="modal-content">
+
+                            <?php
+                            $dir = "../images/gallery/"; // image folder name
+                            if (is_dir($dir)) {
+                                if ($dh = opendir($dir)) {
+                                    while (($file = readdir($dh)) !== false) {
+                                        if ($file == "." or $file == "..") {
+                                        } else {
+                                            ?> <!---- its a loop [change the folder name on img path]----->
+                        <div class='mySlides'>
+                            <img src="../images/gallery/<?php echo $file; ?>">
+                        </div>
+                        <?php
+                                        }
+                                    }
+                                    closedir($dh);
+                                }
+                            } ?>
+
+                        <!-- Next/previous controls -->
+                            <a class="prev" onclick="plusSlides(-1)" title="Prev">&#10094;</a>
+                            <a class="next" onclick="plusSlides(1)" title="next">&#10095;</a>
+
+                            <!-- Caption text -->
+                            <!-- <div class="caption-container">
+                                    <p id="caption"></p>
+                                </div> -->
+
+                        </div>
+                    </div> <!-- Image modal ends here ---------------------------------->
+                </section> <!-- main section ends here ---------------------------------------------------------->
+
+        </div><!-- dashboard ends -->
         <script src="../js/index.js"></script>
     </body>
 

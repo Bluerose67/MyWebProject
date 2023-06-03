@@ -2,9 +2,25 @@ function topFunction(){
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
+/* image form ------------------------------------------------------------------------------ */
+let img= document.getElementById("img");
+let input = document.getElementById('input');
+let resetBtn = document.getElementById('resetBtn');
 
+input.onchange = (e) => {
+  if(input.files[0])
+  img.src = URL.createObjectURL(input.files[0]);
+};
 
-// Open the Modal
+/* reset the selected image */
+resetBtn.addEventListener('click', () => {
+  input.value = ''; // Reset the input value
+  img.src = '../images/upload.png'; // Reset the image source
+});
+/* image form close ------------------------------------------------------------------------ */
+
+/* image modal box --------------------------------------------------------------------------- */
+// Open the Modal 
 function openModal() {
   document.getElementById("myModal").style.display = "block";
 }
@@ -41,16 +57,13 @@ function showSlides(n) {
 
 }
 
-// function scrollToSection(right_lower) {
-//     const section = document.querySelector(`.${right_lower}`);
-//     if (section) {
-//         section.scrollIntoView({ behavior: 'smooth' });
-//     }
-// }
+/* image modal box close --------------------------------------------------------------------------- */
 
+/* scroll function for admin gallery--------------------------------------------------------- */
 function scrollToTopOfElement(right_lower) {
   const element = document.getElementById(right_lower);
   if (element) {
     element.scrollTop = 0;
   }
 }
+/* scroll function for admin gallery ends--------------------------------------------------------- */
