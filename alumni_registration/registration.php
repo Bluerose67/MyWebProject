@@ -20,7 +20,7 @@ include('../connect.php');
             <form action="insert.php" method="post">
                 <div class="text">
 
-                    <input type="text" id="username" name="username" required>
+                    <input type="text" id="username" name="user_name" required>
                     <span> </span>
                     <label for="username">Username</label>
                 </div>

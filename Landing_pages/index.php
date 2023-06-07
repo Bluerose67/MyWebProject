@@ -241,10 +241,10 @@ include("../connect.php");
           <h4> Alumni Hub</h4>
           <ul>
             <li>
-              <a href="#"> About Us</a>
+              <a href="#aboutus"> About Us</a>
             </li>
             <li>
-              <a href="#"> Contact</a>
+              <a href="#contact"> Contact</a>
             </li>
           </ul>
         </div> <!-- footer-col -->

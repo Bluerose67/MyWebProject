@@ -2,7 +2,7 @@
 
 include('../connect.php');
 if ($_POST) {
-    $name = $_POST['username'];
+    $name = $_POST['user_name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $address = $_POST['address'];

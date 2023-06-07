@@ -67,3 +67,76 @@ function scrollToTopOfElement(right_lower) {
   }
 }
 /* scroll function for admin gallery ends--------------------------------------------------------- */
+
+/* side bar change ---------------------------------------------------------------------------------- */
+  // const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+
+  //           allSideMenu.forEach(item => {
+  //               const li = item.parentElement;
+
+  //               item.addEventListener('click', function () {
+  //                   allSideMenu.forEach(i => {
+  //                       i.parentElement.classList.remove('active');
+  //                   })
+  //                   li.classList.add('active');
+  //               })
+  //           });
+
+  document.addEventListener('DOMContentLoaded', function() {
+  const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+  const currentPage = window.location.pathname.split('/').pop(); // Get the current page URL
+console.log(currentPage);
+console.log(allSideMenu);
+  allSideMenu.forEach(item => {
+    const li = item.parentElement;
+
+    if (item.getAttribute('href') === currentPage) {
+      li.classList.add('active');
+    }
+
+    item.addEventListener('click', function() {
+      allSideMenu.forEach(i => {
+        i.parentElement.classList.remove('active');
+      })
+      li.classList.add('active');
+    })
+  });
+});
+
+
+  /* side bar change ends---------------------------------------------------------------------------------- */
+
+            /* delete button confirmation box --------------------------------------------------------------------- */
+            var deleteBtn = document.getElementById("deleteBtn");
+            var confirmationModal = document.getElementById("confirmationModal");
+            var confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+            var cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+            // var close_delete = document.getElementsByClassName("close_delete");
+
+            deleteBtn.addEventListener("click", function () {
+                confirmationModal.style.display = "block";
+            });
+
+            confirmDeleteBtn.addEventListener("click", function () {
+
+                // Close the modal
+                confirmationModal.style.display = "none";
+            });
+
+            cancelDeleteBtn.addEventListener("click", function () {
+                // Close the modal
+                confirmationModal.style.display = "none";
+            });
+            // close_delete.addEventListener("click", function () {
+            //     confirmationModal.style.display = "none";
+
+            // })
+
+            window.addEventListener("click", function (event) {
+                if (event.target == confirmationModal) {
+                    // Close the modal
+                    confirmationModal.style.display = "none";
+                }
+            });
+
+            /* delete button confirmation box --------------------------------------------------------------------- */
