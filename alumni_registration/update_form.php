@@ -95,11 +95,14 @@ if ($role == "admin") {
 <?php } else {
 
     if (isset($_GET['std_id'])) {
-        $admin_id = $_GET['admin_id'];
-        $sql = "SELECT * from users  
-                JOIN admins ON users.user_id=admins.user_id
-                JOIN role ON users.user_id=role.user_id 
-                WHERE admins.admin_id= '$admin_id'";
+        $std_id = $_GET['std_id'];
+        $sql = "SELECT u.*, s.*, f.faculty_name, c.course_name, b.batch_no
+                FROM users u
+                JOIN students s ON u.user_id = s.user_id
+                JOIN faculties f ON s.faculty_id = f.faculty_id
+                JOIN courses c ON s.course_id = c.course_id
+                JOIN batch b ON s.batch_id = b.batch_id;
+                WHERE s.std_id= '$std_id'";
         $result = mysqli_query($conn, $sql);
         if (mysqli_num_rows($result) > 0) {
             // output data of each row

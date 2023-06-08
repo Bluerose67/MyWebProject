@@ -15,84 +15,118 @@ if (!isset($_SESSION['username'])) {
         <link rel="stylesheet" href="Dashboard.css">
         <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+        <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css'>
     </head>
 
     <body>
         <div class="dashboard"> <!-- dashboard begins -->
 
-            <section class="sidebar"><!-- sidebar begins -->
-
+            <!-- SIDEBAR -->
+            <section id="sidebar">
                 <div class="icon1">
                     <a href="../Landing_pages/index.php"><img src="../images/newlogo.png" alt="Logo1">
                     </a>
                 </div>
+                <ul class="side-menu top">
+                    <li>
+                        <a href="Dashboard.php">
+                            <i class='bx bxs-dashboard'></i>
+                            <span class="text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Dashboard_profile.php">
+                            <i class='bx bxs-shopping-bag-alt'></i>
+                            <span class="text">My Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Dashboard_events.php">
+                            <i class='bx bxs-doughnut-chart'></i>
+                            <span class="text"> Events</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Dashboard_managegallery.php">
+                            <i class='bx bxs-message-dots'></i>
+                            <span class="text">Gallery</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="side-menu">
+                    <li>
+                        <a href="#">
+                            <i class='bx bxs-cog'></i>
+                            <span class="text">Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../logout.php" class="logout">
+                            <i class='bx bxs-log-out-circle'></i>
+                            <span class="text">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+            <!-- SIDEBAR -->
 
-                <div class="icon2">
-                    <a href="Dashboard.php"> <span class="material-symbols-outlined">dashboard</span>
-                        <p> Dashboard </p>
-                    </a>
-                </div>
-
-                <div class="icon3">
-                    <a href="Dashboard_profile.php"> <span class="material-symbols-outlined"> person</span>
-                        <p>Profile</p>
-                    </a>
-                </div>
-
-                <div class="icon4">
-                    <a href="Dashboard_alumni.php"> <span class="material-symbols-outlined">groups</span>
-                        <p>Manage Alumni </p>
-                    </a>
-                </div>
-
-                <div class="icon5">
-                    <a href="Dashboard_events.php"> <span class="material-symbols-outlined">event </span>
-                        <p> Manage Events </p>
-                    </a>
-                </div>
-                <div class="icon6">
-                    <a href="Dashboard_managegallery.php"> <span class="material-symbols-outlined">imagesmode </span>
-                        <p> Manage Gallery </p>
-                    </a>
-                </div>
-
-            </section><!-- sidebar ends -->
 
 
-            <section class="right-upper"><!-- main section begins -->
-                <div class="left-text">
-                    <h1>Dashboard</h1>
-                </div>
-                <div class="right_about">
-                    <div>
-                        <p>
-                            <?php echo $_SESSION['username']; ?>
-                        </p>
-                    </div>
+            <section class="main"> <!-- main section begins ------------------------------------------------------------>
 
-                    <div class="profile">
-                        <img src="../images/avatar.jpg" alt="Avatar" class="avatar">
-                    </div>
+                <section class="right-upper"><!-- main-upper section begins ---------------------------------->
+                    <!-- <div class="left-text">
+                        <h1>Dashboard</h1>
+                    </div> -->
+                    <div class="right_about">
+                        <div>
+                            <p>
+                                <?php echo $_SESSION['username']; ?>
+                            </p>
+                        </div>
 
-                    <div class="notification_icon">
-                        <button class="notification_btn" title="Notification">
-                            <a href="#"> <span class="material-symbols-outlined">notifications</span>
-                            </a>
-                        </button>
-                    </div>
-                    <div class="logout_icon">
-                        <form action="../logout.php">
-                            <button class="logout_btn" title="logout">
-                                <span class="material-symbols-outlined"> logout </span>
+                        <div class="profile">
+                            <img src="../images/avatar.jpg" alt="Avatar" class="avatar">
+                        </div>
+
+                        <div class="notification_icon">
+                            <button class="notification_btn" title="Notification">
+                                <a href="#"> <span class="material-symbols-outlined">notifications</span>
+                                </a>
                             </button>
-                        </form>
+                        </div>
                     </div>
-                </div>
 
-            </section><!-- main sections ends -->
+
+
+                </section> <!-- main-upper sections ends -------------------------------------------------->
 
 
         </div><!-- dashboard ends -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+                const currentPage = window.location.pathname.split('/').pop(); // Get the current page URL
+                console.log(currentPage);
+                console.log(allSideMenu);
+                allSideMenu.forEach(item => {
+                    const li = item.parentElement;
+                    console.log(li);
+
+                    if (item.getAttribute('href') === currentPage) {
+                        li.classList.add('active');
+                    }
+
+                    item.addEventListener('click', function () {
+                        allSideMenu.forEach(i => {
+                            i.parentElement.classList.remove('active');
+                        })
+                        li.classList.add('active');
+                    })
+                });
+            });
+        </script>
+
     </body>
 
     </html>
