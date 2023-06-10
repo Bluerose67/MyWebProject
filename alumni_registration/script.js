@@ -5,32 +5,6 @@ function showAdditionalFields() {
 
             if (role === "admin") {
 
-                // var divElement = document.createElement("div");
-                // divElement.classList.add("text");
-
-                // // Create the input element
-                // var inputElement = document.createElement("input");
-                // inputElement.type = "text";
-                // inputElement.name = "admin_id";
-
-                // // Create the span element
-                // var spanElement = document.createElement("span");
-
-                // // Create the label element
-                // var labelElement = document.createElement("label");
-                // labelElement.innerHTML = " Admin_id ";
-
-
-                // // Append the input, span, and label elements to the div element
-                // divElement.appendChild(inputElement);
-                // divElement.appendChild(spanElement);
-                // divElement.appendChild(labelElement);
-
-                // // Append the div element to the document body or any other desired parent element
-                // additionalFieldsContainer.appendChild(divElement);
-
-
-
                 var divElement = document.createElement("div");
                 divElement.classList.add("text");
 
@@ -57,29 +31,7 @@ function showAdditionalFields() {
 
             }
             else if (role === "student") {
-                // var divElement = document.createElement("div");
-                // divElement.classList.add("text");
 
-                // // Create the input element
-                // var inputElement = document.createElement("input");
-                // inputElement.type = "text";
-                // inputElement.name = "std_id";
-
-                // // Create the span element
-                // var spanElement = document.createElement("span");
-
-                // // Create the label element
-                // var labelElement = document.createElement("label");
-                // labelElement.innerHTML = " Std_id ";
-
-
-                // // Append the input, span, and label elements to the div element
-                // divElement.appendChild(inputElement);
-                // divElement.appendChild(spanElement);
-                // divElement.appendChild(labelElement);
-
-                // // Append the div element to the document body or any other desired parent element
-                // additionalFieldsContainer.appendChild(divElement);
 
                 var divElement = document.createElement("div");
                 divElement.classList.add("text");

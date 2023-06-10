@@ -141,43 +141,70 @@ if (!isset($_SESSION['username'])) {
                             </li>
                         </ul>
 
+                        <!-- details tables------------------------------------------------------>
+                        <?php
+                        include "../connect.php";
 
+                        $sqlAdmin = "SELECT * FROM users 
+                                                JOIN admins ON admins.user_id = users.user_id
+                                                JOIN role ON users.user_id = role.user_id
+                                                WHERE role.role = 'admin'";
+
+                        $resultAdmin = mysqli_query($conn, $sqlAdmin);
+
+                        if (mysqli_num_rows($resultAdmin) > 0) {
+                            $i = 0;
+                            // Looping through the results
+                            while ($row = mysqli_fetch_assoc($resultAdmin)) {
+                                $adminRecords[$i] = array(
+                                    "user_id" => $row['user_id'],
+                                    "admin_id" => $row['admin_id'],
+                                    "user_name" => $row['user_name'],
+                                    "email" => $row['email'],
+                                    "address" => $row['address'],
+                                    "DOB" => $row['DOB'],
+                                    "phone_no" => $row['phone_no'],
+                                    "department" => $row['department'],
+                                    "role" => $row['role'],
+                                );
+                                $i++;
+                            }
+                        }
+
+                        $sqlAlumni = "SELECT u.*, s.*, r.role, f.faculty_name, c.course_name, b.batch_no
+                                                FROM users u
+                                                JOIN role r ON u.user_id = r.user_id
+                                                JOIN students s ON u.user_id = s.user_id
+                                                JOIN faculties f ON s.faculty_id = f.faculty_id
+                                                JOIN courses c ON s.course_id = c.course_id
+                                                JOIN batch b ON s.batch_id = b.batch_id
+                                                WHERE r.role = 'student'";
+
+                        $resultAlumni = mysqli_query($conn, $sqlAlumni);
+
+                        if (mysqli_num_rows($resultAlumni) > 0) {
+                            $i = 0;
+                            while ($row = mysqli_fetch_assoc($resultAlumni)) {
+                                $alumniRecords[$i] = array(
+                                    "user_id" => $row['user_id'],
+                                    "std_id" => $row['std_id'],
+                                    "user_name" => $row['user_name'],
+                                    "email" => $row['email'],
+                                    "address" => $row['address'],
+                                    "DOB" => $row['DOB'],
+                                    "phone_no" => $row['phone_no'],
+                                    "faculty_name" => $row['faculty_name'],
+                                    "course_name" => $row['course_name'],
+                                    "batch_no" => $row['batch_no'],
+                                );
+                                $i++;
+                            }
+                        }
+                        // Close the connection
+                        mysqli_close($conn);
+                        ?>
                         <div class="table-data">
                             <div class="order">
-
-                                <?php
-                                include "../connect.php";
-
-                                $sql = "SELECT * FROM users 
-                                            JOIN admins on admins.user_id= users.user_id
-                                            JOIN role on users.user_id=role.user_id where role= 'admin'";
-
-                                $result = mysqli_query($conn, $sql);
-
-                                if (mysqli_num_rows($result) > 0) {
-                                    // output data of each row
-                                    $i = 0;
-                                    // Looping through the results
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        $records[$i] = array(
-                                            "user_id" => $row['user_id'],
-                                            "admin_id" => $row['admin_id'],
-                                            "user_name" => $row['user_name'],
-                                            "email" => $row['email'],
-                                            "address" => $row['address'],
-                                            "DOB" => $row['DOB'],
-                                            "phone_no" => $row['phone_no'],
-                                            "department" => $row['department'],
-                                            "role" => $row['role'],
-                                        );
-                                        $i++;
-                                    }
-                                }
-                                //connection close
-                                mysqli_close($conn);
-                                ?>
-
-                                <!-- <h1 class="heading">List Of All Admins</h1> -->
                                 <div class="container1">
                                     <div class="center1">
                                         <div class="head">
@@ -186,7 +213,7 @@ if (!isset($_SESSION['username'])) {
                                             <i class='bx bx-filter'></i>
                                         </div>
                                         <button class="add-button">
-                                            <a href="../alumni_registration/registration.php">Add new Alumni</a>
+                                            <a href="../alumni_registration/Adminregistration.php">Add new Admin</a>
                                         </button>
                                         <table>
                                             <tr>
@@ -199,7 +226,7 @@ if (!isset($_SESSION['username'])) {
                                                 <th>Department</th>
                                                 <th>Action</th>
                                             </tr>
-                                            <?php foreach ($records as $record) { ?>
+                                            <?php foreach ($adminRecords as $record) { ?>
                                                 <tr>
                                                     <td>
                                                         <?= $record['admin_id'] ?>
@@ -223,24 +250,22 @@ if (!isset($_SESSION['username'])) {
                                                         <?= $record['department'] ?>
                                                     </td>
                                                     <td class="change-buttons">
-
-                                                        <!-- <div class="td-container"> -->
-                                                        <button class="icon-button">&#x22EE;</button>
-                                                        <div class="dropdown-menu">
-                                                            <button class="edit-button">
-                                                                <a
-                                                                    href="../alumni_registration/update_form.php?admin_id=<?= $record['admin_id'] ?>">Edit</a>
-                                                            </button>
-                                                            <button class="edit-button" id="deleteBtn">Delete</button>
+                                                        <div class="dropdown">
+                                                            <button class="icon-button">&#x22EE;</button>
+                                                            <div class="dropdown-menu">
+                                                                <button class="edit-button">
+                                                                    <a
+                                                                        href="../alumni_registration/update_form.php?admin_id=<?= $record['admin_id'] ?>">Edit</a>
+                                                                </button>
+                                                                <button class="edit-button" id="deleteBtn">Delete</button>
+                                                            </div>
                                                         </div>
-                                                        <!-- </div> -->
                                                     </td>
                                                 </tr>
                                             <?php } ?>
                                         </table>
                                         <div id="confirmationModal" class="modal_delete">
                                             <div class="modal-content_delete">
-                                                <!-- <span class="close_delete">&times;</span> -->
                                                 <h2>Confirmation</h2>
                                                 <p>Are you sure you want to delete?</p>
                                                 <button id="confirmDeleteBtn" class="edit-button">Yes</button>
@@ -249,9 +274,92 @@ if (!isset($_SESSION['username'])) {
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
+
+                        <div class="table-data">
+                            <div class="order">
+                                <div class="container1">
+                                    <div class="center1">
+                                        <div class="head">
+                                            <h3>Alumni List</h3>
+                                            <i class='bx bx-search'></i>
+                                            <i class='bx bx-filter'></i>
+                                        </div>
+                                        <button class="add-button">
+                                            <a href="../alumni_registration/Alumniregistration.php">Add new Alumni</a>
+                                        </button>
+                                        <table>
+                                            <tr>
+                                                <th>Student ID</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Address</th>
+                                                <th>DOB</th>
+                                                <th>Contact</th>
+                                                <th>Faculty</th>
+                                                <th>Course</th>
+                                                <th>Batch</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            <?php foreach ($alumniRecords as $record) { ?>
+                                                <tr>
+                                                    <td>
+                                                        <?= $record['std_id'] ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= $record['user_name'] ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= $record['email'] ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= $record['address'] ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= $record['DOB'] ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= $record['phone_no'] ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= $record['faculty_name'] ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= $record['course_name'] ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= $record['batch_no'] ?>
+                                                    </td>
+                                                    <td class="change-buttons">
+                                                        <div class="dropdown">
+                                                            <button class="icon-button">&#x22EE;</button>
+                                                            <div class="dropdown-menu">
+                                                                <button class="edit-button">
+                                                                    <a
+                                                                        href="../alumni_registration/update_form.php?std_id=<?= $record['std_id'] ?>">Edit</a>
+                                                                </button>
+                                                                <button class="edit-button" id="deleteBtn">Delete</button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                        </table>
+
+                                        <div id="confirmationModal" class="modal_delete">
+                                            <div class="modal-content_delete">
+                                                <h2>Confirmation</h2>
+                                                <p>Are you sure you want to delete?</p>
+                                                <button id="confirmDeleteBtn" class="edit-button">Yes</button>
+                                                <button id="cancelDeleteBtn" class="edit-button">No</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- details tables------------------------------------------------------>
                     </main>
                 </section> <!-- main-lower sections ends -------------------------------------------------->
 

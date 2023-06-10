@@ -43,13 +43,13 @@ if (!isset($_SESSION['username'])) {
                     <li>
                         <a href="Dashboard_events.php">
                             <i class='bx bxs-doughnut-chart'></i>
-                            <span class="text">Manage Events</span>
+                            <span class="text">Events</span>
                         </a>
                     </li>
                     <li>
                         <a href="Dashboard_managegallery.php">
                             <i class='bx bxs-message-dots'></i>
-                            <span class="text">Manage Gallery</span>
+                            <span class="text">Gallery</span>
                         </a>
                     </li>
                 </ul>

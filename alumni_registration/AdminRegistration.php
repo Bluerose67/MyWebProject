@@ -10,14 +10,14 @@ include('../connect.php');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Alumni Registration</title>
+    <title> Registration Form</title>
 </head>
 
 <body>
     <div class="container">
         <div class="center">
-            <h1>Register New Alumni</h1>
-            <form action="insert.php" method="post">
+            <h1>Register New Admin </h1>
+            <form action="insertAdmin.php" method="post">
                 <div class="text">
 
                     <input type="text" id="username" name="user_name" required>
@@ -54,24 +54,30 @@ include('../connect.php');
 
                 <div class="text">
 
-                    <input type="tel" id="phone" name="phone" required>
+                    <input type="tel" id="phone" name="phone_no" required>
                     <span> </span>
                     <label for="phone">Phone</label>
                 </div>
 
                 <div class="text1">
 
-                    <select id="role" name="role" class="display-button" onchange="showAdditionalFields()">
+                    <select id="role" name="role" class="display-button">
                         <option value="">Select Role</option>
                         <option value="admin">Admin</option>
                         <option value="student">Student</option>
                         <!-- Add more role options as needed -->
                     </select>
-                    <!-- <span> </span>
-                    <label for="role">Role</label> -->
+
                 </div>
 
-                <div id="additionalFieldsContainer"></div>
+                <div class="text">
+
+                    <input type="text" id="department" name="department" required>
+                    <span> </span>
+                    <label for="Faculty">Department</label>
+                </div>
+
+                <!-- <div id="additionalFieldsContainer"></div> -->
 
                 <input type="submit" value="Register" />
                 <button class="display-button"> <a href="../DB_Admin/Dashboard_alumni.php">Display Records</a>
@@ -79,8 +85,6 @@ include('../connect.php');
             </form>
         </div>
     </div>
-    <script src="script.js">
-    </script>
 </body>
 
 </html>

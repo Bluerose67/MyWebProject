@@ -69,18 +69,6 @@ function scrollToTopOfElement(right_lower) {
 /* scroll function for admin gallery ends--------------------------------------------------------- */
 
 /* side bar change ---------------------------------------------------------------------------------- */
-  // const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
-
-  //           allSideMenu.forEach(item => {
-  //               const li = item.parentElement;
-
-  //               item.addEventListener('click', function () {
-  //                   allSideMenu.forEach(i => {
-  //                       i.parentElement.classList.remove('active');
-  //                   })
-  //                   li.classList.add('active');
-  //               })
-  //           });
 
   document.addEventListener('DOMContentLoaded', function() {
   const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
@@ -140,3 +128,18 @@ console.log(allSideMenu);
             });
 
             /* delete button confirmation box --------------------------------------------------------------------- */
+
+
+
+/* Automatic Slider change  ---------------------------------------------------------------------------*/
+
+var counter = 1;
+        setInterval(function () {
+            document.getElementById('radio' + counter).checked = true;
+            counter++;
+            if (counter > 4) {
+                counter = 1;
+            }
+        }, 5000);
+        
+/* Automatic Slider change  ---------------------------------------------------------------------------*/
