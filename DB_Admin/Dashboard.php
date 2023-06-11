@@ -118,25 +118,50 @@ if (!isset($_SESSION['username'])) {
                         </div>
 
                         <ul class="box-info">
+
+                            <?php
+                            include "../connect.php";
+                            //Display the student count 
+                            $studentQuery = "SELECT COUNT(*) as student_count FROM role WHERE role.role = 'student'";
+                            $result = mysqli_query($conn, $studentQuery);
+                            $studentCount = $result->fetch_assoc()['student_count'];
+
+                            //Display the Admin Count
+                            $adminQuery = "SELECT COUNT(*) as admin_count FROM role WHERE role.role = 'admin'";
+                            $result = mysqli_query($conn, $adminQuery);
+                            $adminCount = $result->fetch_assoc()['admin_count'];
+
+                            //Display the Total Count
+                            $totalQuery = "SELECT COUNT(*) as total_count FROM users";
+                            $result = mysqli_query($conn, $totalQuery);
+                            $totalCount = $result->fetch_assoc()['total_count'];
+
+                            ?>
                             <li>
                                 <i class='bx bxs-calendar-check'></i>
                                 <span class="text">
-                                    <h3>1020</h3>
-                                    <p>New Order</p>
+                                    <h3>
+                                        <?php echo $studentCount; ?>
+                                    </h3>
+                                    <p>No. of Students</p>
                                 </span>
                             </li>
                             <li>
                                 <i class='bx bxs-group'></i>
                                 <span class="text">
-                                    <h3>2834</h3>
-                                    <p>Visitors</p>
+                                    <h3>
+                                        <?php echo $studentCount; ?>
+                                    </h3>
+                                    <p>No of Admins</p>
                                 </span>
                             </li>
                             <li>
                                 <i class='bx bxs-dollar-circle'></i>
                                 <span class="text">
-                                    <h3>$2543</h3>
-                                    <p>Total Sales</p>
+                                    <h3>
+                                        <?php echo $totalCount; ?>
+                                    </h3>
+                                    <p>Total Users</p>
                                 </span>
                             </li>
                         </ul>
