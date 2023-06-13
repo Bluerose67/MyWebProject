@@ -95,6 +95,7 @@ console.log(allSideMenu);
   /* side bar change ends---------------------------------------------------------------------------------- */
 
             /* delete button confirmation box --------------------------------------------------------------------- */
+            
             var deleteBtn = document.getElementById("deleteBtn");
             var confirmationModal = document.getElementById("confirmationModal");
             var confirmDeleteBtn = document.getElementById("confirmDeleteBtn");

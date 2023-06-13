@@ -237,9 +237,9 @@ if (!isset($_SESSION['username'])) {
                                             <i class='bx bx-search'></i>
                                             <i class='bx bx-filter'></i>
                                         </div>
-                                        <button class="add-button">
+                                        <!-- <button class="add-button">
                                             <a href="../alumni_registration/Adminregistration.php">Add new Admin</a>
-                                        </button>
+                                        </button> -->
                                         <table>
                                             <tr>
                                                 <th>Admin ID</th>
@@ -249,7 +249,7 @@ if (!isset($_SESSION['username'])) {
                                                 <th>DOB</th>
                                                 <th>Contact</th>
                                                 <th>Department</th>
-                                                <th>Action</th>
+                                                <!-- <th>Action</th> -->
                                             </tr>
                                             <?php foreach ($adminRecords as $record) { ?>
                                                 <tr>
@@ -274,7 +274,7 @@ if (!isset($_SESSION['username'])) {
                                                     <td>
                                                         <?= $record['department'] ?>
                                                     </td>
-                                                    <td class="change-buttons">
+                                                    <!-- <td class="change-buttons">
                                                         <div class="dropdown">
                                                             <button class="icon-button">&#x22EE;</button>
                                                             <div class="dropdown-menu">
@@ -285,18 +285,18 @@ if (!isset($_SESSION['username'])) {
                                                                 <button class="edit-button" id="deleteBtn">Delete</button>
                                                             </div>
                                                         </div>
-                                                    </td>
+                                                    </td> -->
                                                 </tr>
                                             <?php } ?>
                                         </table>
-                                        <div id="confirmationModal" class="modal_delete">
+                                        <!-- <div id="confirmationModal" class="modal_delete">
                                             <div class="modal-content_delete">
                                                 <h2>Confirmation</h2>
                                                 <p>Are you sure you want to delete?</p>
                                                 <button id="confirmDeleteBtn" class="edit-button">Yes</button>
                                                 <button id="cancelDeleteBtn" class="edit-button">No</button>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
