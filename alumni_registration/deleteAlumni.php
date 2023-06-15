@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "../connect.php";
 if (isset($_GET['std_id'])) {
     $user_id = $_GET['user_id'];
@@ -8,7 +9,7 @@ if (isset($_GET['std_id'])) {
     $batch_id = $_GET['batch_id'];
     $role_id = $_GET['role_id'];
 
-    $sql1 = "DELETE FROM faculties WHERE faculty_id = '$faculty_id'";
+    $sql1 = "DELETE FROM students WHERE std_id = '$std_id'";
     if (mysqli_query($conn, $sql1)) {
 
         $sql2 = "DELETE FROM courses WHERE course_id = '$course_id'";
@@ -17,7 +18,7 @@ if (isset($_GET['std_id'])) {
             $sql3 = "DELETE FROM batch WHERE batch_id = '$batch_id'";
             if (mysqli_query($conn, $sql3)) {
 
-                $sql4 = "DELETE FROM students WHERE std_id = '$std_id'";
+                $sql4 = "DELETE FROM faculties WHERE faculty_id = '$faculty_id'";
                 if (mysqli_query($conn, $sql4)) {
 
                     $sql5 = "DELETE FROM role WHERE role_id = '$role_id'";
@@ -26,7 +27,14 @@ if (isset($_GET['std_id'])) {
                         $sql6 = "DELETE FROM users WHERE user_id = '$user_id'";
                         if (mysqli_query($conn, $sql6)) {
 
-                            header('Location: ../DB_Admin/Dashboard.php');
+                            if ($_SESSION['role'] == 'admin') {
+
+                                header("location: ../DB_Admin/Dashboard.php");
+                            } elseif ($_SESSION['role'] == 'super_admin') {
+                                header("location: ../DB_Superadmin/Dashboard.php");
+                            } else {
+                                echo "Invalid Role";
+                            }
 
                         } else {
                             echo "Delete failed in query 5" . $sql6 . "<br>" . mysqli_error($conn);
@@ -51,9 +59,6 @@ if (isset($_GET['std_id'])) {
     } else {
         echo "Delete failed in query 1" . $sql1 . "<br>" . mysqli_error($conn);
     }
-} else {
-
-    echo "Invalid Request" . "<br>" . mysqli_error($conn);
 
 }
 //connection close

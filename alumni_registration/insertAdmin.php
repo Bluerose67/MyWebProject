@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include('../connect.php');
 if ($_POST) {
     $name = $_POST['user_name'];
@@ -28,7 +28,15 @@ if ($_POST) {
             $sql3 = "INSERT INTO role (role, user_id)
                          VALUES ('$role', '$user_id')";
             if (mysqli_query($conn, $sql3)) {
-                header("location: ../DB_Admin/Dashboard.php");
+
+                if ($_SESSION['role'] == 'admin') {
+
+                    header("location: ../DB_Admin/Dashboard.php");
+                } elseif ($_SESSION['role'] == 'super_admin') {
+                    header("location: ../DB_Superadmin/Dashboard.php");
+                } else {
+                    header("location: ../DB_Alumni/Dashboard.php");
+                }
             } else {
                 echo "Error: " . $sql3 . "<br>" . mysqli_error($conn);
             }

@@ -35,30 +35,24 @@ if (!isset($_SESSION['username'])) {
                     </li>
                     <li>
                         <a href="Dashboard_profile.php">
-                            <i class='bx bxs-shopping-bag-alt'></i>
+                            <i class='bx bxs-user'></i>
                             <span class="text">My Profile</span>
                         </a>
                     </li>
                     <li>
                         <a href="Dashboard_events.php">
-                            <i class='bx bxs-doughnut-chart'></i>
+                            <i class='bx bxs-calendar-event'></i>
                             <span class="text">Manage Events</span>
                         </a>
                     </li>
                     <li>
                         <a href="Dashboard_managegallery.php">
-                            <i class='bx bxs-message-dots'></i>
+                            <i class='bx bxs-image-alt'></i>
                             <span class="text">Manage Gallery</span>
                         </a>
                     </li>
                 </ul>
                 <ul class="side-menu">
-                    <li>
-                        <a href="#">
-                            <i class='bx bxs-cog'></i>
-                            <span class="text">Settings</span>
-                        </a>
-                    </li>
                     <li>
                         <a href="../logout.php" class="logout">
                             <i class='bx bxs-log-out-circle'></i>
@@ -184,6 +178,7 @@ if (!isset($_SESSION['username'])) {
                                 $adminRecords[$i] = array(
                                     "user_id" => $row['user_id'],
                                     "admin_id" => $row['admin_id'],
+                                    "role_id" => $row['role_id'],
                                     "user_name" => $row['user_name'],
                                     "email" => $row['email'],
                                     "address" => $row['address'],
@@ -213,6 +208,10 @@ if (!isset($_SESSION['username'])) {
                                 $alumniRecords[$i] = array(
                                     "user_id" => $row['user_id'],
                                     "std_id" => $row['std_id'],
+                                    "role_id" => $row['role_id'],
+                                    "faculty_id" => $row['faculty_id'],
+                                    "course_id" => $row['course_id'],
+                                    "batch_id" => $row['batch_id'],
                                     "user_name" => $row['user_name'],
                                     "email" => $row['email'],
                                     "address" => $row['address'],
@@ -234,8 +233,13 @@ if (!isset($_SESSION['username'])) {
                                     <div class="center1">
                                         <div class="head">
                                             <h3>Admin List</h3>
-                                            <i class='bx bx-search'></i>
-                                            <i class='bx bx-filter'></i>
+                                            <!-- <input type="text" id="adminSearchInput" placeholder="Search"> -->
+                                            <div class="text1">
+                                                <input type="text" id="adminSearchInput" required />
+                                                <i class='bx bx-search'></i>
+                                                <span> </span>
+                                                <label>Search</label>
+                                            </div>
                                         </div>
                                         <button class="add-button">
                                             <a href="../alumni_registration/Adminregistration.php">Add new Admin</a>
@@ -251,55 +255,57 @@ if (!isset($_SESSION['username'])) {
                                                 <th>Department</th>
                                                 <th>Action</th>
                                             </tr>
-                                            <?php foreach ($adminRecords as $record) { ?>
-                                                <tr>
-                                                    <td>
-                                                        <?= $record['admin_id'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['user_name'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['email'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['address'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['DOB'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['phone_no'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['department'] ?>
-                                                    </td>
-                                                    <td class="change-buttons">
-                                                        <div class="dropdown">
-                                                            <button class="icon-button">&#x22EE;</button>
-                                                            <div class="dropdown-menu">
-                                                                <button class="edit-button">
-                                                                    <a
-                                                                        href="../alumni_registration/update_form.php?admin_id=<?= $record['admin_id'] ?>">Edit</a>
-                                                                </button>
-                                                                <button class="edit-button deleteBtn">
-                                                                    Delete
-                                                                </button>
+                                            <tbody id="adminTableBody">
+                                                <?php foreach ($adminRecords as $record) { ?>
+                                                    <tr>
+                                                        <td>
+                                                            <?= $record['admin_id'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['user_name'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['email'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['address'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['DOB'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['phone_no'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['department'] ?>
+                                                        </td>
+                                                        <td class="change-buttons">
+                                                            <div class="dropdown">
+                                                                <button class="icon-button">&#x22EE;</button>
+                                                                <div class="dropdown-menu">
+                                                                    <button class="edit-button">
+                                                                        <a
+                                                                            href="../alumni_registration/update_form.php?admin_id=<?= $record['admin_id'] ?>">Edit</a>
+                                                                    </button>
+                                                                    <button class="edit-button adminDeleteBtn">
+                                                                        Delete
+                                                                    </button>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            <?php } ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
                                         </table>
-                                        <div id="confirmationModal" class="modal_delete">
+                                        <div id="confirmationModalAdmin" class="modal_delete">
                                             <div class="modal-content_delete">
                                                 <h2>Confirmation</h2>
                                                 <p>Are you sure you want to delete?</p>
-                                                <button id="confirmDeleteBtn" class="edit-button">
+                                                <button id="confirmDeleteBtnAdmin" class="edit-button">
                                                     <a
-                                                        href="../alumni_registration/deleteAdmin.php ?std_id=<?= $record['admin_id'] ?>">Delete</a>
+                                                        href="../alumni_registration/deleteAdmin.php?user_id=<?= $record['user_id'] ?>&admin_id=<?= $record['admin_id'] ?>&role_id=<?= $record['role_id'] ?>">Delete</a>
                                                 </button>
-                                                <button id="cancelDeleteBtn" class="edit-button">No</button>
+                                                <button id="cancelDeleteBtnAdmin" class="edit-button">No</button>
                                             </div>
                                         </div>
                                     </div>
@@ -313,8 +319,14 @@ if (!isset($_SESSION['username'])) {
                                     <div class="center1">
                                         <div class="head">
                                             <h3>Alumni List</h3>
-                                            <i class='bx bx-search'></i>
-                                            <i class='bx bx-filter'></i>
+                                            <!-- <i class='bx bx-search'></i>
+                                            <input type="text" id="alumniSearchInput" placeholder="Search"> -->
+                                            <div class="text1">
+                                                <input type="text" id="alumniSearchInput" required />
+                                                <i class='bx bx-search'></i>
+                                                <span> </span>
+                                                <label>Search</label>
+                                            </div>
                                         </div>
                                         <button class="add-button">
                                             <a href="../alumni_registration/Alumniregistration.php">Add new Alumni</a>
@@ -332,62 +344,64 @@ if (!isset($_SESSION['username'])) {
                                                 <th>Batch</th>
                                                 <th>Action</th>
                                             </tr>
-                                            <?php foreach ($alumniRecords as $record) { ?>
-                                                <tr>
-                                                    <td>
-                                                        <?= $record['std_id'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['user_name'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['email'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['address'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['DOB'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['phone_no'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['faculty_name'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['course_name'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['batch_no'] ?>
-                                                    </td>
-                                                    <td class="change-buttons">
-                                                        <div class="dropdown">
-                                                            <button class="icon-button">&#x22EE;</button>
-                                                            <div class="dropdown-menu">
-                                                                <button class="edit-button">
-                                                                    <a
-                                                                        href="../alumni_registration/update_form.php?std_id=<?= $record['std_id'] ?>">Edit</a>
-                                                                </button>
-                                                                <button class="edit-button deleteBtn">
-                                                                    Delete
-                                                                </button>
+                                            <tbody id="alumniTableBody">
+                                                <?php foreach ($alumniRecords as $record) { ?>
+                                                    <tr>
+                                                        <td>
+                                                            <?= $record['std_id'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['user_name'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['email'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['address'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['DOB'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['phone_no'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['faculty_name'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['course_name'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['batch_no'] ?>
+                                                        </td>
+                                                        <td class="change-buttons">
+                                                            <div class="dropdown">
+                                                                <button class="icon-button">&#x22EE;</button>
+                                                                <div class="dropdown-menu">
+                                                                    <button class="edit-button">
+                                                                        <a
+                                                                            href="../alumni_registration/update_form.php?std_id=<?= $record['std_id'] ?>">Edit</a>
+                                                                    </button>
+                                                                    <button class="edit-button alumniDeleteBtn">
+                                                                        Delete
+                                                                    </button>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            <?php } ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
                                         </table>
 
-                                        <div id="confirmationModal" class="modal_delete">
+                                        <div id="confirmationModalAlumni" class="modal_delete">
                                             <div class="modal-content_delete">
                                                 <h2>Confirmation</h2>
                                                 <p>Are you sure you want to delete?</p>
-                                                <button id="confirmDeleteBtn" class="edit-button">
+                                                <button id="confirmDeleteBtnAlumni" class="edit-button">
                                                     <a
-                                                        href="../alumni_registration/deleteAdmin.php ?std_id=<?= $record['std_id'] ?>">Delete</a>
+                                                        href="../alumni_registration/deleteAdmin.php?user_id=<?= $record['user_id'] ?>&std_id=<?= $record['std_id'] ?>&faculty_id=<?= $record['faculty_id'] ?>&course_id=<?= $record['course_id'] ?>&batch_id=<?= $record['batch_id'] ?>&role_id=<?= $record['role_id'] ?>">Delete</a>
                                                 </button>
-                                                <button id="cancelDeleteBtn" class="edit-button">No</button>
+                                                <button id="cancelDeleteBtnAlumni" class="edit-button">No</button>
                                             </div>
                                         </div>
                                     </div>
@@ -411,6 +425,7 @@ if (!isset($_SESSION['username'])) {
 
 
         </div><!-- dashboard ends ---------------------------------------------------------------------------->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
@@ -436,35 +451,82 @@ if (!isset($_SESSION['username'])) {
 
             /* delete button confirmation box --------------------------------------------------------------------- */
 
-            var deleteBtns = document.querySelectorAll(".deleteBtn");
-            var confirmationModal = document.getElementById("confirmationModal");
-            var confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
-            var cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+            var adminDeleteBtns = document.querySelectorAll(".adminDeleteBtn");
+            var alumniDeleteBtns = document.querySelectorAll(".alumniDeleteBtn");
+            var confirmationModalAdmin = document.getElementById("confirmationModalAdmin");
+            var confirmationModalAlumni = document.getElementById("confirmationModalAlumni");
+            var confirmDeleteBtnAdmin = document.getElementById("confirmDeleteBtnAdmin");
+            var confirmDeleteBtnAlumni = document.getElementById("confirmDeleteBtnAlumni");
+            var cancelDeleteBtnAdmin = document.getElementById("cancelDeleteBtnAdmin");
+            var cancelDeleteBtnAlumni = document.getElementById("cancelDeleteBtnAlumni");
 
-            deleteBtns.forEach(function (deleteBtn) {
+            adminDeleteBtns.forEach(function (deleteBtn) {
                 deleteBtn.addEventListener("click", function () {
-                    confirmationModal.style.display = "block";
+                    confirmationModalAdmin.style.display = "block";
                 });
             });
 
-            confirmDeleteBtn.addEventListener("click", function () {
-                // Close the modal
-                confirmationModal.style.display = "none";
+            alumniDeleteBtns.forEach(function (deleteBtn) {
+                deleteBtn.addEventListener("click", function () {
+                    confirmationModalAlumni.style.display = "block";
+                });
             });
 
-            cancelDeleteBtn.addEventListener("click", function () {
+            confirmDeleteBtnAdmin.addEventListener("click", function () {
                 // Close the modal
-                confirmationModal.style.display = "none";
+                confirmationModalAdmin.style.display = "none";
+            });
+
+            confirmDeleteBtnAlumni.addEventListener("click", function () {
+                // Close the modal
+                confirmationModalAlumni.style.display = "none";
+            });
+
+            cancelDeleteBtnAdmin.addEventListener("click", function () {
+                // Close the modal
+                confirmationModalAdmin.style.display = "none";
+            });
+
+            cancelDeleteBtnAlumni.addEventListener("click", function () {
+                // Close the modal
+                confirmationModalAlumni.style.display = "none";
             });
 
             window.addEventListener("click", function (event) {
-                if (event.target == confirmationModal) {
+                if (event.target == confirmationModalAdmin) {
                     // Close the modal
-                    confirmationModal.style.display = "none";
+                    confirmationModalAdmin.style.display = "none";
+                }
+
+                if (event.target == confirmationModalAlumni) {
+                    // Close the modal
+                    confirmationModalAlumni.style.display = "none";
                 }
             });
 
+
             /* delete button confirmation box --------------------------------------------------------------------- */
+
+            /* Filter data  */
+
+            $(document).ready(function () {
+                // Admin List search
+                $("#adminSearchInput").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#adminTableBody tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                    });
+                });
+
+                // Alumni List search
+                $("#alumniSearchInput").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#alumniTableBody tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                    });
+                });
+            });
+                                                                                /* Filter data  */
         </script>
 
     </body>

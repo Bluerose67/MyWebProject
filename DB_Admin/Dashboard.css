@@ -913,7 +913,7 @@ li {
     display: flex;
     align-items: center;
     grid-gap: 16px;
-    margin: 10px 24px 0px 24px;
+    margin: 10px 24px 10px 24px;
 }
 
  main .table-data .head h3 {
@@ -961,3 +961,65 @@ li {
 }
 
 /* dashbaord --------------------------------------------------------------------------------------------------------------------- */
+
+
+/* filter Search bar starts ---------------------- */
+.text1 {
+    position: relative;
+    border-bottom: 2px solid #adadad;
+}
+
+.text1 input {
+    width: 100%;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.text1 i {
+    right: 5px;
+    top: 26px;
+    font-size: 14px;
+    color: #999;
+    cursor: pointer;
+    position: absolute;
+    transform: translateY(-50%);
+}
+
+.text1 label {
+    position: absolute;
+    top: 40%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.text1 span::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: #2691d9;
+    transition: .5s;
+}
+
+.text1 input:focus~label,
+.text1 input:valid~label {
+    top: -5px;
+    color: #2691d9;
+}
+
+.text1 input:focus~span::before,
+.text1 input:valid~span::before {
+    width: 100%;
+}
+
+/* filter Search bar ends ---------------------- */

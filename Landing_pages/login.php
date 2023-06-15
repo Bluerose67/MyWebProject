@@ -2,7 +2,14 @@
 session_start();
 include("../connect.php");
 if (isset($_SESSION['username'])) {
-  header("Location: ../DB_Admin/Dashboard.php");
+  if ($_SESSION['role'] == 'admin') {
+    header("Location: ../DB_Admin/Dashboard.php");
+  } elseif ($_SESSION['role'] == 'super_admin') {
+    header("Location: ../DB_Superadmin/Dashboard.php");
+  } else {
+    header("Location: ../DB_Alumni/Dashboard.php");
+  }
+  // var_dump($_SESSION['role']);
 } else {
   ?>
 

@@ -22,7 +22,8 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $_SESSION['username'] = $row['user_name'];
         $_SESSION['password'] = $row['password'];
         $_SESSION['role'] = $row['role'];
-        // var_dump($_SESSION['role']);
+        $_SESSION['user_id'] = $row['user_id'];
+        // var_dump($_SESSION['user_id']);
         if ($_SESSION['role'] == 'admin') {
             header("Location: DB_Admin/Dashboard.php");
         } else if ($_SESSION['role'] == 'super_admin') {

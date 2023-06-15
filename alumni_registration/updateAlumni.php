@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../connect.php';
 
 if ($_POST) {
@@ -38,7 +39,14 @@ WHERE user_id = '$user_id'";
                     $sql5 = "UPDATE batch SET batch_no ='$batch_no' where batch_id ='$batch_id'";
                     if (mysqli_query($conn, $sql5)) {
 
-                        header('Location: ../DB_Admin/Dashboard.php');
+                        if ($_SESSION['role'] == 'admin') {
+
+                            header("location: ../DB_Admin/Dashboard.php");
+                        } elseif ($_SESSION['role'] == 'super_admin') {
+                            header("location: ../DB_Superadmin/Dashboard.php");
+                        } else {
+                            header("location: ../DB_Alumni/Dashboard.php");
+                        }
 
                     } else {
                         echo "Update failed in query 5" . $sql5 . "<br>" . mysqli_error($conn);

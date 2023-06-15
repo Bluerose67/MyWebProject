@@ -36,30 +36,25 @@ if (!isset($_SESSION['username'])) {
                     </li>
                     <li>
                         <a href="Dashboard_profile.php">
-                            <i class='bx bxs-shopping-bag-alt'></i>
+                            <i class='bx bxs-user'></i>
                             <span class="text">My Profile</span>
                         </a>
                     </li>
                     <li>
                         <a href="Dashboard_events.php">
-                            <i class='bx bxs-doughnut-chart'></i>
+                            <i class='bx bxs-calendar-event'></i>
                             <span class="text">Manage Events</span>
                         </a>
                     </li>
                     <li>
                         <a href="Dashboard_managegallery.php">
-                            <i class='bx bxs-message-dots'></i>
+                            <i class='bx bxs-image-alt'></i>
                             <span class="text">Manage Gallery</span>
                         </a>
                     </li>
                 </ul>
                 <ul class="side-menu">
-                    <li>
-                        <a href="#">
-                            <i class='bx bxs-cog'></i>
-                            <span class="text">Settings</span>
-                        </a>
-                    </li>
+
                     <li>
                         <a href="../logout.php" class="logout">
                             <i class='bx bxs-log-out-circle'></i>
@@ -100,6 +95,123 @@ if (!isset($_SESSION['username'])) {
 
 
                 </section> <!-- main-upper sections ends -------------------------------------------------->
+                <section class="right-lower">
+                    <main>
+                        <div class="head-title">
+                            <div class="left">
+                                <h1>My Profile</h1>
+                                <ul class="breadcrumb">
+                                    <li>
+                                        <a href="#">My Profile</a>
+                                    </li>
+                                    <li><i class='bx bx-chevron-right'></i></li>
+                                    <li>
+                                        <a class="active" href="../Landing_pages/index.php">Home</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                        <?php
+                        // Fetch user data from the database
+                        include "../connect.php";
+
+                        $userId = $_SESSION['user_id'];
+                        // var_dump($userId);
+                    
+                        $sql = "SELECT * from users  
+                            JOIN admins ON users.user_id=admins.user_id
+                            JOIN role ON users.user_id=role.user_id  WHERE users.user_id = '$userId'";
+                        $result = mysqli_query($conn, $sql);
+
+                        if ($result) {
+                            if (mysqli_num_rows($result) > 0) {
+                                $row = mysqli_fetch_assoc($result);
+                                ?>
+                                <!-- Keep the profile code here -->
+                                <section class="row">
+
+                                    <section class="profile-card">
+                                        <div class="field">
+                                            <img src="2.jpg" alt="" class="Profile-img">
+                                        </div>
+                                        <div class="field">
+                                            <label>User ID:</label>
+                                            <span>
+                                                <?= $row['user_id'] ?>
+                                            </span>
+                                        </div>
+                                        <div class="field">
+                                            <label>User Name:</label>
+                                            <span>
+                                                <?= $row['user_name'] ?>
+                                            </span>
+                                        </div>
+                                        <div class="field">
+                                            <label>Role:</label>
+                                            <span>
+                                                <?= $row['role'] ?>
+                                            </span>
+                                        </div>
+                                    </section>
+
+                                    <section class="additional-info">
+                                        <div class="field">
+                                            <label>Email:</label>
+                                            <span>
+                                                <?= $row['email'] ?>
+                                            </span>
+                                        </div>
+                                        <div class="field">
+                                            <label>Address:</label>
+                                            <span>
+                                                <?= $row['address'] ?>
+                                            </span>
+                                        </div>
+                                        <div class="field">
+                                            <label>Date of Birth:</label>
+                                            <span>
+                                                <?= $row['DOB'] ?>
+                                            </span>
+                                        </div>
+                                        <div class="field">
+                                            <label>Contact:</label>
+                                            <span>
+                                                <?= $row['phone_no'] ?>
+                                            </span>
+                                        </div>
+                                        <div class="field">
+                                            <label>department:</label>
+                                            <span>
+                                                <?= $row['department'] ?>
+                                            </span>
+                                        </div>
+                                    </section> <!-- additional_info -->
+                                </section> <!-- row -->
+
+                                <section class="Bio">
+                                    <div class="field">
+                                        <label>Bio (About yourself):</label>
+                                        <span>
+                                            <?= $row['user_id'] ?>
+                                        </span>
+                                    </div>
+                                </section> <!-- bio ends -->
+                                <!--  -->
+                                <?php
+                            } else {
+                                echo "No user found!";
+                            }
+                        } else {
+                            echo "Error executing the SQL query: " . mysqli_error($conn);
+                        }
+
+                        mysqli_close($conn);
+                        ?>
+                    </main>
+                </section> <!-- rigth lower ends------------------- -->
+            </section> <!-- main section ends------------------------------ -->
 
 
         </div><!-- dashboard ends -->

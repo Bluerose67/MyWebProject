@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('../connect.php');
 
 if ($_POST) {
@@ -47,7 +48,14 @@ if ($_POST) {
                         VALUES ('$faculty_id', '$course_id', '$batch_id', '$user_id')";
                         if (mysqli_query($conn, $sql6)) {
                             $std_id = mysqli_insert_id($conn);
-                            header("location: ../DB_Admin/Dashboard.php");
+                            if ($_SESSION['role'] == 'admin') {
+
+                                header("location: ../DB_Admin/Dashboard.php");
+                            } elseif ($_SESSION['role'] == 'super_admin') {
+                                header("location: ../DB_Superadmin/Dashboard.php");
+                            } else {
+                                header("location: ../DB_Alumni/Dashboard.php");
+                            }
 
                         } else {
                             echo "Error: " . $sql6 . "<br>" . mysqli_error($conn);

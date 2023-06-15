@@ -36,30 +36,25 @@ if (!isset($_SESSION['username'])) {
                     </li>
                     <li>
                         <a href="Dashboard_profile.php">
-                            <i class='bx bxs-shopping-bag-alt'></i>
+                            <i class='bx bxs-user'></i>
                             <span class="text">My Profile</span>
                         </a>
                     </li>
                     <li>
                         <a href="Dashboard_events.php">
-                            <i class='bx bxs-doughnut-chart'></i>
+                            <i class='bx bxs-calendar-event'></i>
                             <span class="text">Manage Events</span>
                         </a>
                     </li>
                     <li>
                         <a href="Dashboard_managegallery.php">
-                            <i class='bx bxs-message-dots'></i>
+                            <i class='bx bxs-image-alt'></i>
                             <span class="text">Manage Gallery</span>
                         </a>
                     </li>
                 </ul>
                 <ul class="side-menu">
-                    <li>
-                        <a href="#">
-                            <i class='bx bxs-cog'></i>
-                            <span class="text">Settings</span>
-                        </a>
-                    </li>
+
                     <li>
                         <a href="../logout.php" class="logout">
                             <i class='bx bxs-log-out-circle'></i>

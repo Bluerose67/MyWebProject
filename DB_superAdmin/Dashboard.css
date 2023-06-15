@@ -993,3 +993,130 @@ main .table-data .order table tbody tr:hover {
 }
 
 /* dashbaord --------------------------------------------------------------------------------------------------------------------- */
+
+
+/* filter Search bar starts ---------------------- */
+.text1 {
+    position: relative;
+    border-bottom: 2px solid #adadad;
+}
+
+.text1 input {
+    width: 100%;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.text1 i {
+    right: 5px;
+    top: 26px;
+    font-size: 14px;
+    color: #999;
+    cursor: pointer;
+    position: absolute;
+    transform: translateY(-50%);
+}
+
+.text1 label {
+    position: absolute;
+    top: 40%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.text1 span::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: #2691d9;
+    transition: .5s;
+}
+
+.text1 input:focus~label,
+.text1 input:valid~label {
+    top: -5px;
+    color: #2691d9;
+}
+
+.text1 input:focus~span::before,
+.text1 input:valid~span::before {
+    width: 100%;
+}
+/* filter Search bar ends ---------------------- */
+
+
+/* profile page starts--------------------------------- */
+section.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-card {
+    border-radius: 20px;
+    background: #ffffff;
+    height: 400px;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.additional-info {
+    border-radius: 20px;
+    background: #ffffff;
+    height: 280px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 113px 0 0 35px;
+}
+
+section.Bio {
+    margin: 35px 0 0 262px;
+    border-radius: 20px;
+    background: #ffffff;
+    height: 220px;
+    width: 61%;
+    padding: 5px;
+}
+
+
+.field {
+    margin: 10px;
+
+
+}
+
+.field label {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.Profile-img {
+
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 10px auto;
+    border: 5px solid #ccc;
+    border-radius: 50%;
+}
+
+/* profile page ends--------------------------------- */
+

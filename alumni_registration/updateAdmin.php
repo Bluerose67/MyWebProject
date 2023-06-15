@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../connect.php';
 
 if ($_POST) {
@@ -23,7 +24,14 @@ if ($_POST) {
             $sql3 = "UPDATE admins SET department ='$department' where admin_id ='$admin_id'";
 
             if (mysqli_query($conn, $sql3)) {
-                header('Location: ../DB_Admin/Dashboard.php');
+                if ($_SESSION['role'] == 'admin') {
+
+                    header("location: ../DB_Admin/Dashboard.php");
+                } elseif ($_SESSION['role'] == 'super_admin') {
+                    header("location: ../DB_Superadmin/Dashboard.php");
+                } else {
+                    header("location: ../DB_Alumni/Dashboard.php");
+                }
             } else {
                 echo "Update Failed in query 3" . $sql3 . "<br>" . mysqli_error($conn);
             }
