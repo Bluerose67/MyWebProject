@@ -17,7 +17,7 @@ include('../connect.php');
     <div class="container">
         <div class="center">
             <h1>Register New Alumni</h1>
-            <form action="insertAlumni.php" method="post">
+            <form action="insertAlumni.php" method="post" enctype="multipart/form-data">
                 <div class="text">
 
                     <input type="text" id="username" name="user_name" required>
@@ -57,6 +57,11 @@ include('../connect.php');
                     <input type="tel" id="phone" name="phone_no" required>
                     <span> </span>
                     <label for="phone">Phone</label>
+                </div>
+                <div class="textt">
+
+                    <input type="file" id="image" name="image" required>
+
                 </div>
 
                 <div class="text1">
@@ -99,7 +104,7 @@ include('../connect.php');
                 <!-- <div id="additionalFieldsContainer"></div> -->
 
                 <input type="submit" value="Register" />
-                <button class="display-button"> <a href="../DB_Admin/Dashboard_alumni.php">Display Records</a>
+                <button class="display-button"> <a href="../DB_Admin/Dashboard.php">Display Records</a>
                 </button>
             </form>
         </div>

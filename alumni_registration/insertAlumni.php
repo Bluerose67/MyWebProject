@@ -13,11 +13,33 @@ if ($_POST) {
     $faculty_name = $_POST['faculty_name'];
     $batch_no = $_POST['batch_no'];
     $course_name = $_POST['course_name'];
+    $image = $_FILES['image']['name'];
 
     // Insert into 'users' table
-    $sql1 = "INSERT INTO users (user_name, email, password, address, DOB, Phone_no)
-                VALUES ('$user_name', '$email', '$password', '$address', '$DOB', '$phone_no')";
+    $sql1 = "INSERT INTO users (user_name, email, password, address, DOB, Phone_no, image)
+                VALUES ('$user_name', '$email', '$password', '$address', '$DOB', '$phone_no','$image')";
     if (mysqli_query($conn, $sql1)) {
+        $image = $_FILES['image']['name']; // Get the name of the uploaded file
+
+        // Specify the destination directory where you want to save the uploaded file
+        $targetDirectory = "../images/profile/";
+
+        // Generate a unique file name to avoid conflicts
+        $targetFileName = uniqid() . "_" . basename($image);
+
+        // The full path to the uploaded file on the server
+        $targetFilePath = $targetDirectory . $targetFileName;
+
+        // Move the uploaded file to the desired location
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
+            // File uploaded successfully,
+
+        } else {
+            // File upload failed
+            echo "Sorry, there was an error uploading your file.";
+        }
+
+
         $user_id = mysqli_insert_id($conn);
 
         // Insert into 'faculties' table
@@ -48,6 +70,7 @@ if ($_POST) {
                         VALUES ('$faculty_id', '$course_id', '$batch_id', '$user_id')";
                         if (mysqli_query($conn, $sql6)) {
                             $std_id = mysqli_insert_id($conn);
+
                             if ($_SESSION['role'] == 'admin') {
 
                                 header("location: ../DB_Admin/Dashboard.php");

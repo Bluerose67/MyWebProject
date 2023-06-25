@@ -7,17 +7,36 @@ if ($_POST) {
     $password = $_POST['password'];
     $address = $_POST['address'];
     $DOB = $_POST['DOB'];
-    $phone = $_POST['phone'];
+    $phone = $_POST['phone_no'];
+    $image = $_FILES['image']['name'];
     $role = $_POST['role'];
     $department = $_POST['department'];
-    $faculty = $_POST['faculty'];
-    $batch = $_POST['batch'];
-    $course = $_POST['course'];
+    // var_dump($_FILES['image']['name']);
 
     // Insert into 'users' table
-    $sql1 = "INSERT INTO users (user_name, email, password, address, DOB, Phone_no)
-                 VALUES ('$name', '$email', '$password', '$address', '$DOB', '$phone')";
+    $sql1 = "INSERT INTO users (user_name, email, password, address, DOB, Phone_no, image)
+                 VALUES ('$name', '$email', '$password', '$address', '$DOB', '$phone','$image')";
     if (mysqli_query($conn, $sql1)) {
+        $image = $_FILES['image']['name']; // Get the name of the uploaded file
+
+        // Specify the destination directory where you want to save the uploaded file
+        $targetDirectory = "../images/profile/";
+
+        // Generate a unique file name to avoid conflicts
+        $targetFileName = uniqid() . "_" . basename($image);
+
+        // The full path to the uploaded file on the server
+        $targetFilePath = $targetDirectory . $targetFileName;
+
+        // Move the uploaded file to the desired location
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
+            // File uploaded successfully,
+
+        } else {
+            // File upload failed
+            echo "Sorry, there was an error uploading your file.";
+        }
+
         $user_id = mysqli_insert_id($conn);
 
         // Insert into 'admins' table

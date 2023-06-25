@@ -144,7 +144,7 @@ if (!isset($_SESSION['username'])) {
                                 <i class='bx bxs-group'></i>
                                 <span class="text">
                                     <h3>
-                                        <?php echo $studentCount; ?>
+                                        <?php echo $adminCount; ?>
                                     </h3>
                                     <p>No of Admins</p>
                                 </span>
@@ -329,7 +329,7 @@ if (!isset($_SESSION['username'])) {
                                             </div>
                                         </div>
                                         <button class="add-button">
-                                            <a href="../alumni_registration/Alumniregistration.php">Add new Alumni</a>
+                                            <a href="../alumni_registration/sAlumniregistration.php">Add new Alumni</a>
                                         </button>
                                         <table>
                                             <tr>
@@ -526,7 +526,7 @@ if (!isset($_SESSION['username'])) {
                     });
                 });
             });
-                                                                                /* Filter data  */
+                                                                                                /* Filter data  */
         </script>
 
     </body>

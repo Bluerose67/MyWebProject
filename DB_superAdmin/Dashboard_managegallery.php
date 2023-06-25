@@ -123,7 +123,7 @@ if (!isset($_SESSION['username'])) {
                             <h1>Upload Images</h1>
                             <form action="" method="post" enctype="multipart/form-data">
                                 <input type="hidden" value="1" name="fileupload">
-                                <div class="text">
+                                <div class="image-upload">
                                     <div class="label1">
                                         <label>Select a File</label>
                                     </div>

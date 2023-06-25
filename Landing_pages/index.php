@@ -198,11 +198,12 @@ include("../connect.php");
     </section>
     <div class="contact_section"> <!-- contact section begins -->
       <div class="row1">
-        <form action="" method="post">
+        <form action="sendEmail.php" method="post">
           <p> Send us a Message </p>
-          <input type="text" class="verify" placeholder="Enter your Name (a-z)" pattern="[a-z]*" />
-          <input type="email" placeholder="Enter your Email eg: abs@gmail.com" required />
-          <textarea placeholder="Enter your message"></textarea>
+          <input type="text" name="name" class="verify" placeholder="Enter your Name (a-z)" pattern="[a-zA-Z\s]*" />
+          <input type="email" name="email" placeholder="Enter your Email eg: abs@gmail.com" required />
+          <input type="text" name="subject" class="verify" placeholder="Enter the subject" />
+          <textarea name="message" placeholder="Enter your message"></textarea>
           <button type="submit" class="send_btn">Send</button>
         </form>
       </div>
@@ -253,7 +254,7 @@ include("../connect.php");
           <h4> Get Help </h4>
           <ul>
             <li class="register_style">
-              <p>Are you an alumni? Do you want to</p>
+              <p>Are you an alumni? Do you want to get</p>
               <a href="#"> register ?</a>
             </li>
           </ul>
@@ -275,6 +276,16 @@ include("../connect.php");
           with the prior written permission of BlueRose.</p>
       </div>
     </div> <!-- footer_containerright -->
+
+    <div id="registerinfo" class="register-info">
+      <div class="modal-content">
+        <h2>Confirmation</h2>
+        <p>Are you sure you want to delete?</p>
+        <button id="contact_btn" class="edit-button">
+          <a href="#contact">Contact Us or Leave a message.</a>
+        </button>
+      </div>
+    </div>
 
   </footer>
   <!-- footer section starts  ---------------------------------------------------------------------------------------->
