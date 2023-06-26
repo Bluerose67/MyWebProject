@@ -255,7 +255,7 @@ include("../connect.php");
           <ul>
             <li class="register_style">
               <p>Are you an alumni? Do you want to get</p>
-              <a href="#"> register ?</a>
+              <a href=""> register ?</a>
             </li>
           </ul>
         </div> <!-- footer-col -->
