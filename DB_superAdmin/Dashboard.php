@@ -63,6 +63,29 @@ if (!isset($_SESSION['username'])) {
             </section>
             <!-- SIDEBAR -->
 
+            <?php
+            // Fetch user data from the database
+            include "../connect.php";
+
+            $userId = $_SESSION['user_id'];
+            // var_dump($userId);
+        
+            $sql = "SELECT * from users  
+                            JOIN admins ON users.user_id=admins.user_id
+                            JOIN role ON users.user_id=role.user_id  WHERE users.user_id = '$userId'";
+            $result = mysqli_query($conn, $sql);
+
+            if ($result) {
+                if (mysqli_num_rows($result) > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                } else {
+                    echo "No user found";
+                }
+            } else {
+                echo "error executing sql query" . mysqli_error($conn);
+            }
+
+            ?>
 
 
             <section class="main"> <!-- main section begins ------------------------------------------------------------>
@@ -79,7 +102,7 @@ if (!isset($_SESSION['username'])) {
                         </div>
 
                         <div class="profile">
-                            <img src="../images/avatar.jpg" alt="Avatar" class="avatar">
+                            <img src="<?php echo "../images/profile/" . $row['image']; ?>" alt="Avatar" class="avatar">
                         </div>
 
                         <div class="notification_icon">
@@ -186,6 +209,8 @@ if (!isset($_SESSION['username'])) {
                                     "phone_no" => $row['phone_no'],
                                     "department" => $row['department'],
                                     "role" => $row['role'],
+                                    "image" => $row['image'],
+
                                 );
                                 $i++;
                             }
@@ -217,6 +242,7 @@ if (!isset($_SESSION['username'])) {
                                     "address" => $row['address'],
                                     "DOB" => $row['DOB'],
                                     "phone_no" => $row['phone_no'],
+                                    "image" => $row['image'],
                                     "faculty_name" => $row['faculty_name'],
                                     "course_name" => $row['course_name'],
                                     "batch_no" => $row['batch_no'],
@@ -246,7 +272,7 @@ if (!isset($_SESSION['username'])) {
                                         </button>
                                         <table>
                                             <tr>
-                                                <th>Admin ID</th>
+                                                <th>Profile</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
                                                 <th>Address</th>
@@ -259,7 +285,7 @@ if (!isset($_SESSION['username'])) {
                                                 <?php foreach ($adminRecords as $record) { ?>
                                                     <tr>
                                                         <td>
-                                                            <?= $record['admin_id'] ?>
+                                                            <img src="<?php echo "../images/profile/" . $record['image'] ?>">
                                                         </td>
                                                         <td>
                                                             <?= $record['user_name'] ?>
@@ -303,7 +329,7 @@ if (!isset($_SESSION['username'])) {
                                                 <p>Are you sure you want to delete?</p>
                                                 <button id="confirmDeleteBtnAdmin" class="edit-button">
                                                     <a
-                                                        href="../alumni_registration/deleteAdmin.php?user_id=<?= $record['user_id'] ?>&admin_id=<?= $record['admin_id'] ?>&role_id=<?= $record['role_id'] ?>">Delete</a>
+                                                        href="../alumni_registration/deleteAdmin.php?user_id=<?= $record['user_id'] ?>&admin_id=<?= $record['admin_id'] ?>&role_id=<?= $record['role_id'] ?>&image=<?= $record['image'] ?>">Delete</a>
                                                 </button>
                                                 <button id="cancelDeleteBtnAdmin" class="edit-button">No</button>
                                             </div>
@@ -333,7 +359,7 @@ if (!isset($_SESSION['username'])) {
                                         </button>
                                         <table>
                                             <tr>
-                                                <th>Student ID</th>
+                                                <th>Profile</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
                                                 <th>Address</th>
@@ -348,7 +374,7 @@ if (!isset($_SESSION['username'])) {
                                                 <?php foreach ($alumniRecords as $record) { ?>
                                                     <tr>
                                                         <td>
-                                                            <?= $record['std_id'] ?>
+                                                            <img src="<?php echo "../images/profile/" . $record['image'] ?>">
                                                         </td>
                                                         <td>
                                                             <?= $record['user_name'] ?>
@@ -399,7 +425,7 @@ if (!isset($_SESSION['username'])) {
                                                 <p>Are you sure you want to delete?</p>
                                                 <button id="confirmDeleteBtnAlumni" class="edit-button">
                                                     <a
-                                                        href="../alumni_registration/deleteAdmin.php?user_id=<?= $record['user_id'] ?>&std_id=<?= $record['std_id'] ?>&faculty_id=<?= $record['faculty_id'] ?>&course_id=<?= $record['course_id'] ?>&batch_id=<?= $record['batch_id'] ?>&role_id=<?= $record['role_id'] ?>">Delete</a>
+                                                        href="../alumni_registration/deleteAdmin.php?user_id=<?= $record['user_id'] ?>&std_id=<?= $record['std_id'] ?>&faculty_id=<?= $record['faculty_id'] ?>&course_id=<?= $record['course_id'] ?>&batch_id=<?= $record['batch_id'] ?>&role_id=<?= $record['role_id'] ?>&image=<?= $record['image'] ?>">Delete</a>
                                                 </button>
                                                 <button id="cancelDeleteBtnAlumni" class="edit-button">No</button>
                                             </div>
@@ -425,6 +451,7 @@ if (!isset($_SESSION['username'])) {
 
 
         </div><!-- dashboard ends ---------------------------------------------------------------------------->
+        <script src="dashboard.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -526,7 +553,7 @@ if (!isset($_SESSION['username'])) {
                     });
                 });
             });
-                                                                                                /* Filter data  */
+                                                                                                                                                                                        /* Filter data  */
         </script>
 
     </body>

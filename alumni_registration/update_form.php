@@ -3,7 +3,7 @@ session_start();
 include '../connect.php';
 $record = [];
 
-// $role = $_SESSION['role'];
+$role = $_SESSION['role'];
 // var_dump($role);
 
 if (isset($_GET['admin_id'])) {
@@ -29,6 +29,7 @@ if (isset($_GET['admin_id'])) {
                 "phone_no" => $row['phone_no'],
                 "department" => $row['department'],
                 "role" => $row['role'],
+                "image" => $row['image'],
             );
         }
     } else {
@@ -50,7 +51,7 @@ if (isset($_GET['admin_id'])) {
         <div class="container">
             <div class="center">
                 <h1>Update Admin Details</h1>
-                <form action="updateAdmin.php" method="post">
+                <form action="updateAdmin.php" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="admin_id" value="<?php echo $record['admin_id'] ?>" />
                     <input type="hidden" name="user_id" value="<?php echo $record['user_id'] ?>" />
                     <input type="hidden" name="role_id" value="<?php echo $record['role_id'] ?>" />
@@ -79,11 +80,26 @@ if (isset($_GET['admin_id'])) {
                         <span> </span>
                         <label>Contact</label>
                     </div>
+
+                    <div class="textt">
+
+                        <input type="file" id="image" name="image">
+                        <input type="hidden" id="image" name="image_old" value="<?php echo $record['image']; ?>">
+
+                    </div>
+
+                    <div class="profile">
+                        <img src="<?php echo "../images/profile/" . $record['image']; ?>" alt="Avatar" class="avatar">
+                    </div>
+
                     <div class="text1">
                         <select id="role" name="role" class="display-button">
                             <option value="">Select Role</option>
-                            <option value="admin">Admin</option>
-                            <option value="student">Student</option>
+                            <option value="admin" <?php if ($record['role'] == 'admin')
+                                echo 'selected'; ?>>Admin</option>
+                            <option value="student" <?php if ($record['role'] == 'student')
+                                echo 'selected'; ?>>Student
+                            </option>
                         </select>
                     </div>
                     <div class="text">
@@ -93,7 +109,14 @@ if (isset($_GET['admin_id'])) {
                     </div>
                     <input type="submit" value="Update" class="login-button" />
                     <!-- <span> </span> -->
-                    <button class="display-button"><a href="../DB_Admin/Dashboard_alumni.php"> Go back </a> </button>
+                    <?php
+                    if ($role === 'super_admin') { ?>
+                        <button class="display-button"><a href="../DB_Superadmin/Dashboard.php"> Go back </a> </button>
+                    <?php } else { ?>
+                        <button class="display-button"><a href="../DB_Admin/Dashboard.php"> Go back </a> </button>
+                    <?php }
+                    ?>
+
                 </form>
             </div>
         </div>
@@ -131,6 +154,8 @@ if (isset($_GET['admin_id'])) {
                 "address" => $row['address'],
                 "DOB" => $row['DOB'],
                 "phone_no" => $row['phone_no'],
+                "image" => $row['image'],
+                "role" => $row['role'],
                 "faculty_name" => $row['faculty_name'],
                 "course_name" => $row['course_name'],
                 "batch_no" => $row['batch_no'],
@@ -156,7 +181,7 @@ if (isset($_GET['admin_id'])) {
             <div class="container">
                 <div class="center">
                     <h1>Update Alumni Details</h1>
-                    <form action="updateAlumni.php" method="post">
+                    <form action="updateAlumni.php" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="std_id" value="<?php echo $record['std_id'] ?>" />
                         <input type="hidden" name="user_id" value="<?php echo $record['user_id'] ?>" />
                         <input type="hidden" name="role_id" value="<?php echo $record['role_id'] ?>" />
@@ -188,11 +213,23 @@ if (isset($_GET['admin_id'])) {
                             <span> </span>
                             <label>Contact</label>
                         </div>
+
+                        <div class="textt">
+
+                            <input type="file" id="image" name="image">
+                            <input type="file" id="image" name="image_old" value="<?php echo $record['image']; ?>">
+
+                        </div>
+
+
                         <div class="text1">
                             <select id="role" name="role" class="display-button">
                                 <option value="">Select Role</option>
-                                <option value="admin">Admin</option>
-                                <option value="student">Student</option>
+                                <option value="admin" <?php if ($record['role'] == 'admin')
+                                    echo 'selected'; ?>>Admin</option>
+                                <option value="student" <?php if ($record['role'] == 'student')
+                                    echo 'selected'; ?>>Student
+                                </option>
                             </select>
                         </div>
                         <div class="text">
@@ -212,7 +249,15 @@ if (isset($_GET['admin_id'])) {
                         </div>
                         <input type="submit" value="Update" class="login-button" />
                         <!-- <span> </span> -->
-                        <button class="display-button"><a href="../DB_Admin/Dashboard_alumni.php"> Go back </a> </button>
+                        <?php
+                        if ($role == 'super_admin') { ?>
+                            <button class="display-button"><a href="../DB_Superadmin/Dashboard.php"> Go back </a> </button>
+                        <?php } elseif ($role == 'admin') { ?>
+                            <button class="display-button"><a href="../DB_Admin/Dashboard.php"> Go back </a> </button>
+                        <?php } else {
+                            echo "error";
+                        }
+                        ?>
                     </form>
                 </div>
             </div>
@@ -220,6 +265,6 @@ if (isset($_GET['admin_id'])) {
 
         </html>
 
-<?php }
+    <?php }
 mysqli_close($conn);
 ?>

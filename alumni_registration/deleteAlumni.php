@@ -8,6 +8,8 @@ if (isset($_GET['std_id'])) {
     $course_id = $_GET['course_id'];
     $batch_id = $_GET['batch_id'];
     $role_id = $_GET['role_id'];
+    $image = $_GET['image'];
+
 
     $sql1 = "DELETE FROM students WHERE std_id = '$std_id'";
     if (mysqli_query($conn, $sql1)) {
@@ -26,6 +28,7 @@ if (isset($_GET['std_id'])) {
 
                         $sql6 = "DELETE FROM users WHERE user_id = '$user_id'";
                         if (mysqli_query($conn, $sql6)) {
+                            unlink("../images/profile/" . $image);
 
                             if ($_SESSION['role'] == 'admin') {
 

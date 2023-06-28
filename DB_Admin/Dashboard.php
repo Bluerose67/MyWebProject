@@ -63,7 +63,29 @@ if (!isset($_SESSION['username'])) {
                 </ul>
             </section>
             <!-- SIDEBAR -->
+            <?php
+            // Fetch user data from the database
+            include "../connect.php";
 
+            $userId = $_SESSION['user_id'];
+            // var_dump($userId);
+        
+            $sql = "SELECT * from users  
+                            JOIN admins ON users.user_id=admins.user_id
+                            JOIN role ON users.user_id=role.user_id  WHERE users.user_id = '$userId'";
+            $result = mysqli_query($conn, $sql);
+
+            if ($result) {
+                if (mysqli_num_rows($result) > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                } else {
+                    echo "No user found";
+                }
+            } else {
+                echo "error executing sql query" . mysqli_error($conn);
+            }
+
+            ?>
 
 
             <section class="main"> <!-- main section begins ------------------------------------------------------------>
@@ -80,7 +102,7 @@ if (!isset($_SESSION['username'])) {
                         </div>
 
                         <div class="profile">
-                            <img src="../images/avatar.jpg" alt="Avatar" class="avatar">
+                            <img src="<?php echo "../images/profile/" . $row['image']; ?>" alt="Avatar" class="avatar">
                         </div>
 
                         <div class="notification_icon">
@@ -145,7 +167,7 @@ if (!isset($_SESSION['username'])) {
                                 <i class='bx bxs-group'></i>
                                 <span class="text">
                                     <h3>
-                                        <?php echo $studentCount; ?>
+                                        <?php echo $adminCount; ?>
                                     </h3>
                                     <p>No of Admins</p>
                                 </span>
@@ -248,31 +270,33 @@ if (!isset($_SESSION['username'])) {
                                                 <th>Department</th>
                                                 <!-- <th>Action</th> -->
                                             </tr>
-                                            <?php foreach ($adminRecords as $record) { ?>
-                                                <tr>
-                                                    <td>
-                                                        <?= $record['admin_id'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['user_name'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['email'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['address'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['DOB'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['phone_no'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $record['department'] ?>
-                                                    </td>
-                                                </tr>
-                                            <?php } ?>
+                                            <tbody id="adminTableBody">
+                                                <?php foreach ($adminRecords as $record) { ?>
+                                                    <tr>
+                                                        <td>
+                                                            <?= $record['admin_id'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['user_name'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['email'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['address'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['DOB'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['phone_no'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $record['department'] ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
                                         </table>
 
                                     </div>
@@ -287,7 +311,7 @@ if (!isset($_SESSION['username'])) {
                                         <div class="head">
                                             <h3>Alumni List</h3>
                                             <div class="text1">
-                                                <input type="text" id="adminSearchInput" required />
+                                                <input type="text" id="alumniSearchInput" required />
                                                 <i class='bx bx-search'></i>
                                                 <span> </span>
                                                 <label>Search</label>
@@ -385,6 +409,29 @@ if (!isset($_SESSION['username'])) {
 
 
         </div><!-- dashboard ends ---------------------------------------------------------------------------->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            /* Filter data  */
+
+            $(document).ready(function () {
+                // Admin List search
+                $("#adminSearchInput").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#adminTableBody tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                    });
+                });
+
+                // Alumni List search
+                $("#alumniSearchInput").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#alumniTableBody tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                    });
+                });
+            });
+                                                                                                                                                        /* Filter data  */
+        </script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
@@ -466,26 +513,6 @@ if (!isset($_SESSION['username'])) {
 
             /* delete button confirmation box --------------------------------------------------------------------- */
 
-            /* Filter data  */
-
-            $(document).ready(function () {
-                // Admin List search
-                $("#adminSearchInput").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#adminTableBody tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-                    });
-                });
-
-                // Alumni List search
-                $("#alumniSearchInput").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#alumniTableBody tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-                    });
-                });
-            });
-                /* Filter data  */
         </script>
 
     </body>

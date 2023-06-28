@@ -65,76 +65,78 @@ if (!isset($_SESSION['username'])) {
             </section>
             <!-- SIDEBAR -->
 
+            <?php
+            // Fetch user data from the database
+            include "../connect.php";
 
-
-            <section class="main"> <!-- main section begins ------------------------------------------------------------>
-
-                <section class="right-upper"><!-- main-upper section begins ---------------------------------->
-                    <!-- <div class="left-text">
-                        <h1>Dashboard</h1>
-                    </div> -->
-                    <div class="right_about">
-                        <div>
-                            <p>
-                                <?php echo $_SESSION['username']; ?>
-                            </p>
-                        </div>
-
-                        <div class="profile">
-                            <img src="../images/avatar.jpg" alt="Avatar" class="avatar">
-                        </div>
-
-                        <div class="notification_icon">
-                            <button class="notification_btn" title="Notification">
-                                <a href="#"> <span class="material-symbols-outlined">notifications</span>
-                                </a>
-                            </button>
-                        </div>
-                    </div>
-
-
-
-                </section> <!-- main-upper sections ends -------------------------------------------------->
-                <section class="right-lower">
-                    <main>
-                        <div class="head-title">
-                            <div class="left">
-                                <h1>My Profile</h1>
-                                <ul class="breadcrumb">
-                                    <li>
-                                        <a href="#">My Profile</a>
-                                    </li>
-                                    <li><i class='bx bx-chevron-right'></i></li>
-                                    <li>
-                                        <a class="active" href="../Landing_pages/index.php">Home</a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                        </div>
-
-                        <?php
-                        // Fetch user data from the database
-                        include "../connect.php";
-
-                        $userId = $_SESSION['user_id'];
-                        // var_dump($userId);
-                    
-                        $sql = "SELECT * from users  
+            $userId = $_SESSION['user_id'];
+            // var_dump($userId);
+        
+            $sql = "SELECT * from users  
                             JOIN admins ON users.user_id=admins.user_id
                             JOIN role ON users.user_id=role.user_id  WHERE users.user_id = '$userId'";
-                        $result = mysqli_query($conn, $sql);
+            $result = mysqli_query($conn, $sql);
 
-                        if ($result) {
-                            if (mysqli_num_rows($result) > 0) {
-                                $row = mysqli_fetch_assoc($result);
-                                ?>
+            if ($result) {
+                if (mysqli_num_rows($result) > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                    ?>
+
+
+
+                    <section class="main"> <!-- main section begins ------------------------------------------------------------>
+
+                        <section class="right-upper"><!-- main-upper section begins ---------------------------------->
+                            <!-- <div class="left-text">
+                        <h1>Dashboard</h1>
+                    </div> -->
+                            <div class="right_about">
+                                <div>
+                                    <p>
+                                        <?php echo $_SESSION['username']; ?>
+                                    </p>
+                                </div>
+
+                                <div class="profile">
+                                    <img src="<?php echo "../images/profile/" . $row['image']; ?>" alt="Avatar" class="avatar">
+                                </div>
+
+                                <div class="notification_icon">
+                                    <button class="notification_btn" title="Notification">
+                                        <a href="#"> <span class="material-symbols-outlined">notifications</span>
+                                        </a>
+                                    </button>
+                                </div>
+                            </div>
+
+
+
+                        </section> <!-- main-upper sections ends -------------------------------------------------->
+                        <section class="right-lower">
+                            <main>
+                                <div class="head-title">
+                                    <div class="left">
+                                        <h1>My Profile</h1>
+                                        <ul class="breadcrumb">
+                                            <li>
+                                                <a href="#">My Profile</a>
+                                            </li>
+                                            <li><i class='bx bx-chevron-right'></i></li>
+                                            <li>
+                                                <a class="active" href="../Landing_pages/index.php">Home</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+
                                 <!-- Keep the profile code here -->
                                 <section class="row">
 
                                     <section class="profile-card">
                                         <div class="field">
-                                            <img src="2.jpg" alt="" class="Profile-img">
+                                            <img src="<?php echo "../images/profile/" . $row['image']; ?>" alt=""
+                                                class="Profile-img">
                                         </div>
                                         <div class="field">
                                             <label>User ID:</label>
@@ -200,21 +202,23 @@ if (!isset($_SESSION['username'])) {
                                 </section> <!-- bio ends -->
                                 <!--  -->
                                 <?php
-                            } else {
-                                echo "No user found!";
-                            }
-                        } else {
-                            echo "Error executing the SQL query: " . mysqli_error($conn);
-                        }
+                } else {
+                    echo "No user found!";
+                }
+            } else {
+                echo "Error executing the SQL query: " . mysqli_error($conn);
+            }
 
-                        mysqli_close($conn);
-                        ?>
+            mysqli_close($conn);
+            ?>
                     </main>
                 </section> <!-- rigth lower ends------------------- -->
             </section> <!-- main section ends------------------------------ -->
 
 
         </div><!-- dashboard ends -->
+        <script src="dashboard.js"></script>
+
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');

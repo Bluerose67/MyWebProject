@@ -33,6 +33,9 @@ include("../connect.php");
               <a href="login.php" style="color: #e9f4fb">Login</a>
             </button>
           </li>
+          <li>
+            <button class="register"> Register </button>
+          </li>
         </ul>
       </div>
     </nav>
@@ -255,7 +258,7 @@ include("../connect.php");
           <ul>
             <li class="register_style">
               <p>Are you an alumni? Do you want to get</p>
-              <a href=""> register ?</a>
+              <button class="register"> register ? </button>
             </li>
           </ul>
         </div> <!-- footer-col -->
@@ -279,8 +282,10 @@ include("../connect.php");
 
     <div id="registerinfo" class="register-info">
       <div class="modal-content">
-        <h2>Confirmation</h2>
-        <p>Are you sure you want to delete?</p>
+        <h2>Hey! Are You New ?</h2>
+        <p> We have a procedure to verify your details for you to be able to register.
+          So, please fill the contact form.
+        </p>
         <button id="contact_btn" class="edit-button">
           <a href="#contact">Contact Us or Leave a message.</a>
         </button>
@@ -291,6 +296,33 @@ include("../connect.php");
   <!-- footer section starts  ---------------------------------------------------------------------------------------->
 
   <script src="../js/index.js"></script>
+  <!-- Register Popup -->
+  <script>
+    var register = document.querySelectorAll(".register");
+    var registerinfo = document.getElementById("registerinfo");
+    var contact_btn = document.getElementById("contact_btn");
+
+    register.forEach(function (Btn) {
+      Btn.addEventListener("click", function () {
+        registerinfo.style.display = "block";
+      });
+    });
+
+
+    contact_btn.addEventListener("click", function () {
+      // Confirm and Close the modal
+      registerinfo.style.display = "none";
+    });
+
+    window.addEventListener("click", function (event) {
+      if (event.target == registerinfo) {
+        // Close the modal
+        registerinfo.style.display = "none";
+      }
+    });
+  </script>
+  <!-- Register Popup ends-->
+
 </body>
 
 </html>

@@ -80,7 +80,29 @@ if (!isset($_SESSION['username'])) {
                 </ul>
             </section>
             <!-- SIDEBAR -->
+            <?php
+            // Fetch user data from the database
+            include "../connect.php";
 
+            $userId = $_SESSION['user_id'];
+            // var_dump($userId);
+        
+            $sql = "SELECT * from users  
+                            JOIN admins ON users.user_id=admins.user_id
+                            JOIN role ON users.user_id=role.user_id  WHERE users.user_id = '$userId'";
+            $result = mysqli_query($conn, $sql);
+
+            if ($result) {
+                if (mysqli_num_rows($result) > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                } else {
+                    echo "No user found";
+                }
+            } else {
+                echo "error executing sql query" . mysqli_error($conn);
+            }
+
+            ?>
 
 
             <section class="main"> <!-- main section begins ------------------------------------------------------------>
@@ -97,7 +119,7 @@ if (!isset($_SESSION['username'])) {
                         </div>
 
                         <div class="profile">
-                            <img src="../images/avatar.jpg" alt="Avatar" class="avatar">
+                            <img src="<?php echo "../images/profile/" . $row['image']; ?>" alt="Avatar" class="avatar">
                         </div>
 
                         <div class="notification_icon">

@@ -36,19 +36,19 @@ if (!isset($_SESSION['username'])) {
                     </li>
                     <li>
                         <a href="Dashboard_profile.php">
-                            <i class='bx bxs-shopping-bag-alt'></i>
+                            <i class='bx bxs-user'></i>
                             <span class="text">My Profile</span>
                         </a>
                     </li>
                     <li>
                         <a href="Dashboard_events.php">
-                            <i class='bx bxs-doughnut-chart'></i>
+                            <i class='bx bxs-calendar-event'></i>
                             <span class="text">Manage Events</span>
                         </a>
                     </li>
                     <li>
                         <a href="Dashboard_managegallery.php">
-                            <i class='bx bxs-message-dots'></i>
+                            <i class='bx bxs-image-alt'></i>
                             <span class="text">Manage Gallery</span>
                         </a>
                     </li>
@@ -65,39 +65,159 @@ if (!isset($_SESSION['username'])) {
             </section>
             <!-- SIDEBAR -->
 
+            <?php
+            // Fetch user data from the database
+            include "../connect.php";
+
+            $userId = $_SESSION['user_id'];
+            // var_dump($userId);
+        
+            $sql = "SELECT * from users  
+                            JOIN admins ON users.user_id=admins.user_id
+                            JOIN role ON users.user_id=role.user_id  WHERE users.user_id = '$userId'";
+            $result = mysqli_query($conn, $sql);
+
+            if ($result) {
+                if (mysqli_num_rows($result) > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                    ?>
 
 
-            <section class="main"> <!-- main section begins ------------------------------------------------------------>
+                    <section class="main"> <!-- main section begins ------------------------------------------------------------>
 
-                <section class="right-upper"><!-- main-upper section begins ---------------------------------->
-                    <!-- <div class="left-text">
+                        <section class="right-upper"><!-- main-upper section begins ---------------------------------->
+                            <!-- <div class="left-text">
                         <h1>Dashboard</h1>
                     </div> -->
-                    <div class="right_about">
-                        <div>
-                            <p>
-                                <?php echo $_SESSION['username']; ?>
-                            </p>
-                        </div>
+                            <div class="right_about">
+                                <div>
+                                    <p>
+                                        <?php echo $_SESSION['username']; ?>
+                                    </p>
+                                </div>
 
-                        <div class="profile">
-                            <img src="../images/avatar.jpg" alt="Avatar" class="avatar">
-                        </div>
+                                <div class="profile">
+                                    <img src="<?php echo "../images/profile/" . $row['image']; ?>" alt="Avatar" class="avatar">
+                                </div>
 
-                        <div class="notification_icon">
-                            <button class="notification_btn" title="Notification">
-                                <a href="#"> <span class="material-symbols-outlined">notifications</span>
-                                </a>
-                            </button>
-                        </div>
-                    </div>
+                                <div class="notification_icon">
+                                    <button class="notification_btn" title="Notification">
+                                        <a href="#"> <span class="material-symbols-outlined">notifications</span>
+                                        </a>
+                                    </button>
+                                </div>
+                            </div>
 
 
 
-                </section> <!-- main-upper sections ends -------------------------------------------------->
+                        </section> <!-- main-upper sections ends -------------------------------------------------->
+                        <section class="right-lower">
+                            <main>
+                                <div class="head-title">
+                                    <div class="left">
+                                        <h1>My Profile</h1>
+                                        <ul class="breadcrumb">
+                                            <li>
+                                                <a href="#">My Profile</a>
+                                            </li>
+                                            <li><i class='bx bx-chevron-right'></i></li>
+                                            <li>
+                                                <a class="active" href="../Landing_pages/index.php">Home</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+
+                                <!-- Keep the profile code here -->
+                                <section class="row">
+
+                                    <section class="profile-card">
+                                        <div class="field">
+                                            <img src="<?php echo "../images/profile/" . $row['image']; ?>" alt=""
+                                                class="Profile-img">
+                                        </div>
+                                        <div class="field">
+                                            <label>User ID:</label>
+                                            <span>
+                                                <?= $row['user_id'] ?>
+                                            </span>
+                                        </div>
+                                        <div class="field">
+                                            <label>User Name:</label>
+                                            <span>
+                                                <?= $row['user_name'] ?>
+                                            </span>
+                                        </div>
+                                        <div class="field">
+                                            <label>Role:</label>
+                                            <span>
+                                                <?= $row['role'] ?>
+                                            </span>
+                                        </div>
+                                    </section>
+
+                                    <section class="additional-info">
+                                        <div class="field">
+                                            <label>Email:</label>
+                                            <span>
+                                                <?= $row['email'] ?>
+                                            </span>
+                                        </div>
+                                        <div class="field">
+                                            <label>Address:</label>
+                                            <span>
+                                                <?= $row['address'] ?>
+                                            </span>
+                                        </div>
+                                        <div class="field">
+                                            <label>Date of Birth:</label>
+                                            <span>
+                                                <?= $row['DOB'] ?>
+                                            </span>
+                                        </div>
+                                        <div class="field">
+                                            <label>Contact:</label>
+                                            <span>
+                                                <?= $row['phone_no'] ?>
+                                            </span>
+                                        </div>
+                                        <div class="field">
+                                            <label>department:</label>
+                                            <span>
+                                                <?= $row['department'] ?>
+                                            </span>
+                                        </div>
+                                    </section> <!-- additional_info -->
+                                </section> <!-- row -->
+
+                                <section class="Bio">
+                                    <div class="field">
+                                        <label>Bio (About yourself):</label>
+                                        <span>
+                                            <?= $row['user_id'] ?>
+                                        </span>
+                                    </div>
+                                </section> <!-- bio ends -->
+                                <!--  -->
+                                <?php
+                } else {
+                    echo "No user found!";
+                }
+            } else {
+                echo "Error executing the SQL query: " . mysqli_error($conn);
+            }
+
+            mysqli_close($conn);
+            ?>
+                    </main>
+                </section> <!-- rigth lower ends------------------- -->
+            </section> <!-- main section ends------------------------------ -->
 
 
         </div><!-- dashboard ends -->
+        <script src="dashboard.js"></script>
+
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');

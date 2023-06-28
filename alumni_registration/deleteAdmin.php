@@ -8,6 +8,7 @@ if (isset($_GET['std_id'])) {
     $course_id = $_GET['course_id'];
     $batch_id = $_GET['batch_id'];
     $role_id = $_GET['role_id'];
+    $image = $_GET['image'];
     // var_dump($_GET['faculty_id']);
 
     $sql1 = "DELETE FROM students WHERE std_id = '$std_id'";
@@ -28,6 +29,7 @@ if (isset($_GET['std_id'])) {
                         $sql6 = "DELETE FROM users WHERE user_id = '$user_id'";
                         if (mysqli_query($conn, $sql6)) {
 
+                            unlink("../images/profile/" . $image);
                             if ($_SESSION['role'] == 'admin') {
 
                                 header("location: ../DB_Admin/Dashboard.php");
@@ -65,6 +67,7 @@ if (isset($_GET['std_id'])) {
     $user_id = $_GET['user_id'];
     $admin_id = $_GET['admin_id'];
     $role_id = $_GET['role_id'];
+    $image = $_GET['image'];
 
 
     $sql1 = "DELETE FROM admins WHERE admin_id = '$admin_id'";
@@ -75,6 +78,7 @@ if (isset($_GET['std_id'])) {
             $sql3 = "DELETE FROM users where user_id='$user_id'";
 
             if (mysqli_query($conn, $sql3)) {
+                unlink("../images/profile/" . $image);
                 header('Location: ../DB_Superadmin/Dashboard.php');
             } else {
                 echo "Delete Failed in query 3" . $sql3 . "<br>" . mysqli_error($conn);

@@ -204,14 +204,22 @@ nav{
 }
 
 /*login button on nav bar*/
-.login-btn{
+.login-btn, .register{
     padding: 5px 13px;
     border-radius: 40px;
     border: 0;
     cursor: pointer;
     background-color: #F85151;
     font-weight: 700;
+    color: #ffffff;
     /* font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', 'sans-serif'; */
+}
+.register{
+        font-size: 14px;
+}
+.register:hover{
+background-color: #7CB9E8;
+    transition: .3s;
 }
 .login-btn:hover{
     background-color:#7CB9E8;
@@ -882,10 +890,22 @@ padding: 0 15px;
     background-color: #ffffff;
 }
 
-.footer-col .register_style a{
-    font-size: 20px;
-    color: #F85151;
+.footer-col .register_style button{
+        width: 90%;
+            padding: 5px 10px;
+            border-radius: 20px;
+            border: 0;
+            cursor: pointer;
+            color: white;
+            background-color: #F85151;
+            font-weight: 900;
+            font-size: 20px;
+            font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', 'sans-serif';
 
+}
+.footer-col .register_style button:hover{
+    background-color: #7CB9E8;
+        transition: .3s;
 }
 
 .copyright1 {
@@ -927,6 +947,29 @@ padding: 0 15px;
 
 .modal-content p {
     margin: 0 0 0 22px;
+}
+.edit-button {
+    width: 80%;
+    height: 30px;
+    margin: 10px 0 5px 10px;
+    border: 1px solid;
+    background: red;
+    color: #e9f4fb;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .3s;
+    outline: none;
+}
+
+.edit-button:hover {
+    background: #7CB9E8;
+}
+
+.edit-button a {
+    color: #ffffff;
+    text-decoration: none;
 }
 
 /* .close_delete {
