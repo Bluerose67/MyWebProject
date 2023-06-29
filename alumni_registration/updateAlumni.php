@@ -37,60 +37,57 @@ if ($_POST) {
             header('Location: update_form.php');
 
         }
-    } else {
+    }
 
+    $sql1 = "UPDATE users SET user_name ='$user_name', email = '$email', address ='$address', DOB = '$DOB', phone_no =
+            '$phone_no', image='$update_filename' WHERE user_id = '$user_id'";
+    if (mysqli_query($conn, $sql1)) {
 
-        $sql1 = "UPDATE users SET user_name ='$user_name', email = '$email', address ='$address', DOB = '$DOB', phone_no =
-'$phone_no'
-WHERE user_id = '$user_id'";
-        if (mysqli_query($conn, $sql1)) {
+        if ($_FILES['image']['name'] != '') {
+            move_uploaded_file($_FILES['image']['tmp_name'], "../images/profile/" . $_FILES['image']['name']);
+            unlink("../images/profile/" . $old_image);
+        }
 
-            if ($_FILES['image']['name'] != '') {
-                move_uploaded_file($_FILES['image']['tmp_name'], "../images/profile/" . $_FILES['image']['name']);
-                unlink("../images/profile/" . $old_image);
-            }
+        $sql2 = "UPDATE role SET role ='$role' where role_id='$role_id'";
+        if (mysqli_query($conn, $sql2)) {
 
-            $sql2 = "UPDATE role SET role ='$role' where role_id='$role_id'";
-            if (mysqli_query($conn, $sql2)) {
+            $sql3 = "UPDATE faculties SET faculty_name ='$faculty_name' where faculty_id ='$faculty_id'";
+            if (mysqli_query($conn, $sql3)) {
 
-                $sql3 = "UPDATE faculties SET faculty_name ='$faculty_name' where faculty_id ='$faculty_id'";
-                if (mysqli_query($conn, $sql3)) {
+                $sql4 = "UPDATE courses SET course_name ='$course_name' where course_id ='$course_id'";
+                if (mysqli_query($conn, $sql4)) {
 
-                    $sql4 = "UPDATE courses SET course_name ='$course_name' where course_id ='$course_id'";
-                    if (mysqli_query($conn, $sql4)) {
+                    $sql5 = "UPDATE batch SET batch_no ='$batch_no' where batch_id ='$batch_id'";
+                    if (mysqli_query($conn, $sql5)) {
 
-                        $sql5 = "UPDATE batch SET batch_no ='$batch_no' where batch_id ='$batch_id'";
-                        if (mysqli_query($conn, $sql5)) {
+                        if ($_SESSION['role'] == 'admin') {
 
-                            if ($_SESSION['role'] == 'admin') {
-
-                                header("location: ../DB_Admin/Dashboard.php");
-                            } elseif ($_SESSION['role'] == 'super_admin') {
-                                header("location: ../DB_Superadmin/Dashboard.php");
-                            } else {
-                                header("location: ../DB_Alumni/Dashboard.php");
-                            }
-
+                            header("location: ../DB_Admin/Dashboard.php");
+                        } elseif ($_SESSION['role'] == 'super_admin') {
+                            header("location: ../DB_Superadmin/Dashboard.php");
                         } else {
-                            echo "Update failed in query 5" . $sql5 . "<br>" . mysqli_error($conn);
+                            header("location: ../DB_Alumni/Dashboard.php");
                         }
 
                     } else {
-                        echo "Update failed in Query 4" . $sql4 . "<br>" . mysqli_error($conn);
+                        echo "Update failed in query 5" . $sql5 . "<br>" . mysqli_error($conn);
                     }
 
                 } else {
-                    echo "Update Failed in query 3" . $sql3 . "<br>" . mysqli_error($conn);
+                    echo "Update failed in Query 4" . $sql4 . "<br>" . mysqli_error($conn);
                 }
 
             } else {
-                echo "Update Failed in query 2" . $sql2 . "<br>" . mysqli_error($conn);
+                echo "Update Failed in query 3" . $sql3 . "<br>" . mysqli_error($conn);
             }
 
         } else {
-            echo "update failed in query 1" . $sql1 . "<br>" . mysqli_error($conn);
+            echo "Update Failed in query 2" . $sql2 . "<br>" . mysqli_error($conn);
         }
 
+    } else {
+        echo "update failed in query 1" . $sql1 . "<br>" . mysqli_error($conn);
     }
+
 }
 ?>

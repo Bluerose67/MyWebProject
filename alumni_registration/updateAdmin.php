@@ -25,47 +25,44 @@ if ($_POST) {
     if ($_FILES['image']['name'] != '') {
         if (file_exists("../images/profile/" . $_FILES['image']['name'])) {
             $filename = $_FILES['image']['name'];
-            $_SESSION['status'] = "Image exists already" . $filename;
+            $_SESSION['status'] = "Image already exists: " . $filename;
             header('Location: update_form.php');
-
-        }
-    } else {
-
-        $sql1 = "UPDATE users SET user_name ='$user_name', email = '$email', address ='$address', DOB = '$DOB', phone_no = '$phone_no' 
-                        WHERE user_id = '$user_id'";
-        if (mysqli_query($conn, $sql1)) {
-
-            if ($_FILES['image']['name'] != '') {
-                move_uploaded_file($_FILES['image']['tmp_name'], "../images/profile/" . $_FILES['image']['name']);
-                unlink("../images/profile/" . $old_image);
-            }
-            $sql2 = "UPDATE role SET role ='$role' where role_id='$role_id'";
-            if (mysqli_query($conn, $sql2)) {
-                $sql3 = "UPDATE admins SET department ='$department' where admin_id ='$admin_id'";
-
-                if (mysqli_query($conn, $sql3)) {
-                    if ($_SESSION['role'] == 'admin') {
-
-                        header("location: ../DB_Admin/Dashboard.php");
-                    } elseif ($_SESSION['role'] == 'super_admin') {
-                        header("location: ../DB_Superadmin/Dashboard.php");
-                    } else {
-                        header("location: ../DB_Alumni/Dashboard.php");
-                    }
-                } else {
-                    echo "Update Failed in query 3" . $sql3 . "<br>" . mysqli_error($conn);
-                }
-
-            } else {
-                echo "Update Failed in query 2" . $sql2 . "<br>" . mysqli_error($conn);
-            }
-
-        } else {
-            echo "update failed in query 1" . $sql1 . "<br>" . mysqli_error($conn);
+            exit();
         }
     }
 
+    $sql1 = "UPDATE users SET user_name ='$user_name', email = '$email', address ='$address', DOB = '$DOB', phone_no = '$phone_no', 
+    image='$update_filename' WHERE user_id = '$user_id'";
+    if (mysqli_query($conn, $sql1)) {
+        if ($_FILES['image']['name'] != '') {
+            move_uploaded_file($_FILES['image']['tmp_name'], "../images/profile/" . $_FILES['image']['name']);
+            unlink("../images/profile/" . $old_image);
+        }
 
+        $sql2 = "UPDATE role SET role ='$role' WHERE role_id='$role_id'";
+        if (mysqli_query($conn, $sql2)) {
+            $sql3 = "UPDATE admins SET department ='$department' WHERE admin_id ='$admin_id'";
+
+            if (mysqli_query($conn, $sql3)) {
+                if ($_SESSION['role'] == 'admin') {
+                    header("location: ../DB_Admin/Dashboard.php");
+                    exit();
+                } elseif ($_SESSION['role'] == 'super_admin') {
+                    header("location: ../DB_Superadmin/Dashboard.php");
+                    exit();
+                } else {
+                    header("location: ../DB_Alumni/Dashboard.php");
+                    exit();
+                }
+            } else {
+                echo "Update Failed in query 3" . $sql3 . "<br>" . mysqli_error($conn);
+            }
+
+        } else {
+            echo "Update Failed in query 2" . $sql2 . "<br>" . mysqli_error($conn);
+        }
+    } else {
+        echo "Update failed in query 1" . $sql1 . "<br>" . mysqli_error($conn);
+    }
 }
-
 ?>
