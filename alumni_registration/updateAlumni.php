@@ -15,11 +15,21 @@ if ($_POST) {
     $address = $_POST['address'];
     $DOB = $_POST['DOB'];
     $phone_no = $_POST['phone_no'];
+    $bio = $_POST['bio'];
     $role = $_POST['role'];
     $faculty_name = $_POST['faculty_name'];
     $course_name = $_POST['course_name'];
     $batch_no = $_POST['batch_no'];
     // var_dump($std_id);
+    // var_dump($role_id);
+    // var_dump($email);
+    // var_dump($address);
+    // var_dump($DOB);
+    // var_dump($phone_no);
+    // var_dump($role);
+    // var_dump($faculty_name);
+    // var_dump($course_name);
+    // var_dump($batch_no);
 
     $new_image = $_FILES['image']['name'];
     $old_image = $_POST['image_old'];
@@ -40,7 +50,7 @@ if ($_POST) {
     }
 
     $sql1 = "UPDATE users SET user_name ='$user_name', email = '$email', address ='$address', DOB = '$DOB', phone_no =
-            '$phone_no', image='$update_filename' WHERE user_id = '$user_id'";
+            '$phone_no',bio='$bio', image='$update_filename' WHERE user_id = '$user_id'";
     if (mysqli_query($conn, $sql1)) {
 
         if ($_FILES['image']['name'] != '') {

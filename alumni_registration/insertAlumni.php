@@ -36,6 +36,9 @@ if ($_POST) {
             $sql1 = "INSERT INTO users (user_name, email, password, address, DOB, Phone_no, image)
                 VALUES ('$user_name', '$email', '$password', '$address', '$DOB', '$phone_no','$image')";
             if (mysqli_query($conn, $sql1)) {
+
+                $user_id = mysqli_insert_id($conn);
+
                 $image = $_FILES['image']['name']; // Get the name of the uploaded file
 
                 // Specify the destination directory where you want to save the uploaded file
@@ -50,14 +53,23 @@ if ($_POST) {
                 // Move the uploaded file to the desired location
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
                     // File uploaded successfully,
+                    // Update the value of $image with the new file name
+                    $image = $targetFileName;
 
+                    // Update the database record with the new file name 
+                    $updateSql = "UPDATE users SET image = '$image' WHERE user_id = '$user_id'";
+                    if (mysqli_query($conn, $updateSql)) {
+                        // Image file name updated in the database successfully
+                    } else {
+                        echo "Error updating image file name in the database: " . mysqli_error($conn);
+                    }
                 } else {
                     // File upload failed
                     echo "Sorry, there was an error uploading your file.";
                 }
 
 
-                $user_id = mysqli_insert_id($conn);
+
 
                 // Insert into 'faculties' table
                 $sql2 = "INSERT INTO faculties (faculty_name)

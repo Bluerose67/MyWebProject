@@ -92,6 +92,7 @@ section.main {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 /* Style sidebar links */
@@ -830,7 +831,6 @@ main {
     width: 100%;
     padding: 10px 20px;
     font-family: var(--poppins);
-    height: 120vh;
 }
 
 main .head-title {
@@ -1057,55 +1057,97 @@ main .table-data .order table tbody tr:hover {
 
 
 /* profile page starts--------------------------------- */
-section.row {
+.profile-main{
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
 }
+section.row {
+    margin: 20px;
+        border-radius: 20px;
+        background: #ffffff;
+        height: 577px;
+        width: 36%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+}
 
-.profile-card {
-    border-radius: 20px;
-    background: #ffffff;
-    height: 400px;
-    width: 25%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
+
+.profile-right{
+        display: flex;
+        flex-direction: column;
+        width: 55%;
 }
 
 .additional-info {
-    border-radius: 20px;
-    background: #ffffff;
-    height: 280px;
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 113px 0 0 35px;
+            border-radius: 20px;
+            background: #ffffff;
+            height: 326px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
 }
 
 section.Bio {
-    margin: 35px 0 0 262px;
+    margin: 35px 0 0 0px;
     border-radius: 20px;
     background: #ffffff;
     height: 220px;
-    width: 61%;
+    width: 100%;
     padding: 5px;
 }
 
 
-.field {
+.field1 {
     margin: 10px;
+}
 
-
+.field {
+display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    width: 80%;
 }
 
 .field label {
+    font-weight: 700;
+        font-size: 20px;
+        color: #F85151;
+        text-align: center;
+        letter-spacing: 1px;
+        font-family: 'poppins', sans-serif;
+}
+.Bio-field {
+    display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 10px;
+        width: 100%;
+}
+
+.field label,
+.Bio-field label {
+    font-weight: 700;
     font-size: 20px;
-    font-weight: 500;
+    color: #F85151;
+    text-align: center;
+    letter-spacing: 1px;
+    font-family: 'poppins', sans-serif;
+}
+
+.profile-main span{
+        font-size: 20px;
+        color: #333;
+        text-align: center;
+        letter-spacing: 1px;
+        font-family: 'poppins', sans-serif;
 }
 
 .Profile-img {
@@ -1116,6 +1158,30 @@ section.Bio {
     margin: 10px auto;
     border: 5px solid #ccc;
     border-radius: 50%;
+}
+.edit-profile {
+    width: 40%;
+    height: 30px;
+    margin: 52px 20px 18px 0px;
+    border: 1px solid;
+    background: red;
+    color: #e9f4fb;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .3s;
+    outline: none;
+    float: right;
+}
+
+.edit-profile:hover {
+    background: #7CB9E8;
+}
+
+.edit-profile a {
+    color: #ffffff;
+    text-decoration: none;
 }
 
 /* profile page ends--------------------------------- */

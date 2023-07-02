@@ -30,6 +30,7 @@ if (isset($_GET['admin_id'])) {
                 "department" => $row['department'],
                 "role" => $row['role'],
                 "image" => $row['image'],
+                "bio" => $row['bio'],
             );
         }
     } else {
@@ -55,6 +56,7 @@ if (isset($_GET['admin_id'])) {
                     <input type="hidden" name="admin_id" value="<?php echo $record['admin_id'] ?>" />
                     <input type="hidden" name="user_id" value="<?php echo $record['user_id'] ?>" />
                     <input type="hidden" name="role_id" value="<?php echo $record['role_id'] ?>" />
+                    <input type="hidden" name="bio" value="<?php echo $record['bio'] ?>" />
                     <div class="text">
                         <input type="text" name="user_name" value="<?= $record['user_name'] ?>" required />
                         <span> </span>
@@ -135,7 +137,7 @@ if (isset($_GET['admin_id'])) {
                     JOIN faculties f ON s.faculty_id = f.faculty_id
                     JOIN courses c ON s.course_id = c.course_id
                     JOIN batch b ON s.batch_id = b.batch_id
-                    WHERE r.role = 'student'";
+                    WHERE s.std_id = '$std_id'";
 
     $result = mysqli_query($conn, $sql);
 
@@ -155,6 +157,7 @@ if (isset($_GET['admin_id'])) {
                 "DOB" => $row['DOB'],
                 "phone_no" => $row['phone_no'],
                 "image" => $row['image'],
+                "bio" => $row['bio'],
                 "role" => $row['role'],
                 "faculty_name" => $row['faculty_name'],
                 "course_name" => $row['course_name'],
@@ -172,7 +175,7 @@ if (isset($_GET['admin_id'])) {
 
         <head>
             <title>
-                Update Admin data
+                Update Alumni Profile
             </title>
             <link rel="stylesheet" href="style.css">
         </head>
@@ -188,6 +191,8 @@ if (isset($_GET['admin_id'])) {
                         <input type="hidden" name="faculty_id" value="<?php echo $record['faculty_id'] ?>" />
                         <input type="hidden" name="course_id" value="<?php echo $record['course_id'] ?>" />
                         <input type="hidden" name="batch_id" value="<?php echo $record['batch_id'] ?>" />
+                        <input type="hidden" name="bio" value="<?php echo $record['bio'] ?>" />
+
                         <div class="text">
                             <input type="text" name="user_name" value="<?= $record['user_name'] ?>" required />
                             <span> </span>
@@ -217,8 +222,11 @@ if (isset($_GET['admin_id'])) {
                         <div class="textt">
 
                             <input type="file" id="image" name="image">
-                            <input type="file" id="image" name="image_old" value="<?php echo $record['image']; ?>">
+                            <input type="hidden" id="image" name="image_old" value="<?php echo $record['image']; ?>">
 
+                        </div>
+                        <div class="profile">
+                            <img src="<?php echo "../images/profile/" . $record['image']; ?>" alt="Avatar" class="avatar">
                         </div>
 
 

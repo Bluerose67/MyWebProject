@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("../connect.php");
 ?>
 <!DOCTYPE html>
@@ -33,11 +34,35 @@ include("../connect.php");
           <li>
             <a href="index.php#contact" class="menu-items"> Contact</a>
           </li>
-          <li>
-            <button class="login-btn">
-              <a href="login.php" style="color: #e9f4fb">Login</a>
-            </button>
-          </li>
+          <?php
+          if (!isset($_SESSION['username'])) { ?>
+            <li>
+              <button class="login-btn">
+                <a href="login.php" style="color: #e9f4fb">Login</a>
+              </button>
+            </li>
+          <?php } else {
+            if ($_SESSION['role'] === 'super_admin') { ?>
+              <li>
+                <button class="login-btn">
+                  <a href="../DB_Superadmin/Dashboard.php" style="color: #e9f4fb">Dashboard</a>
+                </button>
+              </li>
+            <?php } elseif ($_SESSION['role'] === 'admin') { ?>
+              <li>
+                <button class="login-btn">
+                  <a href="../DB_Admin/Dashboard.php" style="color: #e9f4fb">Dashboard</a>
+                </button>
+              </li>
+            <?php } else { ?>
+              <li>
+                <button class="login-btn">
+                  <a href="../DB_Alumni/Dashboard.php" style="color: #e9f4fb">Dashboard</a>
+                </button>
+              </li>
+            <?php }
+          }
+          ?>
         </ul>
       </div>
     </nav>

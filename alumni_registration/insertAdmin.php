@@ -50,7 +50,7 @@ if ($_POST) {
                     // Update the value of $image with the new file name
                     $image = $targetFileName;
 
-                    // Update the database record with the new file name
+                    // Update the database record with the new file name 
                     $updateSql = "UPDATE users SET image = '$image' WHERE user_id = '$user_id'";
                     if (mysqli_query($conn, $updateSql)) {
                         // Image file name updated in the database successfully
