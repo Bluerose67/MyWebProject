@@ -59,66 +59,78 @@ require_once('../DB_Superadmin/Dashboard_template.php');
         </section>
         <!-- Image section begins here -->
         <section class="wrapper_box" id="img_Gallery">
-            <?php
-            $dir = "../images/gallery/"; // image folder name
-            if (is_dir($dir)) {
-                if ($dh = opendir($dir)) {
-                    while (($file = readdir($dh)) !== false) {
-                        if ($file == "." or $file == "..") {
-                        } else { ?> <!---- its a loop [change the folder name on img path]----->
-            <div class='wrapper'>
-                <img src="../images/gallery/<?php echo $file; ?>" onclick="openModal();currentSlide(1)"
-                    class="hover-shadow">
-            </div>
-            <?php } ?>
-            <?php
-                    }
-                }
-                closedir($dh);
-            } ?>
-            <!-- Image Section ends here -->
-
-        </section>
-        <!-- The Modal/Lightbox -->
-        <div id="myModal" class="modal">
-            <span class="close cursor" onclick="closeModal()" title="Close">&times;</span>
-            <div class="modal-content">
-
+            <div id="galleryContainer">
                 <?php
                 $dir = "../images/gallery/"; // image folder name
                 if (is_dir($dir)) {
                     if ($dh = opendir($dir)) {
+                        $slideIndex = 1; // Initialize slide index
                         while (($file = readdir($dh)) !== false) {
                             if ($file == "." or $file == "..") {
+                                continue; // Skip current iteration
                             } else {
-                                ?> <!---- its a loop [change the folder name on img path]----->
-                <div class='mySlides'>
-                    <img src="../images/gallery/<?php echo $file; ?>">
-                </div>
-                <?php
+                                ?>
+                                <div class='wrapper'>
+                                    <img src="../images/gallery/<?php echo $file; ?>"
+                                        onclick="openModal();currentSlide(<?php echo $slideIndex; ?>)" class="hover-shadow">
+                                </div>
+                                <?php
+                                $slideIndex++; // Increment slide index
                             }
                         }
                         closedir($dh);
                     }
-                } ?>
+                }
+                ?>
+            </div>
+            <!-- Image Section ends here -->
+            <div id="paginationContainer">
+                <button id="prevBtn" class="edit-button">Prev</button>
+                <button id="nextBtn" class="edit-button">Next</button>
+            </div>
+        </section>
 
+        <!-- The Modal/Lightbox -->
+        <div id="myModal" class="modal">
+            <span class="close cursor" onclick="closeModal()" title="Close">&times;</span>
+            <div class="modal-content">
+                <?php
+                $dir = "../images/gallery/"; // image folder name
+                if (is_dir($dir)) {
+                    if ($dh = opendir($dir)) {
+                        $slideIndex = 1; // Initialize slide index
+                        while (($file = readdir($dh)) !== false) {
+                            if ($file == "." or $file == "..") {
+                                continue; // Skip current iteration
+                            } else {
+                                ?>
+                                <div class='mySlides'>
+                                    <img src="../images/gallery/<?php echo $file; ?>">
+                                </div>
+                                <?php
+                                $slideIndex++; // Increment slide index
+                            }
+                        }
+                        closedir($dh);
+                    }
+                }
+                ?>
                 <!-- Next/previous controls -->
                 <a class="prev" onclick="plusSlides(-1)" title="Prev">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)" title="next">&#10095;</a>
-
-                <!-- Caption text -->
-                <!-- <div class="caption-container">
-                                    <p id="caption"></p>
-                                </div> -->
+                <a class="next" onclick="plusSlides(1)" title="Next">&#10095;</a>
 
             </div>
-        </div> <!-- Image modal ends here ---------------------------------->
+        </div>
+        <!-- Image modal ends here -->
+
     </main>
 </section><!-- content section ends  -->
 </section> <!-- right lower section ends here ---------------------------------------------------------->
 
 </div><!-- dashboard ends -->
 <script src="../js/index.js"></script>
+<script src="../js/sidebar.js"></script>
+<script src="../js/pagination.js"></script>
 </body>
 
 </html>

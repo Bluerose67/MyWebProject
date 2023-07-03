@@ -214,12 +214,14 @@ section .title h1 span{
     font-weight: lighter;
 
 }
-.wrapper_box {
+
+#galleryContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 }
+
 .wrapper {
     width: 400px;
     height: 500px;
@@ -236,12 +238,27 @@ section .title h1 span{
 .wrapper:hover img{
     transform: scale(1.2);
 }
-/* Modal box starts ------------------------------------------------------------------------------------------------------ */
+
+#paginationContainer {
+    margin: 10px 0px 15px 610px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 20%;
+}
+
+#prevBtn,
+#nextBtn {
+    padding: 8px 16px;
+    margin: 0 5px;
+    color: #ffffff;
+}
+
+/* modal box starts ----------------------------------------------------------------------------------------------------- */
 .modal {
     display: none;
     position: fixed;
     z-index: 4;
-    /* padding-top: 100px; */
     left: 0;
     top: 0;
     width: 100%;
@@ -256,11 +273,6 @@ section .title h1 span{
     width: 100%;
     justify-content: center;
     align-items: center;
-    /* position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    max-width: 1200px; */
 }
 
 /* The Close Button */
@@ -268,9 +280,6 @@ section .title h1 span{
     color: white;
     float: right;
     padding-right: 20px;
-    /* position: absolute; */
-    /* top: 10px; */
-    /* right: 25px; */
     font-size: 35px;
     font-weight: bold;
 }
@@ -331,7 +340,6 @@ section .title h1 span{
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-
 img.hover-shadow {
     transition: 0.3s;
 }
@@ -339,7 +347,8 @@ img.hover-shadow {
 .hover-shadow:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-/* Modal box ends ------------------------------------------------------------------------------------------------------*/
+
+/* modal box ends ----------------------------------------------------------------------------------------------------------------------- */
 
 /* footer starts here ------------------------------------------------------------------------------------------------------------- */
 .footer {

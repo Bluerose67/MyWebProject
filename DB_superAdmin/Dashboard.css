@@ -113,34 +113,10 @@ section.main {
     font-size: 17px;
     color: #b1b8bb;
     border-radius: 10px;
-    /* display: block; */
 }
-
-/* .icon2 a:hover,
-.icon3 a:hover,
-.icon4 a:hover,
-.icon5 a:hover,
-.icon6 a:hover {
-    background-color: var(--grey);
-} */
 
 
 .material-symbols-outlined {
-    font-family: 'Material Symbols Outlined';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-feature-settings: 'liga';
-    -webkit-font-smoothing: antialiased;
-    margin: 0 10px 0 0;
-    color: #ffffff;
     cursor: pointer;
 }
 
@@ -168,10 +144,15 @@ section.main {
 
 .notification_btn {
     border-radius: 30%;
-    border-style: none;
-    background-color: #F85151;
-    text-align: center;
-    padding-left: 8px;
+        color: #ffffff;
+        cursor: pointer;
+        display: inline-block;
+        border-style: none;
+        background-color: #F85151;
+        width: 43px;
+        height: 34px;
+        line-height: 50px;
+        text-align: center;
 }
 
 .notification_btn:hover {
@@ -179,27 +160,9 @@ section.main {
     transition: .3s;
 }
 
-.logout_btn {
-    border-radius: 30%;
-    border-style: none;
-    background-color: #F85151;
-    text-align: center;
-    padding-left: 8px;
-}
-
-.logout_btn:hover {
-    background: #7CB9E8;
-    transition: .3s;
-}
-
 .notification_btn a {
     color: #ffffff;
 
-}
-
-.logout_btn a {
-    color: #ffffff;
-    align-items: center;
 }
 
 .icon-button {
@@ -275,20 +238,6 @@ section.main {
     margin: 0 0 0 22px;
 }
 
-/* .close_delete {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close_delete:hover {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-} */
-
 /* modal to delete a record ends ------------------------------------------------------------------------------------------------*/
 
 .add-button {
@@ -355,20 +304,6 @@ table td.change-buttons {
     width: 95%;
     border-radius: 10px;
 }
-
-/* table {
-        border-collapse: collapse;
-            border-radius: 1em;
-            overflow: hidden;
-            width: 100%;
-}
-
-th,
-td {
-    padding: 1em;
-    background: #efecec;
-    border-bottom: 2px solid white;
-} */
 
 /* Image Upload form begins  -------------------------------------------------------------------------------------------------------*/
 
@@ -482,7 +417,7 @@ section .title h1 span {
 
 }
 
-.wrapper_box {
+#galleryContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -532,6 +467,20 @@ form p {
     font-size: 17px;
     font-weight: 400;
     margin-top: 50px;
+}
+#paginationContainer {
+    margin: 10px 0px 15px 505px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 20%;
+}
+
+#prevBtn,
+#nextBtn {
+    padding: 8px 16px;
+    margin: 0 5px;
+    color: #ffffff;
 }
 
 /* manage gallery img properties ends ----------------------------------------------------------------------------------*/
@@ -919,10 +868,6 @@ main .box-info li .text h3 {
 main .box-info li .text p {
     color: var(--dark);
 }
-
-
-
-
 
 main .table-data {
     display: flex;

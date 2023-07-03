@@ -54,6 +54,7 @@ if (isset($_GET['admin_id'])) {
             </div>
             <!-- Display admin form -->
             <form action="../alumni_registration/updateAdmin.php" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="user_id" value="<?php echo $record['user_id'] ?>" />
                 <input type="hidden" name="admin_id" value="<?php echo $record['admin_id'] ?>" />
                 <input type="hidden" name="role_id" value="<?php echo $record['role_id'] ?>" />
 
@@ -160,32 +161,7 @@ if (isset($_GET['admin_id'])) {
 
 
     </div><!-- dashboard ends -->
-    <script src="dashboard.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
-            const currentPage = window.location.pathname.split('/').pop(); // Get the current page URL
-            console.log(currentPage);
-            console.log(allSideMenu);
-            allSideMenu.forEach(item => {
-                const li = item.parentElement;
-                console.log(li);
-
-                if (item.getAttribute('href') === currentPage) {
-                    li.classList.add('active');
-                }
-
-                item.addEventListener('click', function () {
-                    allSideMenu.forEach(i => {
-                        i.parentElement.classList.remove('active');
-                    })
-                    li.classList.add('active');
-                })
-            });
-        });
-    </script>
-
+    <script src="../js/sidebar.js"></script>
     </body>
 
     </html>

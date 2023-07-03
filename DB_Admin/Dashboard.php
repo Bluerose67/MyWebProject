@@ -298,6 +298,8 @@ require_once('../DB_Superadmin/dashboard_template.php');
 
 
 </div><!-- dashboard ends ---------------------------------------------------------------------------->
+
+<script src="../js/sidebar.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     /* Filter data  */
@@ -321,88 +323,7 @@ require_once('../DB_Superadmin/dashboard_template.php');
     });
                                                                                                                                                         /* Filter data  */
 </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
-        const currentPage = window.location.pathname.split('/').pop(); // Get the current page URL
-        console.log(currentPage);
-        console.log(allSideMenu);
-        allSideMenu.forEach(item => {
-            const li = item.parentElement;
-            console.log(li);
-
-            if (item.getAttribute('href') === currentPage) {
-                li.classList.add('active');
-            }
-
-            item.addEventListener('click', function () {
-                allSideMenu.forEach(i => {
-                    i.parentElement.classList.remove('active');
-                })
-                li.classList.add('active');
-            })
-        });
-    });
-
-    /* delete button confirmation box --------------------------------------------------------------------- */
-
-    var adminDeleteBtns = document.querySelectorAll(".adminDeleteBtn");
-    var alumniDeleteBtns = document.querySelectorAll(".alumniDeleteBtn");
-    var confirmationModalAdmin = document.getElementById("confirmationModalAdmin");
-    var confirmationModalAlumni = document.getElementById("confirmationModalAlumni");
-    var confirmDeleteBtnAdmin = document.getElementById("confirmDeleteBtnAdmin");
-    var confirmDeleteBtnAlumni = document.getElementById("confirmDeleteBtnAlumni");
-    var cancelDeleteBtnAdmin = document.getElementById("cancelDeleteBtnAdmin");
-    var cancelDeleteBtnAlumni = document.getElementById("cancelDeleteBtnAlumni");
-
-    adminDeleteBtns.forEach(function (deleteBtn) {
-        deleteBtn.addEventListener("click", function () {
-            confirmationModalAdmin.style.display = "block";
-        });
-    });
-
-    alumniDeleteBtns.forEach(function (deleteBtn) {
-        deleteBtn.addEventListener("click", function () {
-            confirmationModalAlumni.style.display = "block";
-        });
-    });
-
-    confirmDeleteBtnAdmin.addEventListener("click", function () {
-        // Close the modal
-        confirmationModalAdmin.style.display = "none";
-    });
-
-    confirmDeleteBtnAlumni.addEventListener("click", function () {
-        // Close the modal
-        confirmationModalAlumni.style.display = "none";
-    });
-
-    cancelDeleteBtnAdmin.addEventListener("click", function () {
-        // Close the modal
-        confirmationModalAdmin.style.display = "none";
-    });
-
-    cancelDeleteBtnAlumni.addEventListener("click", function () {
-        // Close the modal
-        confirmationModalAlumni.style.display = "none";
-    });
-
-    window.addEventListener("click", function (event) {
-        if (event.target == confirmationModalAdmin) {
-            // Close the modal
-            confirmationModalAdmin.style.display = "none";
-        }
-
-        if (event.target == confirmationModalAlumni) {
-            // Close the modal
-            confirmationModalAlumni.style.display = "none";
-        }
-    });
-
-
-    /* delete button confirmation box --------------------------------------------------------------------- */
-
-</script>
+<script src="../js/deleteConfirmation.js"></script>
 
 </body>
 

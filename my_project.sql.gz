@@ -1,0 +1,328 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jul 03, 2023 at 12:02 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.10
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `my_project`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admins`
+--
+
+CREATE TABLE `admins` (
+  `admin_id` int(11) NOT NULL,
+  `department` varchar(40) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`admin_id`, `department`, `user_id`) VALUES
+(1, 'Unavailable', 1),
+(15, 'Department of Science', 31),
+(17, 'Department of Management', 33),
+(18, 'Department of Arts', 34),
+(19, 'Department of Business', 42);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `batch`
+--
+
+CREATE TABLE `batch` (
+  `batch_id` int(11) NOT NULL,
+  `batch_no` int(40) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `batch`
+--
+
+INSERT INTO `batch` (`batch_id`, `batch_no`) VALUES
+(14, 2077),
+(15, 2077),
+(16, 2077),
+(17, 2077),
+(18, 2077);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `courses`
+--
+
+CREATE TABLE `courses` (
+  `course_id` int(11) NOT NULL,
+  `course_name` varchar(40) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`course_id`, `course_name`) VALUES
+(15, 'BCA'),
+(16, 'BCA'),
+(17, 'BCA'),
+(18, 'BCA'),
+(19, 'CSIT');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faculties`
+--
+
+CREATE TABLE `faculties` (
+  `faculty_id` int(11) NOT NULL,
+  `faculty_name` varchar(40) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `faculties`
+--
+
+INSERT INTO `faculties` (`faculty_id`, `faculty_name`) VALUES
+(16, 'Humanities'),
+(17, 'Humanities'),
+(18, 'Humanities'),
+(19, 'Humanities'),
+(20, 'humanities'),
+(21, 'Humanities'),
+(22, 'science');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role`
+--
+
+CREATE TABLE `role` (
+  `role_id` int(11) NOT NULL,
+  `role` varchar(15) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `role`
+--
+
+INSERT INTO `role` (`role_id`, `role`, `user_id`) VALUES
+(1, 'super_admin', 1),
+(24, 'admin', 31),
+(26, 'admin', 33),
+(27, 'admin', 34),
+(28, 'student', 35),
+(31, 'student', 38),
+(32, 'student', 39),
+(33, 'student', 40),
+(34, 'student', 41),
+(35, 'admin', 42);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students`
+--
+
+CREATE TABLE `students` (
+  `std_id` int(11) NOT NULL,
+  `faculty_id` int(11) DEFAULT NULL,
+  `course_id` int(11) DEFAULT NULL,
+  `batch_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`std_id`, `faculty_id`, `course_id`, `batch_id`, `user_id`) VALUES
+(14, 16, 15, 14, 35),
+(15, 19, 16, 15, 38),
+(16, 20, 17, 16, 39),
+(17, 21, 18, 17, 40),
+(18, 22, 19, 18, 41);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
+  `user_name` varchar(40) NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `password` varchar(40) NOT NULL,
+  `address` varchar(40) NOT NULL,
+  `DOB` date NOT NULL,
+  `phone_no` varchar(15) NOT NULL,
+  `bio` varchar(500) NOT NULL,
+  `image` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `user_name`, `email`, `password`, `address`, `DOB`, `phone_no`, `bio`, `image`) VALUES
+(1, 'super', 'unavailable', 'super', 'unavailable', '2000-01-01', '0', 'Hello, I am super admin and i am able to do any kind of work for the better functioning of the system.', 'avatar.jpg'),
+(31, 'Rushab Khadka', 'rushabkhadka67@gmail.com', 'rushab123', 'Budhanilkhanta', '2023-06-27', '9840379886', 'Hello, I am the admin of the system and if u have any queries or problem you are requested to bring them to me.', '284955386_5047741688677274_8614783971046823201_n.jpg'),
+(33, 'Suman Maharjan', 'chumu@gmail.com', 'suman123', 'Dhobidhara', '2023-06-14', '9840293873', 'Hey, Suman here and I am currently working as a software engineer and i excel at backend language and framework.', '649d47d3c697b_0-02-03-3ba4bb5d0966fc86ea360744cbaef4eadfadc3c57db9c37a6aba831743cd6387_d8efe9dea916c815.jpg'),
+(34, 'Alisha Nepal', 'Alishanepal@gmail.com', 'alisha123', 'balaju', '2023-06-21', '9811223344', 'Alisha here and I am currently working at leapfrog as a frontend developer. I also have an experience of backend development of about a year.', '649d4a0c92dd3_357319028_3519647611580907_7833749281630837291_n.jpg'),
+(35, 'Nalina Kunwar', 'Nalina@gmail.com', 'nalina123', 'Naikap', '2023-06-07', '9812093833', 'Hey, I am Nalina and I am a content manager in Deerwalk Inc.', '649d4a4035d6a_355816296_244987931615656_8566132587215220801_n.jpg'),
+(38, 'Jinisha Magar', 'jinisha1234@gmail.com', 'jinisha123', 'kalanki', '2023-11-17', '9844039876', 'I am an alumni of this college and i have been engaged in data science for about a year now.\r\n', '649d4cdf29e22_jinisha.jpg'),
+(39, 'Jenisha Shrestha', 'jenisha@gmail.com', 'jenisha123', 'Koteshwor', '2023-06-17', '9857493029', 'Hello, People who are very interested in Networking can reach out to me for tips and how to get started.', '649d4d7ec2827_jenesha.jpg'),
+(40, 'Anjan Phuyal', 'anjan123@gmail.com', 'anjan123', 'Macchapokhari', '2023-12-14', '9874836003', 'Anjan here and i am an alumni of ACHS and I am a software engineer. I have been working abroad but if anyone is interested in software engineering then reach out to me.', '649d4dc030a1d_Screenshot 2023-06-29 143347.png'),
+(41, 'Prasiddhi Acharya', 'prasiddhi123@gmail.com', 'prasiddhi', 'balaju', '2023-06-23', '9811223333', 'Hey, A employee in Cotiviti Nepal and also an alumni of this college, I am ready to be of help for the college and its students.', '649d4dffdc561_Screenshot 2023-06-29 143546.png'),
+(42, 'Anjan Banya', 'Anjanbaniya@gmail.com', 'anjan123', 'Sanagau', '2023-07-12', '9833224456', '   Hey, I am anjan and I have been working in IT sectors for about 3 yrs. I am glad to help anyone who is interested in this sector.', 'Screenshot 2023-06-29 143710.png');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`admin_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `batch`
+--
+ALTER TABLE `batch`
+  ADD PRIMARY KEY (`batch_id`);
+
+--
+-- Indexes for table `courses`
+--
+ALTER TABLE `courses`
+  ADD PRIMARY KEY (`course_id`);
+
+--
+-- Indexes for table `faculties`
+--
+ALTER TABLE `faculties`
+  ADD PRIMARY KEY (`faculty_id`);
+
+--
+-- Indexes for table `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`role_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`std_id`),
+  ADD KEY `faculty_id` (`faculty_id`),
+  ADD KEY `course_id` (`course_id`),
+  ADD KEY `batch_id` (`batch_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `batch`
+--
+ALTER TABLE `batch`
+  MODIFY `batch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `courses`
+--
+ALTER TABLE `courses`
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `faculties`
+--
+ALTER TABLE `faculties`
+  MODIFY `faculty_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `role`
+--
+ALTER TABLE `role`
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `std_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `admins`
+--
+ALTER TABLE `admins`
+  ADD CONSTRAINT `admins_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `role`
+--
+ALTER TABLE `role`
+  ADD CONSTRAINT `role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `students`
+--
+ALTER TABLE `students`
+  ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`faculty_id`) REFERENCES `faculties` (`faculty_id`),
+  ADD CONSTRAINT `students_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`),
+  ADD CONSTRAINT `students_ibfk_3` FOREIGN KEY (`batch_id`) REFERENCES `batch` (`batch_id`),
+  ADD CONSTRAINT `students_ibfk_4` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

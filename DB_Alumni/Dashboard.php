@@ -168,31 +168,9 @@ require_once('Dashboard_template.php');
 
 
 </div><!-- dashboard ends ---------------------------------------------------------------------------->
+<script src="../js/sidebar.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
-        const currentPage = window.location.pathname.split('/').pop(); // Get the current page URL
-        console.log(currentPage);
-        console.log(allSideMenu);
-        allSideMenu.forEach(item => {
-            const li = item.parentElement;
-            console.log(li);
-
-            if (item.getAttribute('href') === currentPage) {
-                li.classList.add('active');
-            }
-
-            item.addEventListener('click', function () {
-                allSideMenu.forEach(i => {
-                    i.parentElement.classList.remove('active');
-                })
-                li.classList.add('active');
-            })
-        });
-    });
-
-
 
     /* Filter data  */
 
@@ -205,7 +183,8 @@ require_once('Dashboard_template.php');
             });
         });
     });
-                                                                                                                                /* Filter data  */
+
+    /* Filter data  */
 </script>
 
 </body>

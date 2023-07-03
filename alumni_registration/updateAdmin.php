@@ -11,6 +11,7 @@ if ($_POST) {
     $address = $_POST['address'];
     $DOB = $_POST['DOB'];
     $phone_no = $_POST['phone_no'];
+    $bio = $_POST['bio'];
     $role = $_POST['role'];
     $department = $_POST['department'];
     $new_image = $_FILES['image']['name'];
@@ -31,8 +32,8 @@ if ($_POST) {
         }
     }
 
-    $sql1 = "UPDATE users SET user_name ='$user_name', email = '$email', address ='$address', DOB = '$DOB', phone_no = '$phone_no', 
-    image='$update_filename' WHERE user_id = '$user_id'";
+    $sql1 = "UPDATE users SET user_name ='$user_name', email = '$email', address ='$address', DOB = '$DOB', phone_no = '$phone_no', bio='$bio',
+     image='$update_filename' WHERE user_id = '$user_id'";
     if (mysqli_query($conn, $sql1)) {
         if ($_FILES['image']['name'] != '') {
             move_uploaded_file($_FILES['image']['tmp_name'], "../images/profile/" . $_FILES['image']['name']);

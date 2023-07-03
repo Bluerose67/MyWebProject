@@ -46,10 +46,7 @@ require_once('dashboard_template.php');
                         <?= $row['role'] ?>
                     </span>
                 </div>
-                <button class="edit-profile">
-                    <a href="../alumni_registration/update_profile.php?admin_id=<?= $row['admin_id'] ?>">Edit
-                        Profile</a>
-                </button>
+
 
             </section> <!-- row -->
 
@@ -107,31 +104,7 @@ require_once('dashboard_template.php');
 
 
 </div><!-- dashboard ends -->
-<script src="dashboard.js"></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
-        const currentPage = window.location.pathname.split('/').pop(); // Get the current page URL
-        console.log(currentPage);
-        console.log(allSideMenu);
-        allSideMenu.forEach(item => {
-            const li = item.parentElement;
-            console.log(li);
-
-            if (item.getAttribute('href') === currentPage) {
-                li.classList.add('active');
-            }
-
-            item.addEventListener('click', function () {
-                allSideMenu.forEach(i => {
-                    i.parentElement.classList.remove('active');
-                })
-                li.classList.add('active');
-            })
-        });
-    });
-</script>
+<script src="../js/sidebar.js"></script>
 
 </body>
 

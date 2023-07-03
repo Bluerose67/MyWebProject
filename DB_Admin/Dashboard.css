@@ -107,31 +107,9 @@ section.main{
     border-radius: 10px;
     /* display: block; */
 }
-/* .icon2 a:hover,
-.icon3 a:hover,
-.icon4 a:hover,
-.icon5 a:hover,
-.icon6 a:hover {
-    background-color: var(--grey);
-} */
 
 
 .material-symbols-outlined {
-    font-family: 'Material Symbols Outlined';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-feature-settings: 'liga';
-    -webkit-font-smoothing: antialiased;
-    margin: 0 10px 0 0;
-    color: #ffffff;
     cursor: pointer;
 }
 
@@ -158,34 +136,26 @@ section.main{
 
 .notification_btn{
     border-radius: 30%;
-    border-style: none;
-    background-color: #F85151;
-    text-align: center;
-    padding-left: 8px;
+        color: #ffffff;
+        cursor: pointer;
+        display: inline-block;
+        border-style: none;
+        background-color: #F85151;
+        width: 43px;
+        height: 34px;
+        line-height: 50px;
+        text-align: center;
 }
 .notification_btn:hover{
     background: #7CB9E8;
     transition: .3s;
 }
-.logout_btn{
-    border-radius: 30%;
-    border-style: none;
-    background-color: #F85151;
-    text-align: center;
-    padding-left: 8px;
-}
-.logout_btn:hover {
-    background: #7CB9E8;
-    transition: .3s;
-}
+
 .notification_btn a {
     color: #ffffff;
     
 }
-.logout_btn a {
-    color: #ffffff;
-    align-items: center;
-}
+
 .icon-button {
     background: none;
     border: none;
@@ -375,12 +345,6 @@ td {
     box-sizing: border-box;
 }
 
-/* form .text {
-    display: flex;
-    flex-direction: column;
-    margin: 10px 0px;
-} */
-
 
 .text input {
     width: 110%;
@@ -427,8 +391,6 @@ input [type="button"] {
 }
 /* Image Upload form ends  ----------------------------------------------------------------------------------------------------------*/
 
-
-
 /* manage gallery img properties begins   ---------------------------------------------------------------------------------------------*/
 section .title {
     display: flex;
@@ -456,7 +418,7 @@ section .title h1 span {
     font-weight: lighter;
 
 }
-.wrapper_box {
+#galleryContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -505,6 +467,22 @@ font-size: 17px;
     font-weight: 400;
     margin-top: 50px;
 }
+
+#paginationContainer {
+    margin: 10px 0px 15px 505px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 20%;
+}
+
+#prevBtn,
+#nextBtn {
+    padding: 8px 16px;
+    margin: 0 5px;
+    color: #ffffff;
+}
+
 
 /* manage gallery img properties ends ----------------------------------------------------------------------------------*/
 
@@ -564,7 +542,6 @@ span.notification_progress{
     display: none;
     position: fixed;
     z-index: 4;
-    /* padding-top: 100px; */
     left: 0;
     top: 0;
     width: 100%;
@@ -579,11 +556,6 @@ span.notification_progress{
     width: 100%;
     justify-content: center;
     align-items: center;
-    /* position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    max-width: 1200px; */
 }
 
 /* The Close Button */
@@ -591,9 +563,6 @@ span.notification_progress{
     color: white;
     float: right;
     padding-right: 20px;
-    /* position: absolute; */
-    /* top: 10px; */
-    /* right: 25px; */
     font-size: 35px;
     font-weight: bold;
 }
@@ -653,7 +622,6 @@ span.notification_progress{
 .next:hover {
     background-color: rgba(0, 0, 0, 0.8);
 }
-
 
 img.hover-shadow {
     transition: 0.3s;
@@ -799,7 +767,6 @@ li {
     width: 100%;
     padding: 10px 20px;
     font-family: var(--poppins);
-    height: 91vh;
 }
 
  main .head-title {
