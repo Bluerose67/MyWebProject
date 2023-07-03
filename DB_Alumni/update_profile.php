@@ -92,7 +92,7 @@ if (isset($_GET['std_id'])) {
                         <div class="field">
                             <label>User Name:</label>
                             <span>
-                                <div class="text">
+                                <div class="text_p">
                                     <input type="text" name="user_name" value="<?= $record['user_name'] ?>" required />
                                 </div>
                             </span>
@@ -100,7 +100,7 @@ if (isset($_GET['std_id'])) {
                         <div class="field">
                             <label>Role:</label>
                             <span>
-                                <div class="text">
+                                <div class="text_p">
                                     <input type="text" name="role" value="<?= $record['role'] ?>" required />
                                 </div>
                             </span>
@@ -115,7 +115,7 @@ if (isset($_GET['std_id'])) {
                             <div class="field">
                                 <label>Email:</label>
                                 <span>
-                                    <div class="text">
+                                    <div class="text_p">
                                         <input type="email" name="email" value="<?= $record['email'] ?>" required />
                                     </div>
                                 </span>
@@ -123,7 +123,7 @@ if (isset($_GET['std_id'])) {
                             <div class="field">
                                 <label>Address:</label>
                                 <span>
-                                    <div class="text">
+                                    <div class="text_p">
                                         <input type="text" name="address" value="<?= $record['address'] ?>" required />
                                     </div>
                                 </span>
@@ -131,7 +131,7 @@ if (isset($_GET['std_id'])) {
                             <div class="field">
                                 <label>Date of Birth:</label>
                                 <span>
-                                    <div class="text">
+                                    <div class="text_p">
                                         <input type="text" name="DOB" value="<?= $record['DOB'] ?>" required />
                                     </div>
                                 </span>
@@ -139,7 +139,7 @@ if (isset($_GET['std_id'])) {
                             <div class="field">
                                 <label>Contact:</label>
                                 <span>
-                                    <div class="text">
+                                    <div class="text_p">
                                         <input type="text" name="phone_no" value="<?= $record['phone_no'] ?>" required />
                                     </div>
                                 </span>
@@ -147,7 +147,7 @@ if (isset($_GET['std_id'])) {
                             <div class="field">
                                 <label>Faculty:</label>
                                 <span>
-                                    <div class="text">
+                                    <div class="text_p">
                                         <input type="text" name="faculty_name" value="<?= $record['faculty_name'] ?>"
                                             required />
                                     </div>
@@ -156,7 +156,7 @@ if (isset($_GET['std_id'])) {
                             <div class="field">
                                 <label>Course:</label>
                                 <span>
-                                    <div class="text">
+                                    <div class="text_p">
                                         <input type="text" name="course_name" value="<?= $record['course_name'] ?>"
                                             required />
                                     </div>
@@ -165,7 +165,7 @@ if (isset($_GET['std_id'])) {
                             <div class="field">
                                 <label>Batch:</label>
                                 <span>
-                                    <div class="text">
+                                    <div class="text_p">
                                         <input type="text" name="batch_no" value="<?= $record['batch_no'] ?>" required />
                                     </div>
                                 </span>

@@ -18,7 +18,7 @@ require_once('../DB_Superadmin/Dashboard_template.php');
                 <h1>Upload Images</h1>
                 <form action="" method="post" enctype="multipart/form-data">
                     <input type="hidden" value="1" name="fileupload">
-                    <div class="text">
+                    <div class="text2">
                         <div class="label1">
                             <label>Select a File</label>
                         </div>
