@@ -29,6 +29,7 @@ $mail->addAddress("rushabkhadka67@gmail.com", "Rushab");
 
 $mail->Subject = $subject;
 $mail->Body = $message;
+$mail->Body = $email;
 
 $mail->send();
 

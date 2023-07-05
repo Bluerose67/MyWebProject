@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="text">
-                        <input type="date" id="DOB" name="DOB" required>
+                        <input type="date" id="DOB" name="date" required>
                         <span> </span>
                         <label for="DOB">Event Date</label>
                     </div>
@@ -58,21 +58,63 @@
             $result = mysqli_query($conn, $sql);
 
             if ($result && mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo '<div class="event">';
-                    echo '<h3>' . $row['title'] . '</h3>';
-                    echo '<img src="../images/events/' . $row['image'] . '" alt="Event Photo">';
-                    echo '<p>' . $row['description'] . '</p>';
-                    echo '<p>Date: ' . $row['date'] . '</p>';
-                    echo '<p><a href="events.php?delete_event=' . $row['id'] . '">Delete</a></p>';
-                    echo '</div>';
-                }
+                while ($row = mysqli_fetch_assoc($result)) { ?>
+                    <div class="event">
+                        <h3>
+                            <?= $row['title'] ?>
+                        </h3>
+                        <div class="event_image">
+                            <img src="<?php echo "../images/events/" . $row['image'] ?>" alt="Event Photo" class="image">
+                        </div>
+                        <p>
+                            <?= $row['description'] ?>
+                        </p>
+                        <p>Date:
+                            <?= $row['date'] ?>
+                        </p>
+                        <div class="buttons">
+                            <button class="action-button">
+                                <a href="../Events/deleteEvents.php?id=<?= $row['id'] ?>">Delete</a>
+                            </button>
+                            <button class="action-button">
+                                <a href="../Events/update_event_form.php?id=<?= $row['id'] ?>">Edit</a>
+                            </button>
+                        </div>
+                    </div>
+                <?php }
             } else {
                 echo "No events found.";
             }
             ?>
         </div>
     </main>
+
+    <div class="notification">
+        <p>
+            <?php
+            if (isset($_SESSION["eventAdded"])) {
+
+                echo $_SESSION["eventAdded"];
+
+                unset($_SESSION["eventAdded"]);
+
+            } elseif (isset($_SESSION["eventupdated"])) {
+
+                echo $_SESSION["eventupdated"];
+
+                unset($_SESSION["eventupdated"]);
+
+            } elseif (isset($_SESSION["eventdeleted"])) {
+
+                echo $_SESSION['eventdeleted'];
+
+                unset($_SESSION["eventdeleted"]);
+            }
+            ?>
+        </p>
+        <span class="notification_progress"></span>
+    </div>
+
 </section> <!-- right lower ends -->
 </section> <!-- content section ends -->
 </section> <!-- main section ends -->

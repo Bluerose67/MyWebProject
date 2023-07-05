@@ -32,8 +32,14 @@ if (isset($_GET['std_id'])) {
                             unlink("../images/profile/" . $image);
                             if ($_SESSION['role'] == 'admin') {
 
+                                $_SESSION['alumniDeleted'] = "Alumni Deleted Successfully";
+
                                 header("location: ../DB_Admin/Dashboard.php");
+
                             } elseif ($_SESSION['role'] == 'super_admin') {
+
+                                $_SESSION['alumniDeleted'] = "Alumni Deleted Successfully";
+
                                 header("location: ../DB_Superadmin/Dashboard.php");
                             } else {
                                 echo "Invalid role";
@@ -79,6 +85,10 @@ if (isset($_GET['std_id'])) {
 
             if (mysqli_query($conn, $sql3)) {
                 unlink("../images/profile/" . $image);
+
+
+                $_SESSION['adminDeleted'] = "Admin Deleted Successfully";
+
                 header('Location: ../DB_Superadmin/Dashboard.php');
             } else {
                 echo "Delete Failed in query 3" . $sql3 . "<br>" . mysqli_error($conn);

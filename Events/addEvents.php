@@ -72,9 +72,11 @@ if (isset($_POST['add_event'])) {
 
                 $message = "Event added successfully.";
                 if ($_SESSION['role'] == 'admin') {
+                    $_SESSION["eventAdded"] = $message;
                     header('Location:../DB_Admin/Dashboard_events.php');
                     exit();
                 } elseif ($_SESSION['role'] == 'super_admin') {
+                    $_SESSION["eventAdded"] = $message;
                     header('Location:../DB_Superadmin/Dashboard_events.php');
                     exit();
                 } else {

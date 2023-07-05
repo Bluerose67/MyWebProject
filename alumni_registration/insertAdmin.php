@@ -74,8 +74,14 @@ if ($_POST) {
 
                         if ($_SESSION['role'] == 'admin') {
 
+                            $_SESSION['adminAdded'] = "Admin Added Successfully";
+
                             header("location: ../DB_Admin/Dashboard.php");
+
                         } elseif ($_SESSION['role'] == 'super_admin') {
+
+                            $_SESSION['adminAdded'] = "Admin Added Successfully";
+
                             header("location: ../DB_Superadmin/Dashboard.php");
                         } else {
                             header("location: ../DB_Alumni/Dashboard.php");

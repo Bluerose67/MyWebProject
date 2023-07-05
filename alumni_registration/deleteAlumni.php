@@ -32,8 +32,13 @@ if (isset($_GET['std_id'])) {
 
                             if ($_SESSION['role'] == 'admin') {
 
+                                $_SESSION['alumniDeleted'] = "Alumni Deleted Successfully";
+
                                 header("location: ../DB_Admin/Dashboard.php");
                             } elseif ($_SESSION['role'] == 'super_admin') {
+
+                                $_SESSION['alumniDeleted'] = "Alumni Deleted Successfully";
+
                                 header("location: ../DB_Superadmin/Dashboard.php");
                             } else {
                                 echo "Invalid Role";

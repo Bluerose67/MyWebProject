@@ -46,10 +46,18 @@ if ($_POST) {
 
             if (mysqli_query($conn, $sql3)) {
                 if ($_SESSION['role'] == 'admin') {
+
+                    $_SESSION['adminUpdated'] = "Admin Updated Successfully";
+
                     header("location: ../DB_Admin/Dashboard.php");
+
                     exit();
                 } elseif ($_SESSION['role'] == 'super_admin') {
+
+                    $_SESSION['adminUpdated'] = "Admin Updated Successfully";
+
                     header("location: ../DB_Superadmin/Dashboard.php");
+
                     exit();
                 } else {
                     header("location: ../DB_Alumni/Dashboard.php");

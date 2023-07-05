@@ -17,7 +17,6 @@ if (!isset($_SESSION['username'])) {
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css'>
-    <!-- <link rel="stylesheet" href="../alumni_registration/style.css"> -->
 
 </head>
 

@@ -296,6 +296,34 @@ require_once('../DB_Superadmin/dashboard_template.php');
     <span class="notification_progress"></span>
 </div>
 
+<div class="notification_CRUD">
+    <p>
+        <?php
+        if (isset($_SESSION['alumniAdded'])) {
+
+            echo $_SESSION['alumniAdded'];
+
+            unset($_SESSION['alumniAdded']);
+
+        } elseif (isset($_SESSION['alumniUpdated'])) {
+
+            echo $_SESSION['alumniUpdated'];
+
+            unset($_SESSION['alumniUpdated']);
+
+        } elseif (isset($_SESSION['alumniDeleted'])) {
+
+            echo $_SESSION['alumniDeleted'];
+
+            unset($_SESSION['alumniDeleted']);
+
+        } else {
+            echo "Hey !";
+        }
+        ?>
+    </p>
+    <span class="notification_progress_CRUD"></span>
+</div>
 
 </div><!-- dashboard ends ---------------------------------------------------------------------------->
 
