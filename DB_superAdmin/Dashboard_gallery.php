@@ -62,9 +62,9 @@ require_once('dashboard_template.php');
         if (isset($_POST['fileupload'])) {
             $dirfile = $dir . basename($_FILES['file']['name']);
             if (move_uploaded_file($_FILES['file']['tmp_name'], $dirfile)) {
-                // echo "File uploaded successfully!";
+                $_SESSION['imageUploaded'] = "File uploaded successfully!";
             } else {
-                echo "Sorry, file not uploaded, please try again!";
+                $_SESSION['imageUploaded'] = "Sorry, file not uploaded, please try again!";
             }
         }
         ?>
@@ -106,6 +106,25 @@ require_once('dashboard_template.php');
                 <button id="nextBtn" class="edit-button">Next</button>
             </div>
         </section>
+
+        <!-- Image Added Notification -->
+
+        <div class="notification">
+            <p>
+                <?php
+                if (isset($_SESSION["imageUploaded"])) {
+
+                    echo $_SESSION["imageUploaded"];
+
+                    unset($_SESSION["imageUploaded"]);
+
+                }
+                ?>
+            </p>
+            <span class="notification_progress"></span>
+        </div>
+
+        <!-- Image Added Notification -->
 
         <!-- The Modal/Lightbox -->
         <div id="myModal" class="modal">

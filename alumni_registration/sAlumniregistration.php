@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('../connect.php');
 ?>
 
@@ -45,18 +46,20 @@ include('../connect.php');
                     <label for="address">Address</label>
                 </div>
 
-                <div class="text">
+                <div class="text-display">
+                    <div class="text">
 
-                    <input type="date" id="DOB" name="DOB" required>
-                    <span> </span>
-                    <label for="DOB">Date of Birth</label>
-                </div>
+                        <input type="date" id="DOB" name="DOB" required>
+                        <span> </span>
+                        <label for="DOB">Date of Birth</label>
+                    </div>
 
-                <div class="text">
+                    <div class="text">
 
-                    <input type="tel" id="phone" name="phone_no" required>
-                    <span> </span>
-                    <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone_no" required>
+                        <span> </span>
+                        <label for="phone">Phone</label>
+                    </div>
                 </div>
                 <div class="textt">
 
@@ -68,7 +71,6 @@ include('../connect.php');
 
                     <select id="role" name="role" class="display-button">
                         <option value="">Select Role</option>
-                        <option value="admin">Admin</option>
                         <option value="student">Student</option>
                         <!-- Add more role options as needed -->
                     </select>
@@ -103,12 +105,90 @@ include('../connect.php');
 
                 <!-- <div id="additionalFieldsContainer"></div> -->
 
-                <input type="submit" value="Register" />
-                <button class="display-button"> <a href="../DB_Superadmin/Dashboard.php">Display Records</a>
-                </button>
+                <?php
+                if (!isset($_SESSION['username'])) { ?>
+
+                    <input type="submit" value="Register" />
+                    <button class="display-button"> <a href="../Landing_pages/index.php">Go Back</a>
+                    </button>
+
+                <?php } else {
+
+                    if ($_SESSION['role'] == 'super_admin') { ?>
+
+                        <input type="submit" value="Register" />
+                        <button class="display-button"> <a href="../DB_Superadmin/Dashboard.php">Display Records</a>
+                        </button>
+
+                    <?php } elseif ($_SESSION['role'] == 'admin') { ?>
+
+                        <input type="submit" value="Register" />
+                        <button class="display-button"> <a href="../DB_Admin/Dashboard.php">Display Records</a>
+                        </button>
+
+                    <?php } else { ?>
+
+                        <input type="submit" value="Register" />
+
+                    <?php }
+
+                } ?>
             </form>
         </div>
     </div>
+
+    <script>
+        // Get form element
+        const form = document.querySelector('form');
+
+        // Add submit event listener to the form
+        form.addEventListener('submit', function (event) {
+            // Prevent form submission
+            event.preventDefault();
+
+            // Perform validation
+            if (validateForm()) {
+                // If the form is valid, submit it
+                form.submit();
+            }
+        });
+
+        // Function to validate the form
+        function validateForm() {
+            // Get form fields
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const address = document.getElementById('address').value;
+            const dob = document.getElementById('DOB').value;
+            const phone = document.getElementById('phone').value;
+            const role = document.getElementById('role').value;
+            const facultyName = document.getElementById('faculty_name').value;
+            const batchNo = document.getElementById('batch_no').value;
+            const course = document.getElementById('course').value;
+
+            // Validate each field
+            if (!username || !email || !password || !address || !dob || !phone || !role || !facultyName || !batchNo || !course) {
+                alert('Please fill in all fields.');
+                return false;
+            }
+
+            if (username.includes('@') || username.includes('#') || username.includes('$') || username.includes('%')) {
+                alert('Username should not contain special characters.');
+                return false;
+            }
+
+            if (password.length < 8) {
+                alert('Password should be 8 or more characters.');
+                return false;
+            }
+
+            // Return true if all validations pass
+            return true;
+        }
+
+    </script>
+
 </body>
 
 </html>

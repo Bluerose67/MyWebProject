@@ -27,8 +27,51 @@ if ($_POST) {
             $_SESSION['status'] = "Please Rename your image and resubmit the form" . $filename;
             header('Location: AdminRegistration.php');
         } else {
+
+
+            // Check if the role already exists in the "role" table
+            $roleExistsQuery = "SELECT role_id FROM role WHERE role = '$role'";
+            $Result = mysqli_query($conn, $roleExistsQuery);
+
+            if ($Result->num_rows > 0) {
+                // Role already exists, retrieve its ID
+                $roleRow = mysqli_fetch_assoc($Result);
+                $roleId = $roleRow['role_id'];
+            } else {
+                // Role doesn't exist, insert into "role" table
+                $insertRoleQuery = "INSERT INTO role (role) VALUES ('$role')";
+                if (mysqli_query($conn, $insertRoleQuery) === TRUE) {
+                    $roleId = mysqli_insert_id($conn); // Get the generated role ID
+                } else {
+                    echo "Error inserting into role table: " . mysqli_error($conn);
+                    mysqli_close($conn);
+                    exit();
+                }
+            }
+
+            // Check if the department already exists in the "departments" table
+            $departmentExistsQuery = "SELECT d_id FROM departments WHERE department = '$department'";
+            $departmentExistsResult = mysqli_query($conn, $departmentExistsQuery);
+
+            if ($departmentExistsResult->num_rows > 0) {
+                // Department already exists, retrieve its ID
+                $departmentRow = mysqli_fetch_assoc($departmentExistsResult);
+                $departmentId = $departmentRow['d_id'];
+            } else {
+                // Department doesn't exist, insert into "departments" table
+                $insertDepartmentQuery = "INSERT INTO departments (department) VALUES ('$department')";
+                if (mysqli_query($conn, $insertDepartmentQuery) === TRUE) {
+                    $departmentId = mysqli_insert_id($conn); // Get the generated department ID
+                } else {
+                    echo "Error inserting into departments table: " . mysqli_error($conn);
+                    $conn->close();
+                    exit;
+                }
+            }
+
+
             // Insert into 'users' table
-            $sql1 = "INSERT INTO users (user_name, email, password, address, DOB, Phone_no, image) VALUES ('$name', '$email', '$password', '$address', '$DOB', '$phone', '$image')";
+            $sql1 = "INSERT INTO users (user_name, email, password, address, DOB, Phone_no, image, status) VALUES ('$name', '$email', '$password', '$address', '$DOB', '$phone', '$image', 'pending')";
             if (mysqli_query($conn, $sql1)) {
                 $user_id = mysqli_insert_id($conn);
 
@@ -63,40 +106,39 @@ if ($_POST) {
                 }
 
 
-                // Insert into 'admins' table
-                $sql2 = "INSERT INTO admins (department, user_id)
-                            VALUES ('$department', '$user_id')";
-                if (mysqli_query($conn, $sql2)) {
-                    // Insert into 'role' table
-                    $sql3 = "INSERT INTO role (role, user_id)
-                                VALUES ('$role', '$user_id')";
-                    if (mysqli_query($conn, $sql3)) {
-
+                // Insert admin relationship into the "admins" table
+                $insertAdminQuery = "INSERT INTO admins (d_id, user_id) VALUES ('$departmentId', '$user_id')";
+                if ($conn->query($insertAdminQuery) === TRUE) {
+                    // Insert role-junction relationship into the "role_junction" table
+                    $insertRoleJunctionQuery = "INSERT INTO role_junction (role_id, user_id) VALUES ('$roleId', '$user_id')";
+                    if ($conn->query($insertRoleJunctionQuery) === TRUE) {
+                        // echo "Data inserted successfully.";
                         if ($_SESSION['role'] == 'admin') {
 
                             $_SESSION['adminAdded'] = "Admin Added Successfully";
 
                             header("location: ../DB_Admin/Dashboard.php");
-
                         } elseif ($_SESSION['role'] == 'super_admin') {
 
                             $_SESSION['adminAdded'] = "Admin Added Successfully";
 
                             header("location: ../DB_Superadmin/Dashboard.php");
                         } else {
-                            header("location: ../DB_Alumni/Dashboard.php");
+                            header("location: ../DB_Alumni/Dashboard_profile.php");
                         }
                     } else {
-                        echo "Error: " . $sql3 . "<br>" . mysqli_error($conn);
+                        echo "Error inserting into role_junction table: " . mysqli_error($conn);
                     }
                 } else {
-                    echo "Error: " . $sql2 . "<br>" . mysqli_error($conn);
+                    echo "Error inserting into admins table: " . mysqli_error($conn);
                 }
             } else {
-                echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
+                echo "Error inserting into users table: " . mysqli_error($conn);
             }
+
+            // Close the database connection
+            $conn->close();
         }
     }
 }
-mysqli_close($conn);
 ?>

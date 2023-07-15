@@ -52,15 +52,18 @@ include("../connect.php");
             <?php } else { ?>
               <li>
                 <button class="login-btn">
-                  <a href="../DB_Alumni/Dashboard.php" style="color: #e9f4fb">Dashboard</a>
+                  <a href="../DB_Alumni/Dashboard_profile.php" style="color: #e9f4fb">Dashboard</a>
                 </button>
               </li>
             <?php }
           }
           ?>
-          <li>
-            <button class="register"> Register </button>
-          </li>
+          <?php
+          if (!isset($_SESSION['username'])) { ?>
+            <li>
+              <button class="register"> Register </button>
+            </li>
+          <?php } ?>
         </ul>
       </div>
     </nav>
@@ -91,7 +94,13 @@ include("../connect.php");
       </div>
     </section>
 
-    <section class="about2"> <!-- about2 section begins------------------------- -->
+    <!-- <div class="video">
+      <video controls poster="thumbnail.png">
+        <source src="video.mp4">
+      </video>
+    </div> -->
+    <!-- about2 section begins------------------------- -->
+    <section class="about2">
       <div class="left-about">
         <div class="card">
           <div class="box">
@@ -146,7 +155,8 @@ include("../connect.php");
           </div>
         </div>
       </div>
-    </section> <!-- about2 section ends------------------------- -->
+    </section>
+    <!-- about2 section ends------------------------- -->
   </section>
   <!-- About section ends here -------------------------------------------------------------------------------------------->
 
@@ -166,47 +176,56 @@ include("../connect.php");
     </section>
 
     <section class="events">
-      <div class="content1">
-        <div class="div1">
-          <h1>
-            15 <br />
-            APRIL
-          </h1>
-        </div>
+      <?php
+      // Fetch all events from the database
+      $sql = "SELECT * FROM events";
+      $result = mysqli_query($conn, $sql);
 
-        <div class="div2">
-          <p>Annual Meetup & Scholarship Presentation</p>
-          <input type="button" value="Learn More" class="btn" />
-        </div>
-      </div>
+      if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) { ?>
+          <div class="content1">
+            <div class="div1">
+              <h1>
+                <?= $row['date'] ?>
+              </h1>
+              <img src="<?php echo "../images/events/" . $row['image'] ?>" alt="">
+            </div>
 
-      <div class="content2">
-        <div class="div1">
-          <h1>
-            19 <br />
-            JULY
-          </h1>
-        </div>
+            <div class="div2">
+              <p>
+                <?= $row['title'] ?>
+              </p>
+              <?php
+              if (isset($_SESSION['username'])) {
+                if ($_SESSION['role'] == 'super_admin') { ?>
 
-        <div class="div2">
-          <p>Web-Development Club Discussion: "New Gen dev"</p>
-          <input type="button" value="Learn More" class="btn" />
-        </div>
-      </div>
+                  <button class="learnMore_btn"> <a href="../DB_Superadmin/Dashboard_events.php">Learn More</a></button>
 
-      <div class="content3">
-        <div class="div1">
-          <h1>
-            12 <br />
-            August
-          </h1>
-        </div>
+                <?php } elseif ($_SESSION['role'] == 'admin') { ?>
 
-        <div class="div2">
-          <p>Annual Sports Meet and Festa</p>
-          <input type="button" value="Learn More" class="btn" />
-        </div>
-      </div>
+                  <button class="learnMore_btn"> <a href="../DB_Admin/Dashboard_events.php">Learn More</a></button>
+
+                <?php } else { ?>
+
+                  <button class="learnMore_btn"> <a href="../DB_Alumni/Dashboard_events.php">Learn More</a></button>
+
+                <?php }
+
+              } else { ?>
+
+              <button class="learnMore_btn"> <a href="login.php">Learn More</a></button>
+
+            <?php }
+              ?>
+
+            </div>
+          </div>
+
+        <?php }
+      } else {
+        echo "No events found.";
+      }
+      ?>
     </section>
     <section class="more_info">
       <div class="event_message">
@@ -274,7 +293,7 @@ include("../connect.php");
               <a href="#aboutus"> About Us</a>
             </li>
             <li>
-              <a href="#contact"> Contact</a>
+              <a href="#Featuredevent"> Events</a>
             </li>
           </ul>
         </div> <!-- footer-col -->
@@ -282,8 +301,8 @@ include("../connect.php");
           <h4> Get Help </h4>
           <ul>
             <li class="register_style">
-              <p>Are you an alumni? Do you want to get</p>
-              <button class="register"> register ? </button>
+              <p>Do you have any inquiries ? Feel Free to </p>
+              <button> <a href="#contact">Contact Us </a></button>
             </li>
           </ul>
         </div> <!-- footer-col -->
@@ -309,10 +328,10 @@ include("../connect.php");
       <div class="modal-content">
         <h2>Hey! Are You New ?</h2>
         <p> We have a procedure to verify your details for you to be able to register.
-          So, please fill the contact form.
+          So, please fill the form.
         </p>
         <button id="contact_btn" class="edit-button">
-          <a href="#contact">Contact Us or Leave a message.</a>
+          <a href="../alumni_registration/signup.php">Fill up form</a>
         </button>
       </div>
     </div>

@@ -6,12 +6,15 @@ $record = [];
 $role = $_SESSION['role'];
 // var_dump($role);
 
-if (isset($_GET['admin_id'])) {
-    $admin_id = $_GET['admin_id'];
-    $sql = "SELECT * from users  
-                JOIN admins ON users.user_id=admins.user_id
-                JOIN role ON users.user_id=role.user_id 
-                WHERE admins.admin_id= '$admin_id'";
+if (isset($_GET['d_id'])) {
+    $d_id = $_GET['d_id'];
+    $sql = "SELECT * FROM users 
+            JOIN admins ON admins.user_id = users.user_id
+            JOIN departments on departments.d_id = admins.d_id
+            JOIN role_junction on role_junction.user_id = users.user_id
+            JOIN role ON role_junction.role_id = role.role_id
+            WHERE departments.d_id= '$d_id'";
+
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
@@ -20,13 +23,14 @@ if (isset($_GET['admin_id'])) {
         while ($row = mysqli_fetch_assoc($result)) {
             $record = array(
                 "user_id" => $row['user_id'],
-                "admin_id" => $row['admin_id'],
+                "d_id" => $row['d_id'],
                 "role_id" => $row['role_id'],
                 "user_name" => $row['user_name'],
                 "email" => $row['email'],
                 "address" => $row['address'],
                 "DOB" => $row['DOB'],
                 "phone_no" => $row['phone_no'],
+                "status" => $row['status'],
                 "department" => $row['department'],
                 "role" => $row['role'],
                 "image" => $row['image'],
@@ -53,7 +57,7 @@ if (isset($_GET['admin_id'])) {
             <div class="center">
                 <h1>Update Admin Details</h1>
                 <form action="updateAdmin.php" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="admin_id" value="<?php echo $record['admin_id'] ?>" />
+                    <input type="hidden" name="d_id" value="<?php echo $record['d_id'] ?>" />
                     <input type="hidden" name="user_id" value="<?php echo $record['user_id'] ?>" />
                     <input type="hidden" name="role_id" value="<?php echo $record['role_id'] ?>" />
                     <input type="hidden" name="bio" value="<?php echo $record['bio'] ?>" />
@@ -95,13 +99,24 @@ if (isset($_GET['admin_id'])) {
                     </div>
 
                     <div class="text1">
+                        <select id="status" name="status" class="display-button">
+                            <option value="pending" <?php if ($record['status'] == 'pending')
+                                echo 'selected'; ?>> Pending
+                            </option>
+                            <option value="approved" <?php if ($record['status'] == 'approved')
+                                echo 'selected'; ?>> approved
+                            </option>
+                            <option value="denied" <?php if ($record['status'] == 'denied')
+                                echo 'selected'; ?>> denied
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="text1">
                         <select id="role" name="role" class="display-button">
-                            <option value="">Select Role</option>
+                            <!-- <option value="">Select Role</option> -->
                             <option value="admin" <?php if ($record['role'] == 'admin')
                                 echo 'selected'; ?>>Admin</option>
-                            <option value="student" <?php if ($record['role'] == 'student')
-                                echo 'selected'; ?>>Student
-                            </option>
                         </select>
                     </div>
                     <div class="text">
@@ -131,13 +146,14 @@ if (isset($_GET['admin_id'])) {
 <?php } else if (isset($_GET['std_id'])) {
     $std_id = $_GET['std_id'];
     $sql = "SELECT u.*, s.*, r.*, f.*, c.*, b.*
-                    FROM users u
-                    JOIN role r ON u.user_id = r.user_id
-                    JOIN students s ON u.user_id = s.user_id
-                    JOIN faculties f ON s.faculty_id = f.faculty_id
-                    JOIN courses c ON s.course_id = c.course_id
-                    JOIN batch b ON s.batch_id = b.batch_id
-                    WHERE s.std_id = '$std_id'";
+            FROM users u
+            JOIN role_junction rj on rj.user_id = u.user_id
+            JOIN role r on rj.role_id = r.role_id
+            JOIN students s on s.user_id = u.user_id
+            JOIN faculties f on f.faculty_id = s.faculty_id
+            JOIN courses c on c.course_id = s.course_id 
+            JOIN batch b on b.batch_id = s.batch_id
+            WHERE s.std_id = '$std_id'";
 
     $result = mysqli_query($conn, $sql);
 
@@ -232,9 +248,7 @@ if (isset($_GET['admin_id'])) {
 
                         <div class="text1">
                             <select id="role" name="role" class="display-button">
-                                <option value="">Select Role</option>
-                                <option value="admin" <?php if ($record['role'] == 'admin')
-                                    echo 'selected'; ?>>Admin</option>
+                                <!-- <option value="">Select Role</option> -->
                                 <option value="student" <?php if ($record['role'] == 'student')
                                     echo 'selected'; ?>>Student
                                 </option>

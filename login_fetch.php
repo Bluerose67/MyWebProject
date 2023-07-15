@@ -8,9 +8,9 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
 
     $sql = "SELECT * FROM users 
-            -- JOIN admins on admins.user_id= users.user_id
-            JOIN role on users.user_id=role.user_id 
-            where user_name = '$username' and password = '$password'";
+            JOIN role_junction on users.user_id=role_junction.user_id 
+            JOIN role on role.role_id = role_junction.role_id
+            where user_name = '$username' and password = '$password' and status = 'approved'";
     $result = mysqli_query($conn, $sql);
 
 
@@ -28,8 +28,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             header("Location: DB_Admin/Dashboard.php");
         } else if ($_SESSION['role'] == 'super_admin') {
             header("Location: DB_Superadmin/Dashboard.php");
+        } elseif ($_SESSION['role'] == 'student') {
+            header("Location: DB_Alumni/Dashboard_profile.php");
         } else {
-            header("Location: DB_Alumni/Dashboard.php");
+            $_SESSION["role_error"] = "Invalid Role";
+            header("Location: Landing_pages/login.php");
         }
     } else {
         $_SESSION["error"] = $error;

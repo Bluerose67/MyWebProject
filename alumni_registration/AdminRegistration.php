@@ -76,7 +76,6 @@ include('../connect.php');
                     <select id="role" name="role" class="display-button">
                         <option value="">Select Role</option>
                         <option value="admin">Admin</option>
-                        <option value="student">Student</option>
                         <!-- Add more role options as needed -->
                     </select>
 

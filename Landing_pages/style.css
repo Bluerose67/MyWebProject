@@ -393,6 +393,10 @@ section.about2 {
     transform: rotateY(180deg);
 }
 
+.video{
+    width: 50%;
+    height: 50%;
+}
 /* Feature event section ------------------------------------------------------------------------------------------------------*/
  .featured_event{
     display: flex;
@@ -423,18 +427,19 @@ section.about2 {
     font-size: 16px;
     font-family: sans-serif;
 }
+
 /* Feature event section end --------------------------------------------------------------------------------------------------------*/
 
 /* Featured Events Boxes starts here -------------------------------------------------------------------------------------------*/
 section.events{
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
     align-items: center;
     justify-content:space-evenly;
     min-height: 45vh;
-    background: url(images/alumni4.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
 }
+
 .icon{
     display: flex;
     margin-top: 20px;
@@ -444,7 +449,7 @@ section.events{
 
 section.events .content1{
     display: flex;
-    width: 40%;
+    width: 80%;
     color: #ffffff;
     background: #F85151;
     transition: .5s;
@@ -458,8 +463,18 @@ section.events .content1{
 .content1 div h1{
     font-size: 30px;
     font-weight: 100;
-    padding: 50px 10px;
+    padding: 31px 10px;
 }
+.content1 .div1 img,
+.content1 .div2 img,
+.content1 .div3 img{
+    width: 66px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0px 0px 5px 50px;
+    }
+
 .content1 div p {
     font-size: 20px;
     font-weight: 200;
@@ -543,6 +558,31 @@ section.events .content2:hover {
 section.events .content3:hover {
     background: #7CB9E8;
     color: #000;
+}
+
+.learnMore_btn {
+    margin: 10px 0px 10px 30px;
+    padding: 5px 13px;
+    border-radius: 40px;
+    border: 0;
+    cursor: pointer;
+    background-color: #ffffff;
+    font-weight: 700;
+}
+
+.learnMore_btn a {
+    font-family: 'poppins', sans-serif;
+    font-size: 14px;
+    color: #F85151;
+    transition: color 0.3s;
+}
+
+.learnMore_btn:hover {
+    background-color: #F85151;
+}
+
+.learnMore_btn:hover a {
+    color: #ffffff;
 }
 /* event boxes ends here ----------------------------------------------------------------------------------------------- */
 

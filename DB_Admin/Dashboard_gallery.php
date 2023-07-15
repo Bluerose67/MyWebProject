@@ -46,9 +46,9 @@ require_once('../DB_Superadmin/Dashboard_template.php');
         if (isset($_POST['fileupload'])) {
             $dirfile = $dir . basename($_FILES['file']['name']);
             if (move_uploaded_file($_FILES['file']['tmp_name'], $dirfile)) {
-                // echo "File uploaded successfully!";
+                $_SESSION['imageUploaded'] = "File uploaded successfully!";
             } else {
-                echo "Sorry, file not uploaded, please try again!";
+                $_SESSION['imageUploaded'] = "Sorry, file not uploaded, please try again!";
             }
         }
         ?>
@@ -88,6 +88,25 @@ require_once('../DB_Superadmin/Dashboard_template.php');
                 <button id="prevBtn" class="edit-button">Prev</button>
                 <button id="nextBtn" class="edit-button">Next</button>
             </div>
+
+            <!-- Image uploaded notification -->
+
+            <div class="notification">
+                <p>
+                    <?php
+                    if (isset($_SESSION["imageUploaded"])) {
+
+                        echo $_SESSION["imageUploaded"];
+
+                        unset($_SESSION["imageUploaded"]);
+
+                    }
+                    ?>
+                </p>
+                <span class="notification_progress"></span>
+            </div>
+
+            <!-- Image uploaded notification -->
         </section>
 
         <!-- The Modal/Lightbox -->

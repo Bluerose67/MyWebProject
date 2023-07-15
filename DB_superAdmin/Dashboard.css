@@ -243,7 +243,7 @@ section.main {
 .add-button {
     width: 12%;
     height: 30px;
-    margin: 15px 20px 18px 0px;
+    margin: 0px 20px 18px 0px;
     border: 1px solid;
     background: red;
     color: #e9f4fb;
@@ -301,7 +301,7 @@ table td.change-buttons {
 }
 
 .center1 {
-    width: 95%;
+    width: 98%;
     border-radius: 10px;
 }
 
@@ -934,7 +934,7 @@ main .table-data {
 main .table-data>div {
     border-radius: 20px;
     background: var(--light);
-    padding: 24px;
+    padding: 10px;
     margin-bottom: 35px;
     height: 427px;
     overflow-x: auto;
@@ -944,7 +944,7 @@ main .table-data .head {
     display: flex;
     align-items: center;
     grid-gap: 16px;
-    margin: 10px 24px 0px 24px;
+    margin: 10px 24px 10px 24px;
 }
 
 main .table-data .head h3 {
@@ -1365,8 +1365,6 @@ input[type="date"]:in-range::-webkit-datetime-edit-text {
     color: transparent;
 }
 
-
-
 .center-box input[type="submit"] {
     width: 30%;
     height: 36px;
@@ -1405,12 +1403,6 @@ input[type="date"]:in-range::-webkit-datetime-edit-text {
     text-align: center;
 }
 
-.event img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-}
-
 .event_image{
     display: flex;
     justify-content: center;
@@ -1422,6 +1414,8 @@ input[type="date"]:in-range::-webkit-datetime-edit-text {
     width: 400px;
     height: 195px;
     object-fit: cover;
+    max-width: 100%;
+    margin-bottom: 10px;
 }
 .buttons{
     display: flex;

@@ -68,40 +68,65 @@ if (isset($_GET['std_id'])) {
     } else {
         echo "Delete failed in query 1" . $sql1 . "<br>" . mysqli_error($conn);
     }
-} elseif (isset($_GET['admin_id'])) {
+} elseif (isset($_GET['d_id'])) {
 
     $user_id = $_GET['user_id'];
-    $admin_id = $_GET['admin_id'];
-    $role_id = $_GET['role_id'];
+    $d_id = $_GET['d_id'];
     $image = $_GET['image'];
 
 
-    $sql1 = "DELETE FROM admins WHERE admin_id = '$admin_id'";
-    if (mysqli_query($conn, $sql1)) {
+    // Delete admin record from the "admins" table
+    $deleteAdminQuery = "DELETE FROM admins WHERE user_id = '$user_id'";
+    if ($conn->query($deleteAdminQuery) === TRUE) {
+        // Delete role-junction record from the "role_junction" table
+        $deleteRoleJunctionQuery = "DELETE FROM role_junction WHERE user_id = '$user_id'";
+        if ($conn->query($deleteRoleJunctionQuery) === TRUE) {
+            // Check if the department is orphaned
+            $checkDepartmentQuery = "SELECT d_id FROM departments WHERE d_id NOT IN (SELECT d_id FROM admins)";
+            $orphanedDepartmentsResult = $conn->query($checkDepartmentQuery);
 
-        $sql2 = "DELETE FROM role where role_id='$role_id'";
-        if (mysqli_query($conn, $sql2)) {
-            $sql3 = "DELETE FROM users where user_id='$user_id'";
+            if ($orphanedDepartmentsResult->num_rows > 0) {
+                // Delete orphaned department(s)
+                while ($row = $orphanedDepartmentsResult->fetch_assoc()) {
+                    $departmentId = $row['d_id'];
+                    $deleteDepartmentQuery = "DELETE FROM departments WHERE d_id = '$departmentId'";
+                    $conn->query($deleteDepartmentQuery);
+                }
+            }
 
-            if (mysqli_query($conn, $sql3)) {
+            // Check if the role is orphaned
+            $checkRoleQuery = "SELECT role_id FROM role WHERE role_id NOT IN (SELECT role_id FROM role_junction)";
+            $orphanedRolesResult = $conn->query($checkRoleQuery);
+
+            if ($orphanedRolesResult->num_rows > 0) {
+                // Delete orphaned role(s)
+                while ($row = $orphanedRolesResult->fetch_assoc()) {
+                    $roleId = $row['role_id'];
+                    $deleteRoleQuery = "DELETE FROM role WHERE role_id = '$roleId'";
+                    $conn->query($deleteRoleQuery);
+                }
+            }
+
+            // Delete user record from the "users" table
+            $deleteUserQuery = "DELETE FROM users WHERE user_id = '$user_id'";
+            if ($conn->query($deleteUserQuery) === TRUE) {
+
                 unlink("../images/profile/" . $image);
-
 
                 $_SESSION['adminDeleted'] = "Admin Deleted Successfully";
 
                 header('Location: ../DB_Superadmin/Dashboard.php');
             } else {
-                echo "Delete Failed in query 3" . $sql3 . "<br>" . mysqli_error($conn);
+                echo "Error deleting user record: " . mysqli_error($conn);
             }
-
         } else {
-            echo "Delete Failed in query 2" . $sql2 . "<br>" . mysqli_error($conn);
+            echo "Error deleting user's role-junction record: " . mysqli_error($conn);
         }
-
     } else {
-        echo "Delete failed in query 1" . $sql1 . "<br>" . mysqli_error($conn);
+        echo "Error deleting user's admin record: " . mysqli_error($conn);
     }
 }
-//connection close
-mysqli_close($conn);
+
+// Close the database connection
+$conn->close();
 ?>

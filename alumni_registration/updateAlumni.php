@@ -81,7 +81,7 @@ if ($_POST) {
 
                             header("location: ../DB_Superadmin/Dashboard.php");
                         } else {
-                            header("location: ../DB_Alumni/Dashboard.php");
+                            header("location: ../DB_Alumni/Dashboard_profile.php");
                         }
 
                     } else {

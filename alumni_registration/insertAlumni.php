@@ -31,108 +31,118 @@ if ($_POST) {
             header('Location: AdminRegistration.php');
         } else {
 
+            $select = "SELECT * FROM users WHERE user_name= '$user_name'";
+            $result = mysqli_query($conn, $select);
 
-            // Insert into 'users' table
-            $sql1 = "INSERT INTO users (user_name, email, password, address, DOB, Phone_no, image)
-                VALUES ('$user_name', '$email', '$password', '$address', '$DOB', '$phone_no','$image')";
-            if (mysqli_query($conn, $sql1)) {
+            if (mysqli_num_rows($result) > 0) {
+                echo "<script type = 'text/javascript'> ";
+                echo "alert('User Name already Exists !!')";
+                echo "window.Location.href = 'signup.php'";
+                echo "</script>";
+            } else {
 
-                $user_id = mysqli_insert_id($conn);
+                // Insert into 'users' table
+                $sql1 = "INSERT INTO users (user_name, email, password, address, DOB, Phone_no, image)
+                    VALUES ('$user_name', '$email', '$password', '$address', '$DOB', '$phone_no','$image')";
+                if (mysqli_query($conn, $sql1)) {
 
-                $image = $_FILES['image']['name']; // Get the name of the uploaded file
+                    $user_id = mysqli_insert_id($conn);
 
-                // Specify the destination directory where you want to save the uploaded file
-                $targetDirectory = "../images/profile/";
+                    $image = $_FILES['image']['name']; // Get the name of the uploaded file
 
-                // Generate a unique file name to avoid conflicts
-                $targetFileName = uniqid() . "_" . basename($image);
+                    // Specify the destination directory where you want to save the uploaded file
+                    $targetDirectory = "../images/profile/";
 
-                // The full path to the uploaded file on the server
-                $targetFilePath = $targetDirectory . $targetFileName;
+                    // Generate a unique file name to avoid conflicts
+                    $targetFileName = uniqid() . "_" . basename($image);
 
-                // Move the uploaded file to the desired location
-                if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
-                    // File uploaded successfully,
-                    // Update the value of $image with the new file name
-                    $image = $targetFileName;
+                    // The full path to the uploaded file on the server
+                    $targetFilePath = $targetDirectory . $targetFileName;
 
-                    // Update the database record with the new file name 
-                    $updateSql = "UPDATE users SET image = '$image' WHERE user_id = '$user_id'";
-                    if (mysqli_query($conn, $updateSql)) {
-                        // Image file name updated in the database successfully
-                    } else {
-                        echo "Error updating image file name in the database: " . mysqli_error($conn);
-                    }
-                } else {
-                    // File upload failed
-                    echo "Sorry, there was an error uploading your file.";
-                }
+                    // Move the uploaded file to the desired location
+                    if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
+                        // File uploaded successfully,
+                        // Update the value of $image with the new file name
+                        $image = $targetFileName;
 
-
-
-
-                // Insert into 'faculties' table
-                $sql2 = "INSERT INTO faculties (faculty_name)
-                    VALUES ('$faculty_name')";
-                if (mysqli_query($conn, $sql2)) {
-                    $faculty_id = mysqli_insert_id($conn);
-
-                    // Insert into 'role' table
-                    $sql3 = "INSERT INTO role (role, user_id)
-                         VALUES ('$role', '$user_id')";
-                    if (mysqli_query($conn, $sql3)) {
-
-                        // Insert into 'courses' table
-                        $sql4 = "INSERT INTO courses (course_name)
-                        VALUES ('$course_name')";
-                        if (mysqli_query($conn, $sql4)) {
-                            $course_id = mysqli_insert_id($conn);
-
-                            //Insert into batch table
-                            $sql5 = "INSERT INTO batch (batch_no)
-                        VALUES ('$batch_no')";
-                            if (mysqli_query($conn, $sql5)) {
-                                $batch_id = mysqli_insert_id($conn);
-
-                                //Insert into students table
-                                $sql6 = "INSERT INTO students (faculty_id, course_id, batch_id, user_id)
-                        VALUES ('$faculty_id', '$course_id', '$batch_id', '$user_id')";
-                                if (mysqli_query($conn, $sql6)) {
-                                    $std_id = mysqli_insert_id($conn);
-
-                                    if ($_SESSION['role'] == 'admin') {
-
-                                        $_SESSION['alumniAdded'] = "Alumni Added Successfully";
-
-                                        header("location: ../DB_Admin/Dashboard.php");
-                                    } elseif ($_SESSION['role'] == 'super_admin') {
-
-                                        $_SESSION['alumniAdded'] = "Alumni Added Successfully";
-
-                                        header("location: ../DB_Superadmin/Dashboard.php");
-                                    } else {
-                                        header("location: ../DB_Alumni/Dashboard.php");
-                                    }
-
-                                } else {
-                                    echo "Error: " . $sql6 . "<br>" . mysqli_error($conn);
-
-                                }
-                            } else {
-                                echo "Error: " . $sql5 . "<br>" . mysqli_error($conn);
-                            }
-
+                        // Update the database record with the new file name 
+                        $updateSql = "UPDATE users SET image = '$image' WHERE user_id = '$user_id'";
+                        if (mysqli_query($conn, $updateSql)) {
+                            // Image file name updated in the database successfully
                         } else {
-                            echo "Error: " . $sql4 . "<br>" . mysqli_error($conn);
+                            echo "Error updating image file name in the database: " . mysqli_error($conn);
                         }
                     } else {
-                        echo "Error: " . $sql3 . "<br>" . mysqli_error($conn);
+                        // File upload failed
+                        echo "Sorry, there was an error uploading your file.";
+                    }
+
+
+
+
+                    // Insert into 'faculties' table
+                    $sql2 = "INSERT INTO faculties (faculty_name)
+                        VALUES ('$faculty_name')";
+                    if (mysqli_query($conn, $sql2)) {
+                        $faculty_id = mysqli_insert_id($conn);
+
+                        // Insert into 'role' table
+                        $sql3 = "INSERT INTO role (role, user_id)
+                             VALUES ('$role', '$user_id')";
+                        if (mysqli_query($conn, $sql3)) {
+
+                            // Insert into 'courses' table
+                            $sql4 = "INSERT INTO courses (course_name)
+                            VALUES ('$course_name')";
+                            if (mysqli_query($conn, $sql4)) {
+                                $course_id = mysqli_insert_id($conn);
+
+                                //Insert into batch table
+                                $sql5 = "INSERT INTO batch (batch_no)
+                            VALUES ('$batch_no')";
+                                if (mysqli_query($conn, $sql5)) {
+                                    $batch_id = mysqli_insert_id($conn);
+
+                                    //Insert into students table
+                                    $sql6 = "INSERT INTO students (faculty_id, course_id, batch_id, user_id)
+                            VALUES ('$faculty_id', '$course_id', '$batch_id', '$user_id')";
+                                    if (mysqli_query($conn, $sql6)) {
+                                        $std_id = mysqli_insert_id($conn);
+
+                                        if ($_SESSION['role'] == 'admin') {
+
+                                            $_SESSION['alumniAdded'] = "Alumni Added Successfully";
+
+                                            header("location: ../DB_Admin/Dashboard.php");
+                                        } elseif ($_SESSION['role'] == 'super_admin') {
+
+                                            $_SESSION['alumniAdded'] = "Alumni Added Successfully";
+
+                                            header("location: ../DB_Superadmin/Dashboard.php");
+                                        } else {
+                                            header("location: ../DB_Alumni/Dashboard_profile.php");
+                                        }
+
+                                    } else {
+                                        echo "Error: " . $sql6 . "<br>" . mysqli_error($conn);
+
+                                    }
+                                } else {
+                                    echo "Error: " . $sql5 . "<br>" . mysqli_error($conn);
+                                }
+
+                            } else {
+                                echo "Error: " . $sql4 . "<br>" . mysqli_error($conn);
+                            }
+                        } else {
+                            echo "Error: " . $sql3 . "<br>" . mysqli_error($conn);
+                        }
+                    } else {
+                        echo "Error: " . $sql2 . "<br>" . mysqli_error($conn);
                     }
                 } else {
-                    echo "Error: " . $sql2 . "<br>" . mysqli_error($conn);
+                    echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
                 }
-            } else {
-                echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
             }
         }
     }

@@ -42,6 +42,18 @@ if (!isset($_SESSION['username'])) {
                     </a>
                 </li>
                 <li>
+                    <a href="admin_list.php">
+                        <i class='bx bxs-user'></i>
+                        <span class="text">Admin List</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="alumni_list.php">
+                        <i class='bx bxs-user'></i>
+                        <span class="text">Alumni List</span>
+                    </a>
+                </li>
+                <li>
                     <a href="Dashboard_events.php">
                         <i class='bx bxs-calendar-event'></i>
                         <span class="text">Events</span>
@@ -71,8 +83,10 @@ if (!isset($_SESSION['username'])) {
 
         $userId = $_SESSION['user_id'];
         $sql = "SELECT * from users  
-                JOIN admins ON users.user_id=admins.user_id
-                JOIN role ON users.user_id=role.user_id  WHERE users.user_id = '$userId'";
+                JOIN admins ON users.user_id = admins.user_id
+                JOIN role_junction ON users.user_id = role_junction.user_id  
+                JOIN role ON role.role_id = role_junction. role_id
+                WHERE users.user_id = '$userId'";
         $result = mysqli_query($conn, $sql);
 
         if ($result) {

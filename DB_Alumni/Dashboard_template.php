@@ -30,12 +30,7 @@ if (!isset($_SESSION['username'])) {
                 </a>
             </div>
             <ul class="side-menu top">
-                <li>
-                    <a href="Dashboard.php">
-                        <i class='bx bxs-dashboard'></i>
-                        <span class="text">Dashboard</span>
-                    </a>
-                </li>
+
                 <li>
                     <a href="Dashboard_profile.php">
                         <i class='bx bxs-shopping-bag-alt'></i>

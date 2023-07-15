@@ -7,7 +7,7 @@ if (isset($_SESSION['username'])) {
   } elseif ($_SESSION['role'] == 'super_admin') {
     header("Location: ../DB_Superadmin/Dashboard.php");
   } else {
-    header("Location: ../DB_Alumni/Dashboard.php");
+    header("Location: ../DB_Alumni/Dashboard_profile.php");
   }
   // var_dump($_SESSION['role']);
 } else {
@@ -69,6 +69,14 @@ if (isset($_SESSION['username'])) {
             if (isset($_SESSION["error"])) {
               $error = $_SESSION["error"];
               echo "<span>$error</span>";
+              unset($_SESSION["error"]);
+              exit();
+            }
+
+            if (isset($_SESSION["role_error"])) {
+              echo "<span" . $_SESSION["role_error"] . "<span>";
+              unset($_SESSION["role_error"]);
+              exit();
             }
             ?>
           </form>
