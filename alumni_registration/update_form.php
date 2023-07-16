@@ -174,6 +174,7 @@ if (isset($_GET['d_id'])) {
                 "phone_no" => $row['phone_no'],
                 "image" => $row['image'],
                 "bio" => $row['bio'],
+                "status" => $row['status'],
                 "role" => $row['role'],
                 "faculty_name" => $row['faculty_name'],
                 "course_name" => $row['course_name'],
@@ -245,6 +246,20 @@ if (isset($_GET['d_id'])) {
                             <img src="<?php echo "../images/profile/" . $record['image']; ?>" alt="Avatar" class="avatar">
                         </div>
 
+                        <div class="text1">
+                            <select id="status" name="status" class="display-button">
+                                <option value="pending" <?php if ($record['status'] == 'pending')
+                                    echo 'selected'; ?>> Pending
+                                </option>
+                                <option value="approved" <?php if ($record['status'] == 'approved')
+                                    echo 'selected'; ?>> approved
+                                </option>
+                                <option value="denied" <?php if ($record['status'] == 'denied')
+                                    echo 'selected'; ?>> denied
+                                </option>
+                            </select>
+                        </div>
+
 
                         <div class="text1">
                             <select id="role" name="role" class="display-button">
@@ -254,20 +269,38 @@ if (isset($_GET['d_id'])) {
                                 </option>
                             </select>
                         </div>
-                        <div class="text">
-                            <input type="text" name="faculty_name" value="<?= $record['faculty_name'] ?>" />
-                            <span> </span>
-                            <label>Faculty Name</label>
+                        <div class="text1">
+                            <select id="faculty_name" name="faculty_name" class="display-button">
+                                <!-- <option value="">Select Role</option> -->
+                                <option value="Humanities" <?php if ($record['faculty_name'] == 'Humanities')
+                                    echo 'selected'; ?>>Humanities
+                                </option>
+                                <option value="Science" <?php if ($record['faculty_name'] == 'Science')
+                                    echo 'selected'; ?>>Science
+                                </option>
+                                <option value="Management" <?php if ($record['faculty_name'] == 'Management')
+                                    echo 'selected'; ?>>Management
+                                </option>
+                            </select>
                         </div>
-                        <div class="text">
-                            <input type="text" name="course_name" value="<?= $record['course_name'] ?>" />
-                            <span> </span>
-                            <label>Course Name</label>
+                        <div class="text1">
+                            <select id="course_name" name="course_name" class="display-button">
+                                <!-- <option value="">Select Role</option> -->
+                                <option value="BCA" <?php if ($record['course_name'] == 'BCA')
+                                    echo 'selected'; ?>>BCA
+                                </option>
+                                <option value="CSIT" <?php if ($record['course_name'] == 'CSIT')
+                                    echo 'selected'; ?>>CSIT
+                                </option>
+                                <option value="BBM" <?php if ($record['course_name'] == 'BBM')
+                                    echo 'selected'; ?>>BBM
+                                </option>
+                            </select>
                         </div>
                         <div class="text">
                             <input type="text" name="batch_no" value="<?= $record['batch_no'] ?>" />
                             <span> </span>
-                            <label>Batch Name</label>
+                            <label>Batch Year: (eg. 2078)</label>
                         </div>
                         <input type="submit" value="Update" class="login-button" />
                         <!-- <span> </span> -->

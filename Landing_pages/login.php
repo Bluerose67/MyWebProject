@@ -68,16 +68,21 @@ if (isset($_SESSION['username'])) {
             <?php
             if (isset($_SESSION["error"])) {
               $error = $_SESSION["error"];
-              echo "<span>$error</span>";
+              echo "<span class= 'error'>" . $error . "</span>";
               unset($_SESSION["error"]);
               exit();
             }
-
-            if (isset($_SESSION["role_error"])) {
-              echo "<span" . $_SESSION["role_error"] . "<span>";
-              unset($_SESSION["role_error"]);
+            if (isset($_SESSION['pending'])) {
+              echo "<span class= 'error'>" . $_SESSION['pending'] . "</span>";
+              unset($_SESSION['pending']);
               exit();
             }
+            if (isset($_SESSION["denied"])) {
+              echo "<span class= 'error'>" . $_SESSION['denied'] . "</span>";
+              unset($_SESSION['denied']);
+              exit();
+            }
+
             ?>
           </form>
         </div>

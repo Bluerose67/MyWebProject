@@ -16,20 +16,12 @@ if ($_POST) {
     $DOB = $_POST['DOB'];
     $phone_no = $_POST['phone_no'];
     $bio = $_POST['bio'];
+    $status = $_POST['status'];
     $role = $_POST['role'];
     $faculty_name = $_POST['faculty_name'];
     $course_name = $_POST['course_name'];
     $batch_no = $_POST['batch_no'];
-    // var_dump($std_id);
-    // var_dump($role_id);
-    // var_dump($email);
-    // var_dump($address);
-    // var_dump($DOB);
-    // var_dump($phone_no);
-    // var_dump($role);
-    // var_dump($faculty_name);
-    // var_dump($course_name);
-    // var_dump($batch_no);
+
 
     $new_image = $_FILES['image']['name'];
     $old_image = $_POST['image_old'];
@@ -48,61 +40,135 @@ if ($_POST) {
 
         }
     }
+    // Check if the user already exists
+    $checkUserQuery = "SELECT user_id FROM users WHERE user_name = '$user_name' AND user_id != '$user_id'";
+    $checkUserResult = $conn->query($checkUserQuery);
 
-    $sql1 = "UPDATE users SET user_name ='$user_name', email = '$email', address ='$address', DOB = '$DOB', phone_no =
-            '$phone_no',bio='$bio', image='$update_filename' WHERE user_id = '$user_id'";
-    if (mysqli_query($conn, $sql1)) {
+    if ($checkUserResult->num_rows > 0) {
+        echo " Please try again with a different username.";
+    } else {
 
-        if ($_FILES['image']['name'] != '') {
-            move_uploaded_file($_FILES['image']['tmp_name'], "../images/profile/" . $_FILES['image']['name']);
-            unlink("../images/profile/" . $old_image);
-        }
+        // Update user record in the "users" table
+        $updateUserQuery = "UPDATE users SET user_name ='$user_name', email = '$email', address ='$address', DOB = '$DOB', phone_no =
+            '$phone_no', status= '$status',bio='$bio', image='$update_filename' WHERE user_id = '$user_id'";
+        if (mysqli_query($conn, $updateUserQuery)) {
 
-        $sql2 = "UPDATE role SET role ='$role' where role_id='$role_id'";
-        if (mysqli_query($conn, $sql2)) {
-
-            $sql3 = "UPDATE faculties SET faculty_name ='$faculty_name' where faculty_id ='$faculty_id'";
-            if (mysqli_query($conn, $sql3)) {
-
-                $sql4 = "UPDATE courses SET course_name ='$course_name' where course_id ='$course_id'";
-                if (mysqli_query($conn, $sql4)) {
-
-                    $sql5 = "UPDATE batch SET batch_no ='$batch_no' where batch_id ='$batch_id'";
-                    if (mysqli_query($conn, $sql5)) {
-
-                        if ($_SESSION['role'] == 'admin') {
-
-                            $_SESSION['alumniUpdated'] = "Alumni Updated Successfully";
-
-                            header("location: ../DB_Admin/Dashboard.php");
-                        } elseif ($_SESSION['role'] == 'super_admin') {
-
-                            $_SESSION['alumniUpdated'] = "Alumni Updated Successfully";
-
-                            header("location: ../DB_Superadmin/Dashboard.php");
-                        } else {
-                            header("location: ../DB_Alumni/Dashboard_profile.php");
-                        }
-
-                    } else {
-                        echo "Update failed in query 5" . $sql5 . "<br>" . mysqli_error($conn);
-                    }
-
-                } else {
-                    echo "Update failed in Query 4" . $sql4 . "<br>" . mysqli_error($conn);
-                }
-
-            } else {
-                echo "Update Failed in query 3" . $sql3 . "<br>" . mysqli_error($conn);
+            if ($_FILES['image']['name'] != '') {
+                move_uploaded_file($_FILES['image']['tmp_name'], "../images/profile/" . $_FILES['image']['name']);
+                unlink("../images/profile/" . $old_image);
             }
 
+            // Check if the role already exists
+            $checkRoleQuery = "SELECT role_id FROM role WHERE role = '$role'";
+            $checkRoleResult = $conn->query($checkRoleQuery);
+
+            if ($checkRoleResult->num_rows > 0) {
+                // Role already exists, retrieve its ID
+                $roleRow = $checkRoleResult->fetch_assoc();
+                $roleId = $roleRow['role_id'];
+            } else {
+                // Role doesn't exist, insert into "role" table
+                $insertRoleQuery = "INSERT INTO role (role) VALUES ('$role')";
+                if ($conn->query($insertRoleQuery) === TRUE) {
+                    $roleId = mysqli_insert_id($conn); // Get the generated role ID
+                } else {
+                    echo "Error inserting into role table: " . mysqli_error($conn);
+                    $conn->close();
+                    exit;
+                }
+            }
+
+            // Check if the faculty already exists
+            $checkFacultyQuery = "SELECT faculty_id FROM faculties WHERE faculty_name = '$faculty_name'";
+            $checkFacultyResult = $conn->query($checkFacultyQuery);
+
+            if ($checkFacultyResult->num_rows > 0) {
+                // Faculty already exists, retrieve its ID
+                $facultyRow = $checkFacultyResult->fetch_assoc();
+                $facultyId = $facultyRow['faculty_id'];
+            } else {
+                // Faculty doesn't exist, insert into "faculties" table
+                $insertFacultyQuery = "INSERT INTO faculties (faculty_name) VALUES ('$faculty_name')";
+                if ($conn->query($insertFacultyQuery) === TRUE) {
+                    $facultyId = mysqli_insert_id($conn); // Get the generated faculty ID
+                } else {
+                    echo "Error inserting into faculties table: " . mysqli_error($conn);
+                    $conn->close();
+                    exit;
+                }
+            }
+
+            // Check if the course already exists
+            $checkCourseQuery = "SELECT course_id FROM courses WHERE course_name = '$course_name'";
+            $checkCourseResult = $conn->query($checkCourseQuery);
+
+            if ($checkCourseResult->num_rows > 0) {
+                // Course already exists, retrieve its ID
+                $courseRow = $checkCourseResult->fetch_assoc();
+                $courseId = $courseRow['course_id'];
+            } else {
+                // Course doesn't exist, insert into "courses" table
+                $insertCourseQuery = "INSERT INTO courses (course_name) VALUES ('$course_name')";
+                if ($conn->query($insertCourseQuery) === TRUE) {
+                    $courseId = mysqli_insert_id($conn); // Get the generated course ID
+                } else {
+                    echo "Error inserting into courses table: " . mysqli_error($conn);
+                    $conn->close();
+                    exit;
+                }
+            }
+
+            // Check if the batch already exists
+            $checkBatchQuery = "SELECT batch_id FROM batch WHERE batch_no = '$batch_no'";
+            $checkBatchResult = $conn->query($checkBatchQuery);
+
+            if ($checkBatchResult->num_rows > 0) {
+                // Batch already exists, retrieve its ID
+                $batchRow = $checkBatchResult->fetch_assoc();
+                $batchId = $batchRow['batch_id'];
+            } else {
+                // Batch doesn't exist, insert into "batch" table
+                $insertBatchQuery = "INSERT INTO batch (batch_no) VALUES ('$batch_no')";
+                if ($conn->query($insertBatchQuery) === TRUE) {
+                    $batchId = mysqli_insert_id($conn); // Get the generated batch ID
+                } else {
+                    echo "Error inserting into batch table: " . mysqli_error($conn);
+                    $conn->close();
+                    exit;
+                }
+            }
+
+            // Update role-junction record in the "role_junction" table
+            $updateRoleJunctionQuery = "UPDATE role_junction SET role_id = '$roleId' WHERE user_id = '$user_id'";
+            if ($conn->query($updateRoleJunctionQuery) === TRUE) {
+                // Update student record in the "students" table
+                $updateStudentQuery = "UPDATE students SET faculty_id = '$facultyId', course_id = '$courseId', batch_id = '$batchId' WHERE user_id = '$user_id'";
+                if ($conn->query($updateStudentQuery) === TRUE) {
+                    if ($_SESSION['role'] == 'admin') {
+
+                        $_SESSION['alumniUpdated'] = "Alumni Updated Successfully";
+
+                        header("location: ../DB_Admin/Dashboard.php");
+                    } elseif ($_SESSION['role'] == 'super_admin') {
+
+                        $_SESSION['alumniUpdated'] = "Alumni Updated Successfully";
+
+                        header("location: ../DB_Superadmin/Dashboard.php");
+                    } else {
+                        header("location: ../DB_Alumni/Dashboard_profile.php");
+                    }
+                } else {
+                    echo "Error updating students table: " . mysqli_error($conn);
+                }
+            } else {
+                echo "Error updating role_junction table: " . mysqli_error($conn);
+            }
         } else {
-            echo "Update Failed in query 2" . $sql2 . "<br>" . mysqli_error($conn);
+            echo "Error updating users table: " . mysqli_error($conn);
         }
-
-    } else {
-        echo "update failed in query 1" . $sql1 . "<br>" . mysqli_error($conn);
     }
-
 }
+
+// Close the database connection
+$conn->close();
 ?>

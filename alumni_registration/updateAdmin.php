@@ -33,61 +33,71 @@ if ($_POST) {
         }
     }
 
-    $sql1 = "UPDATE users SET user_name ='$user_name', email = '$email', address ='$address', DOB = '$DOB', phone_no = '$phone_no', bio='$bio',
-     image='$update_filename', status= '$status' WHERE user_id = '$user_id'";
-    if (mysqli_query($conn, $sql1)) {
-        if ($_FILES['image']['name'] != '') {
-            move_uploaded_file($_FILES['image']['tmp_name'], "../images/profile/" . $_FILES['image']['name']);
-            unlink("../images/profile/" . $old_image);
-        }
+    // Check if the user already exists
+    $checkUserQuery = "SELECT user_id FROM users WHERE user_name = '$user_name' AND user_id != '$user_id'";
+    $checkUserResult = $conn->query($checkUserQuery);
 
-        // Check if the new department already exists
-        $departmentExistsQuery = "SELECT d_id FROM departments WHERE department = '$department'";
-        $departmentExistsResult = $conn->query($departmentExistsQuery);
-
-        if ($departmentExistsResult->num_rows > 0) {
-            // Department already exists, retrieve its ID
-            $departmentRow = $departmentExistsResult->fetch_assoc();
-            $departmentId = $departmentRow['d_id'];
-        } else {
-            // Department doesn't exist, insert into "departments" table
-            $insertDepartmentQuery = "INSERT INTO departments (department) VALUES ('$department')";
-            if ($conn->query($insertDepartmentQuery) === TRUE) {
-                $departmentId = mysqli_insert_id($conn); // Get the generated department ID
-            } else {
-                echo "Error inserting into departments table: " . mysqli_error($conn);
-                $conn->close();
-                exit;
-            }
-        }
-
-        // Update department in the "admins" table
-        $updateAdminQuery = "UPDATE admins SET d_id = '$departmentId' WHERE user_id = '$user_id'";
-        if ($conn->query($updateAdminQuery) === TRUE) {
-            // echo "User record updated successfully.";
-            if ($_SESSION['role'] == 'admin') {
-
-                $_SESSION['adminUpdated'] = "Admin Updated Successfully";
-
-                header("location: ../DB_Admin/Dashboard.php");
-
-                exit();
-            } elseif ($_SESSION['role'] == 'super_admin') {
-
-                $_SESSION['adminUpdated'] = "Admin Updated Successfully";
-
-                header("location: ../DB_Superadmin/Dashboard.php");
-
-                exit();
-            } else {
-                header("location: ../DB_Alumni/Dashboard_profile.php");
-                exit();
-            }
-        } else {
-            echo "Error updating admins table: " . mysqli_error($conn);
-        }
+    if ($checkUserResult->num_rows > 0) {
+        echo "User already exists. Please try again with a different username.";
     } else {
-        echo "Error updating user record: " . mysqli_error($conn);
+
+        // Update user record in the "users" table
+        $sql1 = "UPDATE users SET user_name ='$user_name', email = '$email', address ='$address', DOB = '$DOB', phone_no = '$phone_no', bio='$bio',
+     image='$update_filename', status= '$status' WHERE user_id = '$user_id'";
+        if (mysqli_query($conn, $sql1)) {
+            if ($_FILES['image']['name'] != '') {
+                move_uploaded_file($_FILES['image']['tmp_name'], "../images/profile/" . $_FILES['image']['name']);
+                unlink("../images/profile/" . $old_image);
+            }
+
+            // Check if the new department already exists
+            $departmentExistsQuery = "SELECT d_id FROM departments WHERE department = '$department'";
+            $departmentExistsResult = $conn->query($departmentExistsQuery);
+
+            if ($departmentExistsResult->num_rows > 0) {
+                // Department already exists, retrieve its ID
+                $departmentRow = $departmentExistsResult->fetch_assoc();
+                $departmentId = $departmentRow['d_id'];
+            } else {
+                // Department doesn't exist, insert into "departments" table
+                $insertDepartmentQuery = "INSERT INTO departments (department) VALUES ('$department')";
+                if ($conn->query($insertDepartmentQuery) === TRUE) {
+                    $departmentId = mysqli_insert_id($conn); // Get the generated department ID
+                } else {
+                    echo "Error inserting into departments table: " . mysqli_error($conn);
+                    $conn->close();
+                    exit;
+                }
+            }
+
+            // Update department in the "admins" table
+            $updateAdminQuery = "UPDATE admins SET d_id = '$departmentId' WHERE user_id = '$user_id'";
+            if ($conn->query($updateAdminQuery) === TRUE) {
+                // echo "User record updated successfully.";
+                if ($_SESSION['role'] == 'admin') {
+
+                    $_SESSION['adminUpdated'] = "Admin Updated Successfully";
+
+                    header("location: ../DB_Admin/Dashboard.php");
+
+                    exit();
+                } elseif ($_SESSION['role'] == 'super_admin') {
+
+                    $_SESSION['adminUpdated'] = "Admin Updated Successfully";
+
+                    header("location: ../DB_Superadmin/Dashboard.php");
+
+                    exit();
+                } else {
+                    header("location: ../DB_Alumni/Dashboard_profile.php");
+                    exit();
+                }
+            } else {
+                echo "Error updating admins table: " . mysqli_error($conn);
+            }
+        } else {
+            echo "Error updating user record: " . mysqli_error($conn);
+        }
     }
 }
 

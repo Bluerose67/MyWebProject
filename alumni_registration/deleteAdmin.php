@@ -4,69 +4,93 @@ include "../connect.php";
 if (isset($_GET['std_id'])) {
     $user_id = $_GET['user_id'];
     $std_id = $_GET['std_id'];
-    $faculty_id = $_GET['faculty_id'];
-    $course_id = $_GET['course_id'];
-    $batch_id = $_GET['batch_id'];
-    $role_id = $_GET['role_id'];
     $image = $_GET['image'];
-    // var_dump($_GET['faculty_id']);
 
-    $sql1 = "DELETE FROM students WHERE std_id = '$std_id'";
-    if (mysqli_query($conn, $sql1)) {
+    // Delete record from the "role_junction" table
+    $deleteRoleJunctionQuery = "DELETE FROM role_junction WHERE user_id = '$user_id'";
+    if ($conn->query($deleteRoleJunctionQuery) === TRUE) {
+        // Delete record from the "students" table
+        $deleteStudentQuery = "DELETE FROM students WHERE user_id = '$user_id'";
+        if ($conn->query($deleteStudentQuery) === TRUE) {
 
-        $sql2 = "DELETE FROM courses WHERE course_id = '$course_id'";
-        if (mysqli_query($conn, $sql2)) {
-
-            $sql3 = "DELETE FROM batch WHERE batch_id = '$batch_id'";
-            if (mysqli_query($conn, $sql3)) {
-
-                $sql4 = "DELETE FROM faculties WHERE faculty_id = '$faculty_id'";
-                if (mysqli_query($conn, $sql4)) {
-
-                    $sql5 = "DELETE FROM role WHERE role_id = '$role_id'";
-                    if (mysqli_query($conn, $sql5)) {
-
-                        $sql6 = "DELETE FROM users WHERE user_id = '$user_id'";
-                        if (mysqli_query($conn, $sql6)) {
-
-                            unlink("../images/profile/" . $image);
-                            if ($_SESSION['role'] == 'admin') {
-
-                                $_SESSION['alumniDeleted'] = "Alumni Deleted Successfully";
-
-                                header("location: ../DB_Admin/Dashboard.php");
-
-                            } elseif ($_SESSION['role'] == 'super_admin') {
-
-                                $_SESSION['alumniDeleted'] = "Alumni Deleted Successfully";
-
-                                header("location: ../DB_Superadmin/Dashboard.php");
-                            } else {
-                                echo "Invalid role";
-                            }
-
-                        } else {
-                            echo "Delete failed in query 5" . $sql6 . "<br>" . mysqli_error($conn);
-                        }
-
-                    } else {
-                        echo "Delete failed in query 5" . $sql5 . "<br>" . mysqli_error($conn);
-                    }
-
+            // Check if the role becomes orphaned
+            $checkOrphanedRoleQuery = "SELECT role_id FROM role WHERE role_id NOT IN (SELECT role_id FROM role_junction)";
+            $orphanedRoleResult = $conn->query($checkOrphanedRoleQuery);
+            if ($orphanedRoleResult->num_rows > 0) {
+                // Delete orphaned roles from the "role" table
+                $deleteOrphanedRoleQuery = "DELETE FROM role WHERE role_id IN (SELECT role_id FROM role_junction)";
+                if ($conn->query($deleteOrphanedRoleQuery) === TRUE) {
+                    $_SESSION['deleteSuccess'] = "User record and orphaned roles deleted successfully.";
                 } else {
-                    echo "Delete failed in Query 4" . $sql4 . "<br>" . mysqli_error($conn);
+                    echo "Error deleting orphaned roles from role table: " . mysqli_error($conn);
                 }
-
-            } else {
-                echo "Delete Failed in query 3" . $sql3 . "<br>" . mysqli_error($conn);
             }
 
-        } else {
-            echo "Delete Failed in query 2" . $sql2 . "<br>" . mysqli_error($conn);
-        }
+            // Check if the faculties become orphaned
+            $checkOrphanedFacultyQuery = "SELECT faculty_id FROM faculties WHERE faculty_id NOT IN (SELECT faculty_id FROM students)";
+            $orphanedFacultyResult = $conn->query($checkOrphanedFacultyQuery);
+            if ($orphanedFacultyResult->num_rows > 0) {
+                // Delete orphaned faculties from the "faculties" table
+                $deleteOrphanedFacultyQuery = "DELETE FROM faculties WHERE faculty_id IN (SELECT faculty_id FROM students)";
+                if ($conn->query($deleteOrphanedFacultyQuery) === TRUE) {
+                    $_SESSION['deleteSuccess'] = "User record, orphaned roles, and orphaned faculties deleted successfully.";
+                } else {
+                    echo "Error deleting orphaned faculties from faculties table: " . mysqli_error($conn);
+                }
+            }
 
+            // Check if the courses become orphaned
+            $checkOrphanedCourseQuery = "SELECT course_id FROM courses WHERE course_id NOT IN (SELECT course_id FROM students)";
+            $orphanedCourseResult = $conn->query($checkOrphanedCourseQuery);
+            if ($orphanedCourseResult->num_rows > 0) {
+                // Delete orphaned courses from the "courses" table
+                $deleteOrphanedCourseQuery = "DELETE FROM courses WHERE course_id IN (SELECT course_id FROM students)";
+                if ($conn->query($deleteOrphanedCourseQuery) === TRUE) {
+                    $_SESSION['deleteSuccess'] = "User record, orphaned roles, orphaned faculties, and orphaned courses deleted successfully.";
+                } else {
+                    echo "Error deleting orphaned courses from courses table: " . mysqli_error($conn);
+                }
+            }
+
+            // Check if the batch become orphaned
+            $checkOrphanedBatchQuery = "SELECT batch_id FROM batch WHERE batch_id NOT IN (SELECT batch_id FROM students)";
+            $orphanedBatchResult = $conn->query($checkOrphanedBatchQuery);
+            if ($orphanedBatchResult->num_rows > 0) {
+                // Delete orphaned batches from the "batch" table
+                $deleteOrphanedBatchQuery = "DELETE FROM batch WHERE batch_id IN (SELECT batch_id FROM students)";
+                if ($conn->query($deleteOrphanedBatchQuery) === TRUE) {
+                    $_SESSION['deleteSuccess'] = "User record, orphaned roles, orphaned faculties, orphaned courses, and orphaned batches deleted successfully.";
+                } else {
+                    echo "Error deleting orphaned batches from batch table: " . mysqli_error($conn);
+                }
+            }
+
+            // Delete the user record from the "users" table
+            $deleteUserQuery = "DELETE FROM users WHERE user_id = '$user_id'";
+            if ($conn->query($deleteUserQuery) === TRUE) {
+                unlink("../images/profile/" . $image);
+
+                if ($_SESSION['role'] == 'admin') {
+
+                    $_SESSION['alumniDeleted'] = "Alumni Deleted Successfully";
+
+                    header("location: ../DB_Admin/alumni.php");
+                } elseif ($_SESSION['role'] == 'super_admin') {
+
+                    $_SESSION['alumniDeleted'] = "Alumni Deleted Successfully";
+
+                    header("location: ../DB_Superadmin/alumni.php");
+                } else {
+                    echo "Invalid Role";
+                }
+            } else {
+                echo "Error deleting from users table: " . mysqli_error($conn);
+            }
+        } else {
+            echo "Error deleting from students table: " . mysqli_error($conn);
+        }
     } else {
-        echo "Delete failed in query 1" . $sql1 . "<br>" . mysqli_error($conn);
+        echo "Error deleting from role_junction table: " . mysqli_error($conn);
     }
 } elseif (isset($_GET['d_id'])) {
 
@@ -115,7 +139,7 @@ if (isset($_GET['std_id'])) {
 
                 $_SESSION['adminDeleted'] = "Admin Deleted Successfully";
 
-                header('Location: ../DB_Superadmin/Dashboard.php');
+                header('Location: ../DB_Superadmin/admin_list.php');
             } else {
                 echo "Error deleting user record: " . mysqli_error($conn);
             }

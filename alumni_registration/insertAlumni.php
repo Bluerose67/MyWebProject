@@ -41,10 +41,10 @@ if ($_POST) {
                 echo "</script>";
             } else {
 
-                // Insert into 'users' table
-                $sql1 = "INSERT INTO users (user_name, email, password, address, DOB, Phone_no, image)
-                    VALUES ('$user_name', '$email', '$password', '$address', '$DOB', '$phone_no','$image')";
-                if (mysqli_query($conn, $sql1)) {
+                // Insert user record into the "users" table
+                $insertUserQuery = "INSERT INTO users (user_name, email, password, address, DOB, Phone_no, bio, status) 
+                        VALUES ('$user_name', '$email', '$password', '$address', '$DOB', '$phone_no','Write abour yourself', 'pending')";
+                if ($conn->query($insertUserQuery) === TRUE) {
 
                     $user_id = mysqli_insert_id($conn);
 
@@ -79,75 +79,120 @@ if ($_POST) {
 
 
 
+                    // Check if the role already exists
+                    $checkRoleQuery = "SELECT role_id FROM role WHERE role = '$role'";
+                    $checkRoleResult = $conn->query($checkRoleQuery);
 
-                    // Insert into 'faculties' table
-                    $sql2 = "INSERT INTO faculties (faculty_name)
-                        VALUES ('$faculty_name')";
-                    if (mysqli_query($conn, $sql2)) {
-                        $faculty_id = mysqli_insert_id($conn);
+                    if ($checkRoleResult->num_rows > 0) {
+                        // Role already exists, retrieve its ID
+                        $roleRow = $checkRoleResult->fetch_assoc();
+                        $roleId = $roleRow['role_id'];
+                    } else {
+                        // Role doesn't exist, insert into "role" table
+                        $insertRoleQuery = "INSERT INTO role (role) VALUES ('$role')";
+                        if ($conn->query($insertRoleQuery) === TRUE) {
+                            $roleId = mysqli_insert_id($conn); // Get the generated role ID
+                        } else {
+                            echo "Error inserting into role table: " . mysqli_error($conn);
+                            $conn->close();
+                            exit;
+                        }
+                    }
 
-                        // Insert into 'role' table
-                        $sql3 = "INSERT INTO role (role, user_id)
-                             VALUES ('$role', '$user_id')";
-                        if (mysqli_query($conn, $sql3)) {
+                    // Check if the faculty already exists
+                    $checkFacultyQuery = "SELECT faculty_id FROM faculties WHERE faculty_name = '$faculty_name'";
+                    $checkFacultyResult = $conn->query($checkFacultyQuery);
 
-                            // Insert into 'courses' table
-                            $sql4 = "INSERT INTO courses (course_name)
-                            VALUES ('$course_name')";
-                            if (mysqli_query($conn, $sql4)) {
-                                $course_id = mysqli_insert_id($conn);
+                    if ($checkFacultyResult->num_rows > 0) {
+                        // Faculty already exists, retrieve its ID
+                        $facultyRow = $checkFacultyResult->fetch_assoc();
+                        $facultyId = $facultyRow['faculty_id'];
+                    } else {
+                        // Faculty doesn't exist, insert into "faculties" table
+                        $insertFacultyQuery = "INSERT INTO faculties (faculty_name) VALUES ('$faculty_name')";
+                        if ($conn->query($insertFacultyQuery) === TRUE) {
+                            $facultyId = mysqli_insert_id($conn); // Get the generated faculty ID
+                        } else {
+                            echo "Error inserting into faculties table: " . mysqli_error($conn);
+                            $conn->close();
+                            exit;
+                        }
+                    }
 
-                                //Insert into batch table
-                                $sql5 = "INSERT INTO batch (batch_no)
-                            VALUES ('$batch_no')";
-                                if (mysqli_query($conn, $sql5)) {
-                                    $batch_id = mysqli_insert_id($conn);
+                    // Check if the course already exists
+                    $checkCourseQuery = "SELECT course_id FROM courses WHERE course_name = '$course_name'";
+                    $checkCourseResult = $conn->query($checkCourseQuery);
 
-                                    //Insert into students table
-                                    $sql6 = "INSERT INTO students (faculty_id, course_id, batch_id, user_id)
-                            VALUES ('$faculty_id', '$course_id', '$batch_id', '$user_id')";
-                                    if (mysqli_query($conn, $sql6)) {
-                                        $std_id = mysqli_insert_id($conn);
+                    if ($checkCourseResult->num_rows > 0) {
+                        // Course already exists, retrieve its ID
+                        $courseRow = $checkCourseResult->fetch_assoc();
+                        $courseId = $courseRow['course_id'];
+                    } else {
+                        // Course doesn't exist, insert into "courses" table
+                        $insertCourseQuery = "INSERT INTO courses (course_name) VALUES ('$course_name')";
+                        if ($conn->query($insertCourseQuery) === TRUE) {
+                            $courseId = mysqli_insert_id($conn); // Get the generated course ID
+                        } else {
+                            echo "Error inserting into courses table: " . mysqli_error($conn);
+                            $conn->close();
+                            exit;
+                        }
+                    }
 
-                                        if ($_SESSION['role'] == 'admin') {
+                    // Check if the batch already exists
+                    $checkBatchQuery = "SELECT batch_id FROM batch WHERE batch_no = '$batch_no'";
+                    $checkBatchResult = $conn->query($checkBatchQuery);
 
-                                            $_SESSION['alumniAdded'] = "Alumni Added Successfully";
+                    if ($checkBatchResult->num_rows > 0) {
+                        // Batch already exists, retrieve its ID
+                        $batchRow = $checkBatchResult->fetch_assoc();
+                        $batchId = $batchRow['batch_id'];
+                    } else {
+                        // Batch doesn't exist, insert into "batch" table
+                        $insertBatchQuery = "INSERT INTO batch (batch_no) VALUES ('$batch_no')";
+                        if ($conn->query($insertBatchQuery) === TRUE) {
+                            $batchId = mysqli_insert_id($conn); // Get the generated batch ID
+                        } else {
+                            echo "Error inserting into batch table: " . mysqli_error($conn);
+                            $conn->close();
+                            exit;
+                        }
+                    }
 
-                                            header("location: ../DB_Admin/Dashboard.php");
-                                        } elseif ($_SESSION['role'] == 'super_admin') {
+                    // Insert role-junction record into the "role_junction" table
+                    $insertRoleJunctionQuery = "INSERT INTO role_junction (role_id, user_id) VALUES ('$roleId', '$user_id')";
+                    if ($conn->query($insertRoleJunctionQuery) === TRUE) {
+                        // Insert student record into the "students" table
+                        $insertStudentQuery = "INSERT INTO students (user_id, faculty_id, course_id, batch_id) 
+                               VALUES ('$user_id', '$facultyId', '$courseId', '$batchId')";
+                        if ($conn->query($insertStudentQuery) === TRUE) {
+                            if ($_SESSION['role'] == 'admin') {
 
-                                            $_SESSION['alumniAdded'] = "Alumni Added Successfully";
+                                $_SESSION['adminAdded'] = "Admin Added Successfully";
 
-                                            header("location: ../DB_Superadmin/Dashboard.php");
-                                        } else {
-                                            header("location: ../DB_Alumni/Dashboard_profile.php");
-                                        }
+                                header("location: ../DB_Admin/alumni_list.php");
+                            } elseif ($_SESSION['role'] == 'super_admin') {
 
-                                    } else {
-                                        echo "Error: " . $sql6 . "<br>" . mysqli_error($conn);
+                                $_SESSION['adminAdded'] = "Admin Added Successfully";
 
-                                    }
-                                } else {
-                                    echo "Error: " . $sql5 . "<br>" . mysqli_error($conn);
-                                }
-
+                                header("location: ../DB_Superadmin/alumni_list.php");
                             } else {
-                                echo "Error: " . $sql4 . "<br>" . mysqli_error($conn);
+                                header("location: ../Landing_pages/index.php");
                             }
                         } else {
-                            echo "Error: " . $sql3 . "<br>" . mysqli_error($conn);
+                            echo "Error inserting into students table: " . mysqli_error($conn);
                         }
                     } else {
-                        echo "Error: " . $sql2 . "<br>" . mysqli_error($conn);
+                        echo "Error inserting into role_junction table: " . mysqli_error($conn);
                     }
                 } else {
-                    echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
+                    echo "Error inserting into users table: " . mysqli_error($conn);
                 }
             }
         }
     }
-
 }
-mysqli_close($conn);
 
+// Close the database connection
+$conn->close();
 ?>

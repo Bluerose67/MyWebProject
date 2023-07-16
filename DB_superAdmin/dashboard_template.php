@@ -35,12 +35,14 @@ if (!isset($_SESSION['username'])) {
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
-                <li>
-                    <a href="Dashboard_profile.php">
-                        <i class='bx bxs-user'></i>
-                        <span class="text">My Profile</span>
-                    </a>
-                </li>
+                <?php if ($_SESSION['role'] == 'admin') { ?>
+                    <li>
+                        <a href="Dashboard_profile.php">
+                            <i class='bx bxs-user'></i>
+                            <span class="text">My Profile</span>
+                        </a>
+                    </li>
+                <?php } ?>
                 <li>
                     <a href="admin_list.php">
                         <i class='bx bxs-user'></i>
@@ -84,6 +86,7 @@ if (!isset($_SESSION['username'])) {
         $userId = $_SESSION['user_id'];
         $sql = "SELECT * from users  
                 JOIN admins ON users.user_id = admins.user_id
+                JOIN departments ON departments.d_id = admins.d_id
                 JOIN role_junction ON users.user_id = role_junction.user_id  
                 JOIN role ON role.role_id = role_junction. role_id
                 WHERE users.user_id = '$userId'";

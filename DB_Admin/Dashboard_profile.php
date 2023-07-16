@@ -40,14 +40,9 @@ require_once('../DB_Superadmin/Dashboard_template.php');
                         <?= $row['user_name'] ?>
                     </span>
                 </div>
-                <div class="field">
-                    <label>Role:</label>
-                    <span>
-                        <?= $row['role'] ?>
-                    </span>
-                </div>
+
                 <button class="edit-profile">
-                    <a href="update_profile.php?admin_id=<?= $row['admin_id'] ?>">Edit
+                    <a href="update_profile.php?d_id=<?= $row['d_id'] ?>">Edit
                         Profile</a>
                 </button>
 

@@ -2,6 +2,34 @@
 require_once('../DB_Superadmin/dashboard_template.php');
 ?>
 
+<div class="notification_CRUD">
+    <p>
+        <?php
+        if (isset($_SESSION['alumniUpdated'])) {
+
+            echo $_SESSION['alumniUpdated'];
+
+            unset($_SESSION['alumniUpdated']);
+
+        } elseif (isset($_SESSION['alumniDeleted'])) {
+
+            echo $_SESSION['alumniDeleted'];
+
+            unset($_SESSION['alumniDeleted']);
+        } elseif (isset($_SESSION['adminUpdated'])) {
+
+            echo $_SESSION['adminUpdated'];
+
+            unset($_SESSION['adminUpdated']);
+
+        } else {
+            echo "Welcome, " . $_SESSION['username'];
+        }
+        ?>
+    </p>
+    <span class="notification_progress_CRUD"></span>
+</div>
+
 <section class="right-lower">
     <!-- main-lower sections begins -------------------------------------------------->
     <main>
@@ -25,307 +53,354 @@ require_once('../DB_Superadmin/dashboard_template.php');
 
             <?php
             include "../connect.php";
-            //Display the student count 
-            $studentQuery = "SELECT COUNT(*) as student_count FROM role WHERE role.role = 'student'";
+            //Display the pending student count 
+            $studentQuery = "SELECT COUNT(*) as student_count FROM role 
+            JOIN role_junction ON role_junction.role_id = role.role_id
+            JOIN users on role_junction.user_id = users.user_id 
+            WHERE role.role = 'student' AND users.status = 'pending'";
             $result = mysqli_query($conn, $studentQuery);
-            $studentCount = $result->fetch_assoc()['student_count'];
+            $pendingstudentCount = $result->fetch_assoc()['student_count'];
 
-            //Display the Admin Count
-            $adminQuery = "SELECT COUNT(*) as admin_count FROM role WHERE role.role = 'admin'";
-            $result = mysqli_query($conn, $adminQuery);
-            $adminCount = $result->fetch_assoc()['admin_count'];
-
-            //Display the Total Count
-            $totalQuery = "SELECT COUNT(*) as total_count FROM users";
-            $result = mysqli_query($conn, $totalQuery);
-            $totalCount = $result->fetch_assoc()['total_count'];
+            //Display the denied student count 
+            $studentQuery = "SELECT COUNT(*) as student_count FROM role 
+            JOIN role_junction ON role_junction.role_id = role.role_id
+            JOIN users on role_junction.user_id = users.user_id 
+            WHERE role.role = 'student' AND users.status = 'denied'";
+            $result = mysqli_query($conn, $studentQuery);
+            $deniedstudentCount = $result->fetch_assoc()['student_count'];
 
             ?>
             <li>
-                <i class='bx bxs-calendar-check'></i>
+                <i class='bx bxs-group'></i>
                 <span class="text">
                     <h3>
-                        <?php echo $studentCount; ?>
+                        <?php echo $pendingstudentCount; ?>
                     </h3>
-                    <p>No. of Students</p>
+                    <p>No of pending alumni</p>
                 </span>
             </li>
             <li>
                 <i class='bx bxs-group'></i>
                 <span class="text">
                     <h3>
-                        <?php echo $adminCount; ?>
+                        <?php echo $deniedstudentCount; ?>
                     </h3>
-                    <p>No of Admins</p>
-                </span>
-            </li>
-            <li>
-                <i class='bx bxs-dollar-circle'></i>
-                <span class="text">
-                    <h3>
-                        <?php echo $totalCount; ?>
-                    </h3>
-                    <p>Total Users</p>
+                    <p>No of denied alumni</p>
                 </span>
             </li>
         </ul>
 
-        <!-- details tables------------------------------------------------------>
+        <!-- Pending alumni table------------------------------------------------------ -->
         <?php
-        include "../connect.php";
-
-        $sqlAdmin = "SELECT * FROM users 
-                                                        JOIN admins ON admins.user_id = users.user_id
-                                                        JOIN role ON users.user_id = role.user_id
-                                                        WHERE role.role = 'admin'";
-
-        $resultAdmin = mysqli_query($conn, $sqlAdmin);
-
-        if (mysqli_num_rows($resultAdmin) > 0) {
-            $i = 0;
-            // Looping through the results
-            while ($row = mysqli_fetch_assoc($resultAdmin)) {
-                $adminRecords[$i] = array(
-                    "user_id" => $row['user_id'],
-                    "admin_id" => $row['admin_id'],
-                    "user_name" => $row['user_name'],
-                    "email" => $row['email'],
-                    "address" => $row['address'],
-                    "DOB" => $row['DOB'],
-                    "phone_no" => $row['phone_no'],
-                    "image" => $row['image'],
-                    "department" => $row['department'],
-                    "role" => $row['role'],
-                );
-                $i++;
-            }
-        }
-
-        $sqlAlumni = "SELECT u.*, s.*, r.role, f.faculty_name, c.course_name, b.batch_no
-                                                        FROM users u
-                                                        JOIN role r ON u.user_id = r.user_id
-                                                        JOIN students s ON u.user_id = s.user_id
-                                                        JOIN faculties f ON s.faculty_id = f.faculty_id
-                                                        JOIN courses c ON s.course_id = c.course_id
-                                                        JOIN batch b ON s.batch_id = b.batch_id
-                                                        WHERE r.role = 'student'";
+        $sqlAlumni = "SELECT u.*, s.*, r.*, f.*, c.*, b.*
+                    FROM users u
+                    JOIN role_junction rj on rj.user_id = u.user_id
+                    JOIN role r on rj.role_id = r.role_id
+                    JOIN students s on s.user_id = u.user_id
+                    JOIN faculties f on f.faculty_id = s.faculty_id
+                    JOIN courses c on c.course_id = s.course_id 
+                    JOIN batch b on b.batch_id = s.batch_id
+                    WHERE r.role = 'student' AND u.status = 'pending'";
 
         $resultAlumni = mysqli_query($conn, $sqlAlumni);
 
-        if (mysqli_num_rows($resultAlumni) > 0) {
-            $i = 0;
-            while ($row = mysqli_fetch_assoc($resultAlumni)) {
-                $alumniRecords[$i] = array(
-                    "user_id" => $row['user_id'],
-                    "std_id" => $row['std_id'],
-                    "user_name" => $row['user_name'],
-                    "email" => $row['email'],
-                    "address" => $row['address'],
-                    "DOB" => $row['DOB'],
-                    "phone_no" => $row['phone_no'],
-                    "image" => $row['image'],
-                    "faculty_name" => $row['faculty_name'],
-                    "course_name" => $row['course_name'],
-                    "batch_no" => $row['batch_no'],
-                );
-                $i++;
+        if ($resultAlumni) {
+            $alumniRecords = array(); // Initialize an empty array
+            if (mysqli_num_rows($resultAlumni) > 0) {
+                $i = 0;
+                // Looping through the results
+                while ($row = mysqli_fetch_assoc($resultAlumni)) {
+                    $alumniRecords[$i] = array(
+                        "user_id" => $row['user_id'],
+                        "std_id" => $row['std_id'],
+                        "role_id" => $row['role_id'],
+                        "faculty_id" => $row['faculty_id'],
+                        "course_id" => $row['course_id'],
+                        "batch_id" => $row['batch_id'],
+                        "user_name" => $row['user_name'],
+                        "email" => $row['email'],
+                        "address" => $row['address'],
+                        "DOB" => $row['DOB'],
+                        "phone_no" => $row['phone_no'],
+                        "status" => $row['status'],
+                        "image" => $row['image'],
+                        "faculty_name" => $row['faculty_name'],
+                        "course_name" => $row['course_name'],
+                        "batch_no" => $row['batch_no'],
+                    );
+                    $i++;
+                }
             }
-        }
-        // Close the connection
-        mysqli_close($conn);
-        ?>
-        <div class="table-data">
-            <div class="order">
-                <div class="container1">
-                    <div class="center1">
-                        <div class="head">
-                            <h3>Admin List</h3>
-                            <div class="text1">
-                                <input type="text" id="adminSearchInput" required />
-                                <i class='bx bx-search'></i>
-                                <span> </span>
-                                <label>Search</label>
+            ?>
+
+
+            <div class="table-data">
+                <div class="order">
+                    <div class="container1">
+                        <div class="center1">
+                            <div class="head">
+                                <h3>Alumni List (Pending)</h3>
+                                <div class="text1">
+                                    <input type="text" id="alumniSearchInput" required />
+                                    <i class='bx bx-search'></i>
+                                    <span> </span>
+                                    <label>Search</label>
+                                </div>
                             </div>
-                        </div>
 
-                        <table>
-                            <tr>
-                                <th>Profile</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Address</th>
-                                <th>DOB</th>
-                                <th>Contact</th>
-                                <th>Department</th>
-                                <!-- <th>Action</th> -->
-                            </tr>
-                            <tbody id="adminTableBody">
-                                <?php foreach ($adminRecords as $record) { ?>
-                                    <tr>
-                                        <td>
-                                            <img src="<?php echo "../images/profile/" . $record['image'] ?>">
-                                        </td>
-                                        <td>
-                                            <?= $record['user_name'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $record['email'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $record['address'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $record['DOB'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $record['phone_no'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $record['department'] ?>
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
+                            <table>
+                                <tr>
+                                    <th>Profile</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>DOB</th>
+                                    <th>Contact</th>
+                                    <th>Faculty</th>
+                                    <th>Course</th>
+                                    <th>Batch</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                <tbody id="alumniTableBody">
+                                    <?php
+                                    if (empty($alumniRecords)) {
+                                        echo "<tr><td colspan='8'>No Data are in pending list.</td></tr>";
+                                    } else {
+                                        foreach ($alumniRecords as $record) { ?>
+                                            <tr>
+                                                <td>
+                                                    <img src="<?php echo "../images/profile/" . $record['image'] ?>">
+                                                </td>
+                                                <td>
+                                                    <?= $record['user_name'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['email'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['address'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['DOB'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['phone_no'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['faculty_name'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['course_name'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['batch_no'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['status'] ?>
+                                                </td>
+                                                <td class="change-buttons">
+                                                    <div class="dropdown">
+                                                        <button class="icon-button">&#x22EE;</button>
+                                                        <div class="dropdown-menu">
+                                                            <button class="edit-button">
+                                                                <a
+                                                                    href="../alumni_registration/update_form.php?std_id=<?= $record['std_id'] ?>">Edit</a>
+                                                            </button>
+                                                            <button class="edit-button alumniDeleteBtn">
+                                                                Delete
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php }
+                                    } ?>
+                                </tbody>
+                            </table>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="table-data">
-            <div class="order">
-                <div class="container1">
-                    <div class="center1">
-                        <div class="head">
-                            <h3>Alumni List</h3>
-                            <div class="text1">
-                                <input type="text" id="alumniSearchInput" required />
-                                <i class='bx bx-search'></i>
-                                <span> </span>
-                                <label>Search</label>
-                            </div>
-                        </div>
-                        <button class="add-button">
-                            <a href="../alumni_registration/Alumniregistration.php">Add new Alumni</a>
-                        </button>
-                        <table>
-                            <tr>
-                                <th>Profile</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Address</th>
-                                <th>DOB</th>
-                                <th>Contact</th>
-                                <th>Faculty</th>
-                                <th>Course</th>
-                                <th>Batch</th>
-                                <th>Action</th>
-                            </tr>
-                            <tbody id="alumniTableBody">
-                                <?php foreach ($alumniRecords as $record) { ?>
-                                    <tr>
-                                        <td>
-                                            <img src="<?php echo "../images/profile/" . $record['image'] ?>">
-                                        </td>
-                                        <td>
-                                            <?= $record['user_name'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $record['email'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $record['address'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $record['DOB'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $record['phone_no'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $record['faculty_name'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $record['course_name'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $record['batch_no'] ?>
-                                        </td>
-                                        <td class="change-buttons">
-                                            <div class="dropdown">
-                                                <button class="icon-button">&#x22EE;</button>
-                                                <div class="dropdown-menu">
-                                                    <button class="edit-button">
-                                                        <a
-                                                            href="../alumni_registration/update_form.php?std_id=<?= $record['std_id'] ?>">Edit</a>
-                                                    </button>
-                                                    <button class="edit-button" id="deleteBtn">Delete</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-
-                        <div id="confirmationModal" class="modal_delete">
+                            <?php
+        } else {
+            // Error executing the query
+            echo "Error: " . mysqli_error($conn);
+        } ?>
+                        <div id="confirmationModalAlumni" class="modal_delete">
                             <div class="modal-content_delete">
                                 <h2>Confirmation</h2>
                                 <p>Are you sure you want to delete?</p>
-                                <button id="confirmDeleteBtn" class="edit-button">Yes</button>
-                                <button id="cancelDeleteBtn" class="edit-button">No</button>
+                                <button id="confirmDeleteBtnAlumni" class="edit-button">
+                                    <a
+                                        href="../alumni_registration/deleteAdmin.php?user_id=<?= $record['user_id'] ?>&std_id=<?= $record['std_id'] ?>&faculty_id=<?= $record['faculty_id'] ?>&course_id=<?= $record['course_id'] ?>&batch_id=<?= $record['batch_id'] ?>&role_id=<?= $record['role_id'] ?>&image=<?= $record['image'] ?>">Delete</a>
+                                </button>
+                                <button id="cancelDeleteBtnAlumni" class="edit-button">No</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- details tables------------------------------------------------------>
+        <!-- Pending alumni table ends------------------------------------------------------ -->
+        <?php
+        $sqlAlumni = "SELECT u.*, s.*, r.*, f.*, c.*, b.*
+                    FROM users u
+                    JOIN role_junction rj on rj.user_id = u.user_id
+                    JOIN role r on rj.role_id = r.role_id
+                    JOIN students s on s.user_id = u.user_id
+                    JOIN faculties f on f.faculty_id = s.faculty_id
+                    JOIN courses c on c.course_id = s.course_id 
+                    JOIN batch b on b.batch_id = s.batch_id
+                    WHERE r.role = 'student' AND u.status = 'denied'";
+
+        $resultAlumni = mysqli_query($conn, $sqlAlumni);
+
+        if ($resultAlumni) {
+            $alumniRecords = array(); // Initialize an empty array
+        
+            if (mysqli_num_rows($resultAlumni) > 0) {
+                $i = 0;
+                // Looping through the results
+                while ($row = mysqli_fetch_assoc($resultAlumni)) {
+                    $alumniRecords[$i] = array(
+                        "user_id" => $row['user_id'],
+                        "std_id" => $row['std_id'],
+                        "role_id" => $row['role_id'],
+                        "faculty_id" => $row['faculty_id'],
+                        "course_id" => $row['course_id'],
+                        "batch_id" => $row['batch_id'],
+                        "user_name" => $row['user_name'],
+                        "email" => $row['email'],
+                        "address" => $row['address'],
+                        "DOB" => $row['DOB'],
+                        "phone_no" => $row['phone_no'],
+                        "status" => $row['status'],
+                        "image" => $row['image'],
+                        "faculty_name" => $row['faculty_name'],
+                        "course_name" => $row['course_name'],
+                        "batch_no" => $row['batch_no'],
+                    );
+                    $i++;
+                }
+            }
+            // Close the connection
+            mysqli_close($conn);
+            ?>
+
+
+            <div class="table-data">
+                <div class="order">
+                    <div class="container1">
+                        <div class="center1">
+                            <div class="head">
+                                <h3>Alumni List (Denied)</h3>
+                                <div class="text1">
+                                    <input type="text" id="alumniSearchInput" required />
+                                    <i class='bx bx-search'></i>
+                                    <span> </span>
+                                    <label>Search</label>
+                                </div>
+                            </div>
+
+                            <table>
+                                <tr>
+                                    <th>Profile</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>DOB</th>
+                                    <th>Contact</th>
+                                    <th>Faculty</th>
+                                    <th>Course</th>
+                                    <th>Batch</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                <tbody id="alumniTableBody">
+                                    <?php
+                                    if (empty($alumniRecords)) {
+                                        echo "<tr><td colspan='8'>No Data are in denied list.</td></tr>";
+                                    } else {
+                                        foreach ($alumniRecords as $record) { ?>
+                                            <tr>
+                                                <td>
+                                                    <img src="<?php echo "../images/profile/" . $record['image'] ?>">
+                                                </td>
+                                                <td>
+                                                    <?= $record['user_name'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['email'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['address'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['DOB'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['phone_no'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['faculty_name'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['course_name'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['batch_no'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['status'] ?>
+                                                </td>
+                                                <td class="change-buttons">
+                                                    <div class="dropdown">
+                                                        <button class="icon-button">&#x22EE;</button>
+                                                        <div class="dropdown-menu">
+                                                            <button class="edit-button">
+                                                                <a
+                                                                    href="../alumni_registration/update_form.php?std_id=<?= $record['std_id'] ?>">Edit</a>
+                                                            </button>
+                                                            <button class="edit-button alumniDeleteBtn">
+                                                                Delete
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php }
+                                    } ?>
+                                </tbody>
+                            </table>
+
+                            <?php
+        } else {
+            // Error executing the query
+            echo "Error: " . mysqli_error($conn);
+        } ?>
+                        <div id="confirmationModalAlumni" class="modal_delete">
+                            <div class="modal-content_delete">
+                                <h2>Confirmation</h2>
+                                <p>Are you sure you want to delete?</p>
+                                <button id="confirmDeleteBtnAlumni" class="edit-button">
+                                    <a
+                                        href="../alumni_registration/deleteAdmin.php?user_id=<?= $record['user_id'] ?>&std_id=<?= $record['std_id'] ?>&faculty_id=<?= $record['faculty_id'] ?>&course_id=<?= $record['course_id'] ?>&batch_id=<?= $record['batch_id'] ?>&role_id=<?= $record['role_id'] ?>&image=<?= $record['image'] ?>">Delete</a>
+                                </button>
+                                <button id="cancelDeleteBtnAlumni" class="edit-button">No</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Denied alumni table ends ------------------------------------------------------ -->
     </main>
 </section> <!-- main-lower sections ends -------------------------------------------------->
-</section> <!-- content section ends -->
+
 </section>
-<!-- main sections ends ---------------------------------------------------------------------------------->
-
-
-<div class="notification">
-    <p> Welcome,
-        <?php echo $_SESSION['username'] ?>
-    </p>
-    <span class="notification_progress"></span>
+<!-- End of content section -->
+</section>
+<!-- End of main section -->
 </div>
-
-<div class="notification_CRUD">
-    <p>
-        <?php
-        if (isset($_SESSION['alumniAdded'])) {
-
-            echo $_SESSION['alumniAdded'];
-
-            unset($_SESSION['alumniAdded']);
-
-        } elseif (isset($_SESSION['alumniUpdated'])) {
-
-            echo $_SESSION['alumniUpdated'];
-
-            unset($_SESSION['alumniUpdated']);
-
-        } elseif (isset($_SESSION['alumniDeleted'])) {
-
-            echo $_SESSION['alumniDeleted'];
-
-            unset($_SESSION['alumniDeleted']);
-
-        } else {
-            echo "Hey !";
-        }
-        ?>
-    </p>
-    <span class="notification_progress_CRUD"></span>
-</div>
-
-</div><!-- dashboard ends ---------------------------------------------------------------------------->
 
 <script src="../js/sidebar.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -349,7 +424,6 @@ require_once('../DB_Superadmin/dashboard_template.php');
             });
         });
     });
-                                                                                                                                                        /* Filter data  */
 </script>
 <script src="../js/deleteConfirmation.js"></script>
 

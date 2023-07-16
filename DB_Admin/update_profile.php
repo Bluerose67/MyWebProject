@@ -4,12 +4,14 @@ require_once('../DB_Superadmin/dashboard_template.php');
 
 
 <?php
-if (isset($_GET['admin_id'])) {
-    $admin_id = $_GET['admin_id'];
-    $sql = "SELECT * from users  
-                JOIN admins ON users.user_id=admins.user_id
-                JOIN role ON users.user_id=role.user_id 
-                WHERE admins.admin_id= '$admin_id'";
+if (isset($_GET['d_id'])) {
+    $d_id = $_GET['d_id'];
+    $sql = "SELECT * FROM users 
+            JOIN admins ON admins.user_id = users.user_id
+            JOIN departments on departments.d_id = admins.d_id
+            JOIN role_junction on role_junction.user_id = users.user_id
+            JOIN role ON role_junction.role_id = role.role_id
+            WHERE departments.d_id= '$d_id'";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
@@ -18,7 +20,7 @@ if (isset($_GET['admin_id'])) {
         while ($row = mysqli_fetch_assoc($result)) {
             $record = array(
                 "user_id" => $row['user_id'],
-                "admin_id" => $row['admin_id'],
+                "d_id" => $row['d_id'],
                 "role_id" => $row['role_id'],
                 "user_name" => $row['user_name'],
                 "email" => $row['email'],
@@ -26,6 +28,7 @@ if (isset($_GET['admin_id'])) {
                 "DOB" => $row['DOB'],
                 "phone_no" => $row['phone_no'],
                 "bio" => $row['bio'],
+                "status" => $row['status'],
                 "department" => $row['department'],
                 "role" => $row['role'],
                 "image" => $row['image'],
@@ -55,8 +58,9 @@ if (isset($_GET['admin_id'])) {
             <!-- Display admin form -->
             <form action="../alumni_registration/updateAdmin.php" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="user_id" value="<?php echo $record['user_id'] ?>" />
-                <input type="hidden" name="admin_id" value="<?php echo $record['admin_id'] ?>" />
+                <input type="hidden" name="d_id" value="<?php echo $record['d_id'] ?>" />
                 <input type="hidden" name="role_id" value="<?php echo $record['role_id'] ?>" />
+                <input type="hidden" name="status" value="<?php echo $record['status'] ?>" />
 
                 <section class="profile-main"> <!-- profile main begins -->
 
@@ -85,14 +89,7 @@ if (isset($_GET['admin_id'])) {
                                 </div>
                             </span>
                         </div>
-                        <div class="field">
-                            <label>Role:</label>
-                            <span>
-                                <div class="text_p">
-                                    <input type="text" name="role" value="<?= $record['role'] ?>" required />
-                                </div>
-                            </span>
-                        </div>
+
                         <input type="submit" value="SAVE" class="edit-profile" />
 
                     </section> <!-- row -->

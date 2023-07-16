@@ -2,23 +2,10 @@
 require_once('dashboard_template.php');
 ?>
 
-<!-- <div class="notification">
-    <p> Welcome,
-        <?php echo $_SESSION['username']; ?>
-    </p>
-    <span class="notification_progress"></span>
-</div> -->
-
 <div class="notification_CRUD">
     <p>
         <?php
-        if (isset($_SESSION['adminAdded'])) {
-
-            echo $_SESSION['adminAdded'];
-
-            unset($_SESSION['adminAdded']);
-
-        } elseif (isset($_SESSION['adminUpdated'])) {
+        if (isset($_SESSION['adminUpdated'])) {
 
             echo $_SESSION['adminUpdated'];
 
@@ -29,12 +16,6 @@ require_once('dashboard_template.php');
             echo $_SESSION['adminDeleted'];
 
             unset($_SESSION['adminDeleted']);
-
-        } elseif (isset($_SESSION['alumniAdded'])) {
-
-            echo $_SESSION['alumniAdded'];
-
-            unset($_SESSION['alumniAdded']);
 
         } elseif (isset($_SESSION['alumniUpdated'])) {
 
@@ -79,53 +60,75 @@ require_once('dashboard_template.php');
 
             <?php
             include "../connect.php";
-            //Display the student count 
+            //Display the pending student count 
             $studentQuery = "SELECT COUNT(*) as student_count FROM role 
             JOIN role_junction ON role_junction.role_id = role.role_id
             JOIN users on role_junction.user_id = users.user_id 
             WHERE role.role = 'student' AND users.status = 'pending'";
             $result = mysqli_query($conn, $studentQuery);
-            $studentCount = $result->fetch_assoc()['student_count'];
+            $pendingstudentCount = $result->fetch_assoc()['student_count'];
 
-            //Display the Admin Count
+            //Display the pending Admin Count
             $adminQuery = "SELECT COUNT(*) as admin_count FROM role 
             JOIN role_junction ON role_junction.role_id = role.role_id
             JOIN users on role_junction.user_id = users.user_id
             WHERE role.role = 'admin' AND users.status = 'pending'";
             $result = mysqli_query($conn, $adminQuery);
-            $adminCount = $result->fetch_assoc()['admin_count'];
+            $pendingadminCount = $result->fetch_assoc()['admin_count'];
 
-            //Display the Total Count
-            $totalQuery = "SELECT COUNT(*) as total_count FROM users WHERE users.status = 'pending'";
-            $result = mysqli_query($conn, $totalQuery);
-            $totalCount = $result->fetch_assoc()['total_count'];
+            //Display the denied student count 
+            $studentQuery = "SELECT COUNT(*) as student_count FROM role 
+            JOIN role_junction ON role_junction.role_id = role.role_id
+            JOIN users on role_junction.user_id = users.user_id 
+            WHERE role.role = 'student' AND users.status = 'denied'";
+            $result = mysqli_query($conn, $studentQuery);
+            $deniedstudentCount = $result->fetch_assoc()['student_count'];
+
+            //Display the denied Admin Count
+            $adminQuery = "SELECT COUNT(*) as admin_count FROM role 
+            JOIN role_junction ON role_junction.role_id = role.role_id
+            JOIN users on role_junction.user_id = users.user_id
+            WHERE role.role = 'admin' AND users.status = 'denied'";
+            $result = mysqli_query($conn, $adminQuery);
+            $deniedadminCount = $result->fetch_assoc()['admin_count'];
+
+
 
             ?>
             <li>
-                <i class='bx bxs-calendar-check'></i>
+                <i class='bx bxs-group'></i>
                 <span class="text">
                     <h3>
-                        <?php echo $studentCount; ?>
+                        <?php echo $pendingadminCount; ?>
                     </h3>
-                    <p>No. of Students (Pending)</p>
+                    <p>No. of pending admin</p>
                 </span>
             </li>
             <li>
                 <i class='bx bxs-group'></i>
                 <span class="text">
                     <h3>
-                        <?php echo $adminCount; ?>
+                        <?php echo $deniedadminCount; ?>
                     </h3>
-                    <p>No of Admins (Pending)</p>
+                    <p>No. of denied admin</p>
                 </span>
             </li>
             <li>
-                <i class='bx bxs-dollar-circle'></i>
+                <i class='bx bxs-group'></i>
                 <span class="text">
                     <h3>
-                        <?php echo $totalCount; ?>
+                        <?php echo $pendingstudentCount; ?>
                     </h3>
-                    <p>Total Pending Users</p>
+                    <p>No of pending alumni</p>
+                </span>
+            </li>
+            <li>
+                <i class='bx bxs-group'></i>
+                <span class="text">
+                    <h3>
+                        <?php echo $deniedstudentCount; ?>
+                    </h3>
+                    <p>No of denied alumni</p>
                 </span>
             </li>
         </ul>
@@ -198,48 +201,53 @@ require_once('dashboard_template.php');
                                     <th>Action</th>
                                 </tr>
                                 <tbody id="adminTableBody">
-                                    <?php foreach ($adminRecords as $record) { ?>
-                                        <tr>
-                                            <td>
-                                                <img src="<?php echo "../images/profile/" . $record['image'] ?>">
-                                            </td>
-                                            <td>
-                                                <?= $record['user_name'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['email'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['address'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['DOB'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['phone_no'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['department'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['status'] ?>
-                                            </td>
-                                            <td class="change-buttons">
-                                                <div class="dropdown">
-                                                    <button class="icon-button">&#x22EE;</button>
-                                                    <div class="dropdown-menu">
-                                                        <button class="edit-button">
-                                                            <a
-                                                                href="../alumni_registration/update_form.php?d_id=<?= $record['d_id'] ?>">Edit</a>
-                                                        </button>
-                                                        <button class="edit-button adminDeleteBtn">
-                                                            Delete
-                                                        </button>
+                                    <?php
+                                    if (empty($adminRecords)) {
+                                        echo "<tr><td colspan='8'>No Data are in pending list.</td></tr>";
+                                    } else {
+                                        foreach ($adminRecords as $record) { ?>
+                                            <tr>
+                                                <td>
+                                                    <img src="<?php echo "../images/profile/" . $record['image'] ?>">
+                                                </td>
+                                                <td>
+                                                    <?= $record['user_name'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['email'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['address'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['DOB'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['phone_no'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['department'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['status'] ?>
+                                                </td>
+                                                <td class="change-buttons">
+                                                    <div class="dropdown">
+                                                        <button class="icon-button">&#x22EE;</button>
+                                                        <div class="dropdown-menu">
+                                                            <button class="edit-button">
+                                                                <a
+                                                                    href="../alumni_registration/update_form.php?d_id=<?= $record['d_id'] ?>">Edit</a>
+                                                            </button>
+                                                            <button class="edit-button adminDeleteBtn">
+                                                                Delete
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
+                                                </td>
+                                            </tr>
+                                        <?php }
+                                    } ?>
                                 </tbody>
                             </table>
                             <?php
@@ -332,48 +340,53 @@ require_once('dashboard_template.php');
                                     <th>Action</th>
                                 </tr>
                                 <tbody id="adminTableBody">
-                                    <?php foreach ($adminRecords as $record) { ?>
-                                        <tr>
-                                            <td>
-                                                <img src="<?php echo "../images/profile/" . $record['image'] ?>">
-                                            </td>
-                                            <td>
-                                                <?= $record['user_name'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['email'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['address'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['DOB'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['phone_no'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['department'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['status'] ?>
-                                            </td>
-                                            <td class="change-buttons">
-                                                <div class="dropdown">
-                                                    <button class="icon-button">&#x22EE;</button>
-                                                    <div class="dropdown-menu">
-                                                        <button class="edit-button">
-                                                            <a
-                                                                href="../alumni_registration/update_form.php?d_id=<?= $record['d_id'] ?>">Edit</a>
-                                                        </button>
-                                                        <button class="edit-button adminDeleteBtn">
-                                                            Delete
-                                                        </button>
+                                    <?php
+                                    if (empty($adminRecords)) {
+                                        echo "<tr><td colspan='8'>No Data are in denied list.</td></tr>";
+                                    } else {
+                                        foreach ($adminRecords as $record) { ?>
+                                            <tr>
+                                                <td>
+                                                    <img src="<?php echo "../images/profile/" . $record['image'] ?>">
+                                                </td>
+                                                <td>
+                                                    <?= $record['user_name'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['email'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['address'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['DOB'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['phone_no'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['department'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['status'] ?>
+                                                </td>
+                                                <td class="change-buttons">
+                                                    <div class="dropdown">
+                                                        <button class="icon-button">&#x22EE;</button>
+                                                        <div class="dropdown-menu">
+                                                            <button class="edit-button">
+                                                                <a
+                                                                    href="../alumni_registration/update_form.php?d_id=<?= $record['d_id'] ?>">Edit</a>
+                                                            </button>
+                                                            <button class="edit-button adminDeleteBtn">
+                                                                Delete
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
+                                                </td>
+                                            </tr>
+                                        <?php }
+                                    } ?>
                                 </tbody>
                             </table>
                             <?php
@@ -471,54 +484,59 @@ require_once('dashboard_template.php');
                                     <th>Action</th>
                                 </tr>
                                 <tbody id="alumniTableBody">
-                                    <?php foreach ($alumniRecords as $record) { ?>
-                                        <tr>
-                                            <td>
-                                                <img src="<?php echo "../images/profile/" . $record['image'] ?>">
-                                            </td>
-                                            <td>
-                                                <?= $record['user_name'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['email'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['address'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['DOB'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['phone_no'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['faculty_name'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['course_name'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['batch_no'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['status'] ?>
-                                            </td>
-                                            <td class="change-buttons">
-                                                <div class="dropdown">
-                                                    <button class="icon-button">&#x22EE;</button>
-                                                    <div class="dropdown-menu">
-                                                        <button class="edit-button">
-                                                            <a
-                                                                href="../alumni_registration/update_form.php?std_id=<?= $record['std_id'] ?>">Edit</a>
-                                                        </button>
-                                                        <button class="edit-button alumniDeleteBtn">
-                                                            Delete
-                                                        </button>
+                                    <?php
+                                    if (empty($alumniRecords)) {
+                                        echo "<tr><td colspan='8'>No Data are in pending list.</td></tr>";
+                                    } else {
+                                        foreach ($alumniRecords as $record) { ?>
+                                            <tr>
+                                                <td>
+                                                    <img src="<?php echo "../images/profile/" . $record['image'] ?>">
+                                                </td>
+                                                <td>
+                                                    <?= $record['user_name'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['email'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['address'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['DOB'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['phone_no'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['faculty_name'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['course_name'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['batch_no'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['status'] ?>
+                                                </td>
+                                                <td class="change-buttons">
+                                                    <div class="dropdown">
+                                                        <button class="icon-button">&#x22EE;</button>
+                                                        <div class="dropdown-menu">
+                                                            <button class="edit-button">
+                                                                <a
+                                                                    href="../alumni_registration/update_form.php?std_id=<?= $record['std_id'] ?>">Edit</a>
+                                                            </button>
+                                                            <button class="edit-button alumniDeleteBtn">
+                                                                Delete
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
+                                                </td>
+                                            </tr>
+                                        <?php }
+                                    } ?>
                                 </tbody>
                             </table>
 
@@ -618,54 +636,59 @@ require_once('dashboard_template.php');
                                     <th>Action</th>
                                 </tr>
                                 <tbody id="alumniTableBody">
-                                    <?php foreach ($alumniRecords as $record) { ?>
-                                        <tr>
-                                            <td>
-                                                <img src="<?php echo "../images/profile/" . $record['image'] ?>">
-                                            </td>
-                                            <td>
-                                                <?= $record['user_name'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['email'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['address'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['DOB'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['phone_no'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['faculty_name'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['course_name'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['batch_no'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['status'] ?>
-                                            </td>
-                                            <td class="change-buttons">
-                                                <div class="dropdown">
-                                                    <button class="icon-button">&#x22EE;</button>
-                                                    <div class="dropdown-menu">
-                                                        <button class="edit-button">
-                                                            <a
-                                                                href="../alumni_registration/update_form.php?std_id=<?= $record['std_id'] ?>">Edit</a>
-                                                        </button>
-                                                        <button class="edit-button alumniDeleteBtn">
-                                                            Delete
-                                                        </button>
+                                    <?php
+                                    if (empty($alumniRecords)) {
+                                        echo "<tr><td colspan='8'>No Data are in denied list.</td></tr>";
+                                    } else {
+                                        foreach ($alumniRecords as $record) { ?>
+                                            <tr>
+                                                <td>
+                                                    <img src="<?php echo "../images/profile/" . $record['image'] ?>">
+                                                </td>
+                                                <td>
+                                                    <?= $record['user_name'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['email'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['address'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['DOB'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['phone_no'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['faculty_name'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['course_name'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['batch_no'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['status'] ?>
+                                                </td>
+                                                <td class="change-buttons">
+                                                    <div class="dropdown">
+                                                        <button class="icon-button">&#x22EE;</button>
+                                                        <div class="dropdown-menu">
+                                                            <button class="edit-button">
+                                                                <a
+                                                                    href="../alumni_registration/update_form.php?std_id=<?= $record['std_id'] ?>">Edit</a>
+                                                            </button>
+                                                            <button class="edit-button alumniDeleteBtn">
+                                                                Delete
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
+                                                </td>
+                                            </tr>
+                                        <?php }
+                                    } ?>
                                 </tbody>
                             </table>
 

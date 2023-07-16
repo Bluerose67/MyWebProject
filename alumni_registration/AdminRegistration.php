@@ -18,8 +18,8 @@ include('../connect.php');
     <div class="container">
         <div class="center">
             <?php
-            if (isset($_SESSION["status"])) {
-                $status = $_SESSION["status"];
+            if (isset($_SESSION["image_status"])) {
+                $status = $_SESSION["image_status"];
                 echo "<span>$status</span>";
             }
             ?>
@@ -91,7 +91,7 @@ include('../connect.php');
                 <!-- <div id="additionalFieldsContainer"></div> -->
 
                 <input type="submit" value="Register" />
-                <button class="display-button"> <a href="../DB_Superadmin/Dashboard.php">Display Records</a>
+                <button class="display-button"> <a href="../DB_Superadmin/admin_list.php">Display Records</a>
                 </button>
             </form>
         </div>

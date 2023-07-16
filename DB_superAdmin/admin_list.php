@@ -75,13 +75,13 @@ require_once('dashboard_template.php');
             <?php
             include "../connect.php";
             //Display the student count 
-            $studentQuery = "SELECT COUNT(*) as student_count FROM role 
-            JOIN role_junction ON role_junction.role_id = role.role_id
-            JOIN users on role_junction.user_id = users.user_id 
-            WHERE role.role = 'student' AND users.status = 'approved'";
-            $result = mysqli_query($conn, $studentQuery);
-            $studentCount = $result->fetch_assoc()['student_count'];
-
+            // $studentQuery = "SELECT COUNT(*) as student_count FROM role 
+            // JOIN role_junction ON role_junction.role_id = role.role_id
+            // JOIN users on role_junction.user_id = users.user_id 
+            // WHERE role.role = 'student' AND users.status = 'approved'";
+            // $result = mysqli_query($conn, $studentQuery);
+            // $studentCount = $result->fetch_assoc()['student_count'];
+            
             //Display the Admin Count
             $adminQuery = "SELECT COUNT(*) as admin_count FROM role 
             JOIN role_junction ON role_junction.role_id = role.role_id
@@ -91,27 +91,21 @@ require_once('dashboard_template.php');
             $adminCount = $result->fetch_assoc()['admin_count'];
 
             //Display the Total Count
-            $totalQuery = "SELECT COUNT(*) as total_count FROM users WHERE users.status = 'approved'";
+            $totalQuery = "SELECT COUNT(*) as total_count FROM users 
+            JOIN role_junction ON role_junction.user_id = users.user_id
+            JOIN role on role.role_id = role_junction.role_id
+            WHERE users.status = 'approved' AND role.role != 'super_admin'";
             $result = mysqli_query($conn, $totalQuery);
             $totalCount = $result->fetch_assoc()['total_count'];
 
             ?>
-            <li>
-                <i class='bx bxs-calendar-check'></i>
-                <span class="text">
-                    <h3>
-                        <?php echo $studentCount; ?>
-                    </h3>
-                    <p>No. of Students</p>
-                </span>
-            </li>
             <li>
                 <i class='bx bxs-group'></i>
                 <span class="text">
                     <h3>
                         <?php echo $adminCount; ?>
                     </h3>
-                    <p>No of Admins</p>
+                    <p>No of Approved Admins</p>
                 </span>
             </li>
             <li>
@@ -120,7 +114,7 @@ require_once('dashboard_template.php');
                     <h3>
                         <?php echo $totalCount; ?>
                     </h3>
-                    <p>Total Users</p>
+                    <p>Total Approved Users</p>
                 </span>
             </li>
         </ul>
@@ -179,9 +173,11 @@ require_once('dashboard_template.php');
                                     <label>Search</label>
                                 </div>
                             </div>
-                            <button class="add-button">
-                                <a href="../alumni_registration/Adminregistration.php">Add new Admin</a>
-                            </button>
+                            <?php if ($_SESSION['role'] == 'super_admin') { ?>
+                                <button class="add-button">
+                                    <a href="../alumni_registration/Adminregistration.php">Add new Admin</a>
+                                </button>
+                            <?php } ?>
                             <table>
                                 <tr>
                                     <th>Profile</th>
@@ -192,51 +188,60 @@ require_once('dashboard_template.php');
                                     <th>Contact</th>
                                     <th>Department</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <?php if ($_SESSION['role'] == 'super_admin') { ?>
+                                        <th>Action</th>
+                                    <?php } ?>
                                 </tr>
                                 <tbody id="adminTableBody">
-                                    <?php foreach ($adminRecords as $record) { ?>
-                                        <tr>
-                                            <td>
-                                                <img src="<?php echo "../images/profile/" . $record['image'] ?>">
-                                            </td>
-                                            <td>
-                                                <?= $record['user_name'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['email'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['address'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['DOB'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['phone_no'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['department'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $record['status'] ?>
-                                            </td>
-                                            <td class="change-buttons">
-                                                <div class="dropdown">
-                                                    <button class="icon-button">&#x22EE;</button>
-                                                    <div class="dropdown-menu">
-                                                        <button class="edit-button">
-                                                            <a
-                                                                href="../alumni_registration/update_form.php?d_id=<?= $record['d_id'] ?>">Edit</a>
-                                                        </button>
-                                                        <button class="edit-button adminDeleteBtn">
-                                                            Delete
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
+                                    <?php
+                                    if (empty($adminRecords)) {
+                                        echo "<tr><td colspan='8'>No Admin Record Available.</td></tr>";
+                                    } else {
+                                        foreach ($adminRecords as $record) { ?>
+                                            <tr>
+                                                <td>
+                                                    <img src="<?php echo "../images/profile/" . $record['image'] ?>">
+                                                </td>
+                                                <td>
+                                                    <?= $record['user_name'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['email'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['address'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['DOB'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['phone_no'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['department'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['status'] ?>
+                                                </td>
+                                                <?php if ($_SESSION['role'] == 'super_admin') { ?>
+                                                    <td class="change-buttons">
+                                                        <div class="dropdown">
+                                                            <button class="icon-button">&#x22EE;</button>
+                                                            <div class="dropdown-menu">
+                                                                <button class="edit-button">
+                                                                    <a
+                                                                        href="../alumni_registration/update_form.php?d_id=<?= $record['d_id'] ?>">Edit</a>
+                                                                </button>
+                                                                <button class="edit-button adminDeleteBtn">
+                                                                    Delete
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                <?php } ?>
+                                            </tr>
+                                        <?php }
+                                    } ?>
                                 </tbody>
                             </table>
                             <?php

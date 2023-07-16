@@ -77,11 +77,16 @@ include('../connect.php');
 
                 </div>
 
-                <div class="text">
+                <div class="text1">
 
-                    <input type="text" id="faculty_name" name="faculty_name" required>
-                    <span> </span>
-                    <label for="Faculty">Faculty</label>
+                    <select id="faculty" name="faculty_name" class="display-button">
+                        <option value="">Select Faculty</option>
+                        <option value="Humanities">Humanities</option>
+                        <option value="Science">Science</option>
+                        <option value="Management">Management</option>
+                        <!-- Add more faculty options as needed -->
+                    </select>
+
                 </div>
 
                 <div class="text">
@@ -97,7 +102,7 @@ include('../connect.php');
                         <option value="">Select Course</option>
                         <option value="BCA">BCA</option>
                         <option value="CSIT">CSIT</option>
-                        <option value="CSIT">BBM</option>
+                        <option value="BBM">BBM</option>
                         <!-- Add more role options as needed -->
                     </select>
 
@@ -117,13 +122,13 @@ include('../connect.php');
                     if ($_SESSION['role'] == 'super_admin') { ?>
 
                         <input type="submit" value="Register" />
-                        <button class="display-button"> <a href="../DB_Superadmin/Dashboard.php">Display Records</a>
+                        <button class="display-button"> <a href="../DB_Superadmin/alumni_list.php">Display Records</a>
                         </button>
 
                     <?php } elseif ($_SESSION['role'] == 'admin') { ?>
 
                         <input type="submit" value="Register" />
-                        <button class="display-button"> <a href="../DB_Admin/Dashboard.php">Display Records</a>
+                        <button class="display-button"> <a href="../DB_Admin/alumni_list.php">Display Records</a>
                         </button>
 
                     <?php } else { ?>

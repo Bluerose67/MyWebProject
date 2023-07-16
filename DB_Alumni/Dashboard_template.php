@@ -69,13 +69,14 @@ if (!isset($_SESSION['username'])) {
         $userId = $_SESSION['user_id'];
         // var_dump($userId);
         
-        $sql = "SELECT u.*, s.*,r.role, f.faculty_name, c.course_name, b.batch_no
+        $sql = "SELECT u.*, s.*, r.*, f.*, c.*, b.*
                 FROM users u
-                JOIN role r ON u.user_id = r.user_id
-                JOIN students s ON u.user_id = s.user_id
-                JOIN faculties f ON s.faculty_id = f.faculty_id
-                JOIN courses c ON s.course_id = c.course_id
-                JOIN batch b ON s.batch_id = b.batch_id 
+                JOIN role_junction rj on rj.user_id = u.user_id
+                JOIN role r on rj.role_id = r.role_id
+                JOIN students s on s.user_id = u.user_id
+                JOIN faculties f on f.faculty_id = s.faculty_id
+                JOIN courses c on c.course_id = s.course_id 
+                JOIN batch b on b.batch_id = s.batch_id
                 WHERE u.user_id = '$userId'";
         $result = mysqli_query($conn, $sql);
 
