@@ -152,6 +152,7 @@ require_once('dashboard_template.php');
                         "email" => $row['email'],
                         "address" => $row['address'],
                         "DOB" => $row['DOB'],
+                        "status" => $row['status'],
                         "phone_no" => $row['phone_no'],
                         "image" => $row['image'],
                         "faculty_name" => $row['faculty_name'],
@@ -193,6 +194,7 @@ require_once('dashboard_template.php');
                                     <th>Faculty</th>
                                     <th>Course</th>
                                     <th>Batch</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 <tbody id="alumniTableBody">
@@ -228,6 +230,9 @@ require_once('dashboard_template.php');
                                                 </td>
                                                 <td>
                                                     <?= $record['batch_no'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $record['status'] ?>
                                                 </td>
                                                 <td class="change-buttons">
                                                     <div class="dropdown">

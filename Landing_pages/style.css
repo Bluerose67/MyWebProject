@@ -335,7 +335,7 @@ section.about2 {
 }
 
 
-.card {
+.about_card {
     position: relative;
     width: 350px;
     height: 234px;
@@ -397,7 +397,7 @@ section.about2 {
     font-size: 14px;
 }
 
-.card:hover .box {
+.about_card:hover .box {
     transform: rotateY(180deg);
 }
 
@@ -435,141 +435,137 @@ section.about2 {
     font-size: 16px;
     font-family: sans-serif;
 }
-
-/* Feature event section end --------------------------------------------------------------------------------------------------------*/
-
-/* Featured Events Boxes starts here -------------------------------------------------------------------------------------------*/
-section.events{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: 20px;
-    align-items: center;
-    justify-content:space-evenly;
-    min-height: 45vh;
-}
-
-.icon{
+.icon {
     display: flex;
     margin-top: 20px;
     align-items: center;
     justify-content: center;
 }
 
-section.events .content1{
+/* Feature event section end --------------------------------------------------------------------------------------------------------*/
+
+/* Featured Events Boxes starts here -------------------------------------------------------------------------------------------*/
+
+.event_slider{
     display: flex;
-    width: 80%;
-    color: #ffffff;
-    background: #F85151;
-    transition: .5s;
-    margin: 80px;
-    border-radius: 10px;
-}
-.content1 .div1{
-    border-right: 1px solid white;
-}
-
-.content1 div h1{
-    font-size: 30px;
-    font-weight: 100;
-    padding: 31px 10px;
-}
-.content1 .div1 img,
-.content1 .div2 img,
-.content1 .div3 img{
-    width: 66px;
-    height: 64px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin: 0px 0px 5px 50px;
-    }
-
-.content1 div p {
-    font-size: 20px;
-    font-weight: 200;
-    padding: 50px 10px;
-
-}
-section.events .content2 {
-    display: flex;
-    width: 40%;
-    color: #ffffff;
-    background: #F85151;
-    transition: .5s;
-    margin: 80px;
-    border-radius: 10px;
-}
-.content2 .div1 {
-    border-right: 1px solid white;
-}
-
-.content2 div h1 {
-    font-size: 30px;
-    font-weight: 100;
-    padding: 50px 10px;
-}
-
-.content2 div p {
-    font-size:20px;
-    font-weight:200;
-    padding: 50px 10px;
-    
-}
-section.events .content3 {
-    display: flex;
-    width: 40%;
-    color: #ffffff;
-    background: #F85151;
-    transition: .5s;
-    margin: 80px;
-    border-radius: 10px;
-}
-.content3 .div1 {
-    border-right: 1px solid white;
-}
-.content3 div h1 {
-    font-size: 30px;
-    font-weight: 100;
-    padding: 50px 10px;
-}
-
-.content3 div p {
-    font-size:20px;
-    font-weight:200;
-    padding: 50px 10px;
-    
-}
-.div2 .btn{
-    font-weight: 600;
-    margin: 0 0 10px 60px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 0;
-    cursor: pointer;
-    outline: none;
-    background: white;
-    color: #F85151;
+    padding: 0 35px;
+    align-items: center;
     justify-content: center;
+    margin: 0px 0px 110px 0px;
 }
-.div2 .btn:hover {
-    color: white;
-    background-color: #F85151;
+.wrapper {
+    max-width: 1100px;
+    width: 100%;
+    position: relative;
 }
 
-section.events .content1:hover{
-    background: #7CB9E8;
-    color: #000;
+.wrapper i {
+    top: 50%;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    font-size: 1.25rem;
+    position: absolute;
+    text-align: center;
+    line-height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.23);
+    transform: translateY(-50%);
+    transition: transform 0.1s linear;
 }
-section.events .content2:hover {
-    background: #7CB9E8;
-    color: #000;
+
+.wrapper i:active {
+    transform: translateY(-50%) scale(0.85);
 }
-section.events .content3:hover {
-    background: #7CB9E8;
-    color: #000;
+
+.wrapper i:first-child {
+    left: -22px;
+}
+
+.wrapper i:last-child {
+    right: -22px;
+}
+
+.wrapper .carousel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% / 3) - 12px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    border-radius: 8px;
+    scroll-behavior: smooth;
+}
+
+.carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel.no-transition {
+    scroll-behavior: auto;
+}
+
+.carousel.dragging {
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+}
+
+.carousel.dragging .card {
+    cursor: grab;
+    user-select: none;
+}
+
+.carousel :where(.card, .img) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel .card {
+    scroll-snap-align: start;
+    height: 342px;
+    list-style: none;
+    background: #F85151;
+    cursor: pointer;
+    padding-bottom: 15px;
+    flex-direction: column;
+    border-radius: 8px;
+}
+.carousel .card:hover{
+    transition: 0.5s ease;
+    background: #7CB9E8 ;
+}
+
+.carousel .card .img {
+    background: #8B53FF;
+    height: 174px;
+    width: 287px;
+    border-radius: 10%;
+}
+
+.card .img img {
+    width: 280px;
+    height: 168px;
+    border-radius: 10%;
+    object-fit: cover;
+    border: 3px solid #fff;
+}
+
+.carousel .card h2 {
+    font-weight: 500;
+    font-size: 1.56rem;
+    margin: 15px 0 5px;
+    color: #ffffff;
+}
+
+.carousel .card span {
+    color: #ffffff;
+    font-size: 1.31rem;
 }
 
 .learnMore_btn {
-    margin: 10px 0px 10px 30px;
+    margin: 10px 0px 10px 0px;
     padding: 5px 13px;
     border-radius: 40px;
     border: 0;
@@ -585,13 +581,14 @@ section.events .content3:hover {
     transition: color 0.3s;
 }
 
-.learnMore_btn:hover {
+.card:hover .learnMore_btn {
     background-color: #F85151;
 }
 
-.learnMore_btn:hover a {
+.card:hover .learnMore_btn a {
     color: #ffffff;
 }
+
 /* event boxes ends here ----------------------------------------------------------------------------------------------- */
 
 

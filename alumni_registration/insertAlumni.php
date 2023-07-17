@@ -170,12 +170,12 @@ if ($_POST) {
 
                                 $_SESSION['adminAdded'] = "Admin Added Successfully";
 
-                                header("location: ../DB_Admin/alumni_list.php");
+                                header("location: ../DB_Admin/Dashboard.php");
                             } elseif ($_SESSION['role'] == 'super_admin') {
 
                                 $_SESSION['adminAdded'] = "Admin Added Successfully";
 
-                                header("location: ../DB_Superadmin/alumni_list.php");
+                                header("location: ../DB_Superadmin/Dashboard.php");
                             } else {
                                 header("location: ../Landing_pages/index.php");
                             }

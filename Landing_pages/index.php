@@ -13,6 +13,7 @@ include("../connect.php");
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -102,7 +103,7 @@ include("../connect.php");
     <!-- about2 section begins------------------------- -->
     <section class="about2">
       <div class="left-about">
-        <div class="card">
+        <div class="about_card">
           <div class="box">
             <div class="imgBx">
               <img src="../images/alumni2.jpg" alt="Logo" id="img_align" />
@@ -120,7 +121,7 @@ include("../connect.php");
         </div>
       </div>
       <div class="middel-about">
-        <div class="card">
+        <div class="about_card">
           <div class="box">
             <div class="imgBx">
               <img src="../images/alumni3.jpg" alt="Logo" id="img_align" />
@@ -138,7 +139,7 @@ include("../connect.php");
         </div>
       </div>
       <div class="right-about">
-        <div class="card">
+        <div class="about_card">
           <div class="box">
             <div class="imgBx">
               <img src="../images/alumni.jpg" alt="Logo" id="img_align" />
@@ -175,58 +176,59 @@ include("../connect.php");
       </div>
     </section>
 
-    <section class="events">
-      <?php
-      // Fetch all events from the database
-      $sql = "SELECT * FROM events";
-      $result = mysqli_query($conn, $sql);
+    <div class="event_slider">
+      <div class="wrapper">
+        <i id="left" class="fa-solid fa-angle-left"></i>
+        <ul class="carousel">
+          <?php
+          // Fetch all events from the database
+          $sql = "SELECT * FROM events";
+          $result = mysqli_query($conn, $sql);
 
-      if ($result && mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) { ?>
-          <div class="content1">
-            <div class="div1">
-              <h1>
-                <?= $row['date'] ?>
-              </h1>
-              <img src="<?php echo "../images/events/" . $row['image'] ?>" alt="">
-            </div>
+          if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) { ?>
+              <li class="card">
+                <div class="img"><img src="<?php echo "../images/events/" . $row['image'] ?>" alt="Event Image"
+                    draggable="false"></div>
+                <h2>
+                  <?= $row['title'] ?>
+                </h2>
+                <span>Date :
+                  <?= $row['date'] ?>
+                </span>
+                <?php
+                if (isset($_SESSION['username'])) {
+                  if ($_SESSION['role'] == 'super_admin') { ?>
 
-            <div class="div2">
-              <p>
-                <?= $row['title'] ?>
-              </p>
-              <?php
-              if (isset($_SESSION['username'])) {
-                if ($_SESSION['role'] == 'super_admin') { ?>
+                    <button class="learnMore_btn"> <a href="../DB_Superadmin/Dashboard_events.php">Learn More</a></button>
 
-                  <button class="learnMore_btn"> <a href="../DB_Superadmin/Dashboard_events.php">Learn More</a></button>
+                  <?php } elseif ($_SESSION['role'] == 'admin') { ?>
 
-                <?php } elseif ($_SESSION['role'] == 'admin') { ?>
+                    <button class="learnMore_btn"> <a href="../DB_Admin/Dashboard_events.php">Learn More</a></button>
 
-                  <button class="learnMore_btn"> <a href="../DB_Admin/Dashboard_events.php">Learn More</a></button>
+                  <?php } else { ?>
 
-                <?php } else { ?>
+                    <button class="learnMore_btn"> <a href="../DB_Alumni/Dashboard_events.php">Learn More</a></button>
 
-                  <button class="learnMore_btn"> <a href="../DB_Alumni/Dashboard_events.php">Learn More</a></button>
+                  <?php }
 
-                <?php }
+                } else { ?>
 
-              } else { ?>
+                <button class="learnMore_btn"> <a href="login.php">Learn More</a></button>
 
-              <button class="learnMore_btn"> <a href="login.php">Learn More</a></button>
-
+              <?php }
+                ?>
+              </li>
             <?php }
-              ?>
+          } else {
+            echo "No events found.";
+          }
+          ?>
+        </ul>
+        <i id="right" class="fa-solid fa-angle-right"></i>
+      </div>
+    </div>
 
-            </div>
-          </div>
-
-        <?php }
-      } else {
-        echo "No events found.";
-      }
-      ?>
-    </section>
     <section class="more_info">
       <div class="event_message">
         <p class="p1"> Making efforts on oragnizing different events helps everyone to realize the diversity of
@@ -340,6 +342,7 @@ include("../connect.php");
   <!-- footer section starts  ---------------------------------------------------------------------------------------->
 
   <script src="../js/index.js"></script>
+  <script src="../js/slider.js" defer></script>
   <!-- Register Popup -->
   <script>
     var register = document.querySelectorAll(".register");

@@ -79,7 +79,7 @@ include('../connect.php');
 
                 <div class="text1">
 
-                    <select id="faculty" name="faculty_name" class="display-button">
+                    <select id="faculty_name" name="faculty_name" class="display-button">
                         <option value="">Select Faculty</option>
                         <option value="Humanities">Humanities</option>
                         <option value="Science">Science</option>
