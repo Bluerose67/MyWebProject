@@ -553,6 +553,58 @@ span.notification_progress{
 }
 
  /* welcome notification ends ------------------------------------------------------------------------------------------- */
+ /* Notification of USER CRUD---------------------------------------------------------------------- */
+
+ .notification_CRUD {
+     position: absolute;
+     bottom: 120px;
+     left: 50px;
+     width: max-content;
+     padding: 20px 15px;
+     border-radius: 4px;
+     background-color: #F85151;
+     color: whitesmoke;
+     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+     transform: translateY(30px);
+     opacity: 0;
+     visibility: hidden;
+     animation: fade-in 4s linear forwards;
+     z-index: 2;
+ }
+
+ span.notification_progress_CRUD {
+     position: absolute;
+     left: 5px;
+     bottom: 5px;
+     width: calc(100% - 10px);
+     height: 3px;
+     transform: scaleX(0);
+     transform-origin: left;
+     background-image: linear-gradient(to right, #ffff, #b1afaf);
+     border-radius: inherit;
+     animation: load 3s 0.25s linear forwards;
+ }
+
+ @keyframes fade-in {
+     5% {
+         opacity: 1;
+         visibility: visible;
+         transform: translateY(0);
+     }
+
+     90% {
+         opacity: 1;
+         transform: translateY(0);
+     }
+ }
+
+ @keyframes load {
+     to {
+         transform: scaleX(1);
+     }
+ }
+
+ /* Notification of USER CRUD---------------------------------------------------------------------- */
 
 /* modal box starts ----------------------------------------------------------------------------------------------------- */
 .modal {
@@ -574,11 +626,7 @@ span.notification_progress{
     width: 100%;
     justify-content: center;
     align-items: center;
-    /* position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    max-width: 1200px; */
+    
 }
 
 /* The Close Button */
@@ -586,9 +634,6 @@ span.notification_progress{
     color: white;
     float: right;
     padding-right: 20px;
-    /* position: absolute; */
-    /* top: 10px; */
-    /* right: 25px; */
     font-size: 35px;
     font-weight: bold;
 }
@@ -1165,6 +1210,9 @@ section.Bio {
      border: none;
      background: none;
      outline: none;
+ }
+ .text_p h5{
+    margin-right: 161px;
  }
 /* profile page ends--------------------------------- */
 

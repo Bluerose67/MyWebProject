@@ -36,6 +36,63 @@ require_once('dashboard_template.php');
     </p>
     <span class="notification_progress_CRUD"></span>
 </div>
+<!-- Notification -->
+<?php if (isset($_SESSION["adminUpdated"])) { ?>
+    <div class="notification_CRUD">
+        <p>
+            <?php
+            echo $_SESSION['adminUpdated'];
+
+            unset($_SESSION['adminUpdated']);
+            ?>
+        </p>
+        <span class="notification_progress_CRUD"></span>
+    </div>
+<?php } elseif (isset($_SESSION["adminDeleted"])) { ?>
+    <div class="notification_CRUD">
+        <p>
+            <?php
+            echo $_SESSION['adminDeleted'];
+
+            unset($_SESSION['adminDeleted']);
+            ?>
+        </p>
+        <span class="notification_progress_CRUD"></span>
+    </div>
+<?php } elseif (isset($_SESSION["alumniUpdated"])) { ?>
+    <div class="notification_CRUD">
+        <p>
+            <?php
+            echo $_SESSION['alumniUpdated'];
+
+            unset($_SESSION['alumniUpdated']);
+            ?>
+        </p>
+        <span class="notification_progress_CRUD"></span>
+    </div>
+<?php } elseif (isset($_SESSION["alumniDeleted"])) { ?>
+    <div class="notification_CRUD">
+        <p>
+            <?php
+            echo $_SESSION['alumniDeleted'];
+
+            unset($_SESSION['alumniDeleted']);
+            ?>
+        </p>
+        <span class="notification_progress_CRUD"></span>
+    </div>
+<?php } else { ?>
+    <div class="notification_CRUD">
+        <p>
+            <?php
+            echo "Welcome, " . $_SESSION['username'];
+            ?>
+        </p>
+        <span class="notification_progress_CRUD"></span>
+    </div>
+<?php }
+?>
+
 
 <section class="right-lower">
     <!-- main-lower sections begins -------------------------------------------------->

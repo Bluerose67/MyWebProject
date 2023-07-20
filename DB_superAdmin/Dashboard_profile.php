@@ -2,6 +2,18 @@
 require_once('dashboard_template.php');
 ?>
 
+<?php if (isset($_SESSION['adminUpdated'])) { ?>
+    <div class="notification_CRUD">
+        <p>
+            <?php
+            echo $_SESSION['adminUpdated'];
+
+            unset($_SESSION['adminUpdated']);
+            ?>
+        </p>
+        <span class="notification_progress_CRUD"></span>
+    </div>
+<?php } ?>
 <section class="right-lower">
     <main>
         <div class="head-title">
@@ -20,7 +32,7 @@ require_once('dashboard_template.php');
 
         </div>
 
-        <!-- Keep the profile code here -->
+        <!-- profile code here -->
         <secttion class="profile-main"> <!-- profile main begins -->
 
             <section class="row">
@@ -40,13 +52,13 @@ require_once('dashboard_template.php');
                         <?= $row['user_name'] ?>
                     </span>
                 </div>
-                <div class="field">
-                    <label>Role:</label>
-                    <span>
-                        <?= $row['role'] ?>
-                    </span>
-                </div>
 
+                <?php if ($_SESSION['role'] == 'admin') { ?>
+                    <button class="edit-profile">
+                        <a href="update_profile.php?d_id=<?= $row['d_id'] ?>">Edit
+                            Profile</a>
+                    </button>
+                <?php } ?>
 
             </section> <!-- row -->
 
@@ -95,8 +107,6 @@ require_once('dashboard_template.php');
                 </section> <!-- bio ends -->
             </section> <!-- additional and bio section -->
         </secttion> <!-- profile main ends -->
-
-        <!--  -->
     </main>
 </section> <!-- rigth lower ends------------------- -->
 </section> <!-- content section ends -->

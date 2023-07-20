@@ -1,6 +1,20 @@
 <?php
 require_once('Dashboard_template.php');
 ?>
+
+<?php if (isset($_SESSION['alumniUpdated'])) { ?>
+    <div class="notification_CRUD">
+        <p>
+            <?php
+            echo $_SESSION['alumniUpdated'];
+
+            unset($_SESSION['alumniUpdated']);
+            ?>
+        </p>
+        <span class="notification_progress_CRUD"></span>
+    </div>
+<?php } ?>
+
 <section class="right-lower">
     <main>
         <div class="head-title">
@@ -37,12 +51,6 @@ require_once('Dashboard_template.php');
                     <label>User Name:</label>
                     <span>
                         <?= $row['user_name'] ?>
-                    </span>
-                </div>
-                <div class="field">
-                    <label>Role:</label>
-                    <span>
-                        <?= $row['role'] ?>
                     </span>
                 </div>
                 <button class="edit-profile">

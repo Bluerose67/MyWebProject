@@ -6,7 +6,8 @@ if (isset($_GET['std_id'])) {
     $std_id = $_GET['std_id'];
     $sql = "SELECT u.*, s.*, r.*, f.*, c.*, b.*
             FROM users u
-            JOIN role r ON u.user_id = r.user_id
+            JOIN role_junction rj on rj.user_id = u.user_id
+            JOIN role r on rj.role_id = r.role_id
             JOIN students s ON u.user_id = s.user_id
             JOIN faculties f ON s.faculty_id = f.faculty_id
             JOIN courses c ON s.course_id = c.course_id
@@ -31,6 +32,7 @@ if (isset($_GET['std_id'])) {
                 "DOB" => $row['DOB'],
                 "phone_no" => $row['phone_no'],
                 "bio" => $row['bio'],
+                "status" => $row['status'],
                 "image" => $row['image'],
                 "role" => $row['role'],
                 "faculty_name" => $row['faculty_name'],
@@ -69,6 +71,11 @@ if (isset($_GET['std_id'])) {
                 <input type="hidden" name="faculty_id" value="<?php echo $record['faculty_id'] ?>" />
                 <input type="hidden" name="course_id" value="<?php echo $record['course_id'] ?>" />
                 <input type="hidden" name="batch_id" value="<?php echo $record['batch_id'] ?>" />
+                <input type="hidden" name="role" value="<?= $record['role'] ?>" required />
+                <input type="hidden" name="faculty_name" value="<?= $record['faculty_name'] ?>" required />
+                <input type="hidden" name="course_name" value="<?= $record['course_name'] ?>" required />
+                <input type="hidden" name="batch_no" value="<?= $record['batch_no'] ?>" required />
+                <input type="hidden" name="status" value="<?= $record['status'] ?>" required />
 
                 <section class="profile-main"> <!-- profile main begins -->
 
@@ -97,14 +104,7 @@ if (isset($_GET['std_id'])) {
                                 </div>
                             </span>
                         </div>
-                        <div class="field">
-                            <label>Role:</label>
-                            <span>
-                                <div class="text_p">
-                                    <input type="text" name="role" value="<?= $record['role'] ?>" required />
-                                </div>
-                            </span>
-                        </div>
+
                         <input type="submit" value="SAVE" class="edit-profile" />
 
                     </section> <!-- row -->
@@ -144,32 +144,7 @@ if (isset($_GET['std_id'])) {
                                     </div>
                                 </span>
                             </div>
-                            <div class="field">
-                                <label>Faculty:</label>
-                                <span>
-                                    <div class="text_p">
-                                        <input type="text" name="faculty_name" value="<?= $record['faculty_name'] ?>"
-                                            required />
-                                    </div>
-                                </span>
-                            </div>
-                            <div class="field">
-                                <label>Course:</label>
-                                <span>
-                                    <div class="text_p">
-                                        <input type="text" name="course_name" value="<?= $record['course_name'] ?>"
-                                            required />
-                                    </div>
-                                </span>
-                            </div>
-                            <div class="field">
-                                <label>Batch:</label>
-                                <span>
-                                    <div class="text_p">
-                                        <input type="text" name="batch_no" value="<?= $record['batch_no'] ?>" required />
-                                    </div>
-                                </span>
-                            </div>
+
                         </section> <!-- additional_info -->
 
                         <section class="Bio">

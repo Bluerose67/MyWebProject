@@ -2,33 +2,51 @@
 require_once('../DB_Superadmin/dashboard_template.php');
 ?>
 
-<div class="notification_CRUD">
-    <p>
-        <?php
-        if (isset($_SESSION['alumniUpdated'])) {
+<!-- Notification -->
+<?php if (isset($_SESSION['alumniAdded'])) { ?>
+    <div class="notification_CRUD">
+        <p>
+            <?php
+            echo $_SESSION['alumniAdded'];
 
+            unset($_SESSION['alumniAdded']);
+            ?>
+        </p>
+        <span class="notification_progress_CRUD"></span>
+    </div>
+<?php } elseif (isset($_SESSION["alumniUpdated"])) { ?>
+    <div class="notification_CRUD">
+        <p>
+            <?php
             echo $_SESSION['alumniUpdated'];
 
             unset($_SESSION['alumniUpdated']);
-
-        } elseif (isset($_SESSION['alumniDeleted'])) {
-
+            ?>
+        </p>
+        <span class="notification_progress_CRUD"></span>
+    </div>
+<?php } elseif (isset($_SESSION["alumniDeleted"])) { ?>
+    <div class="notification_CRUD">
+        <p>
+            <?php
             echo $_SESSION['alumniDeleted'];
 
             unset($_SESSION['alumniDeleted']);
-        } elseif (isset($_SESSION['adminUpdated'])) {
-
-            echo $_SESSION['adminUpdated'];
-
-            unset($_SESSION['adminUpdated']);
-
-        } else {
+            ?>
+        </p>
+        <span class="notification_progress_CRUD"></span>
+    </div>
+<?php } else { ?>
+    <div class="notification_CRUD">
+        <p>
+            <?php
             echo "Welcome, " . $_SESSION['username'];
-        }
-        ?>
-    </p>
-    <span class="notification_progress_CRUD"></span>
-</div>
+            ?>
+        </p>
+        <span class="notification_progress_CRUD"></span>
+    </div>
+<?php }
+?>
 
 <section class="right-lower">
     <!-- main-lower sections begins -------------------------------------------------->

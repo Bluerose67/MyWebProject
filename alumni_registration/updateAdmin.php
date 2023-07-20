@@ -78,14 +78,14 @@ if ($_POST) {
 
                     $_SESSION['adminUpdated'] = "Admin Updated Successfully";
 
-                    header("location: ../DB_Admin/Dashboard.php");
+                    header("location: ../DB_Admin/Dashboard_profile.php");
 
                     exit();
                 } elseif ($_SESSION['role'] == 'super_admin') {
 
                     $_SESSION['adminUpdated'] = "Admin Updated Successfully";
 
-                    header("location: ../DB_Superadmin/Dashboard.php");
+                    header("location: ../DB_Superadmin/admin_list.php");
 
                     exit();
                 } else {

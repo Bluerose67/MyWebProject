@@ -329,7 +329,7 @@ include("../connect.php");
     <div id="registerinfo" class="register-info">
       <div class="modal-content">
         <h2>Hey! Are You New ?</h2>
-        <p> We have a procedure to verify your details for you to be able to register.
+        <p> After you register, We have a procedure to verify your details for you to be able to Login.
           So, please fill the form.
         </p>
         <button id="contact_btn" class="edit-button">

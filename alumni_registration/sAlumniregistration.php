@@ -19,6 +19,14 @@ include('../connect.php');
         <div class="center">
             <h1>Register New Alumni</h1>
             <form action="insertAlumni.php" method="post" enctype="multipart/form-data">
+                <h4>
+                    <?php
+                    if (isset($_SESSION['dublicate_name'])) {
+                        echo $_SESSION['dublicate_name'];
+                        unset($_SESSION['dublicate_name']);
+                    } ?>
+
+                </h4>
                 <div class="text">
 
                     <input type="text" id="username" name="user_name" required>

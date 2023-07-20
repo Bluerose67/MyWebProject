@@ -5,6 +5,7 @@ if ($_POST) {
     $name = $_POST['user_name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $address = $_POST['address'];
     $DOB = $_POST['DOB'];
     $phone = $_POST['phone_no'];
@@ -79,7 +80,7 @@ if ($_POST) {
 
 
                 // Insert into 'users' table
-                $sql1 = "INSERT INTO users (user_name, email, password, address, DOB, Phone_no, image, status) VALUES ('$name', '$email', '$password', '$address', '$DOB', '$phone', '$image', 'pending')";
+                $sql1 = "INSERT INTO users (user_name, email, password, address, DOB, Phone_no, image, status) VALUES ('$name', '$email', '$hashedPassword', '$address', '$DOB', '$phone', '$image', 'pending')";
                 if (mysqli_query($conn, $sql1)) {
                     $user_id = mysqli_insert_id($conn);
 

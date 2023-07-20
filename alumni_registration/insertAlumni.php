@@ -6,6 +6,7 @@ if ($_POST) {
     $user_name = $_POST['user_name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $address = $_POST['address'];
     $DOB = $_POST['DOB'];
     $phone_no = $_POST['phone_no'];
@@ -35,15 +36,13 @@ if ($_POST) {
             $result = mysqli_query($conn, $select);
 
             if (mysqli_num_rows($result) > 0) {
-                echo "<script type = 'text/javascript'> ";
-                echo "alert('User Name already Exists !!')";
-                echo "window.Location.href = 'signup.php'";
-                echo "</script>";
+                $_SESSION['dublicate_name'] = "User Name already taken. Choose another Username.";
+                header("Location: signup.php");
             } else {
 
                 // Insert user record into the "users" table
                 $insertUserQuery = "INSERT INTO users (user_name, email, password, address, DOB, Phone_no, bio, status) 
-                        VALUES ('$user_name', '$email', '$password', '$address', '$DOB', '$phone_no','Write abour yourself', 'pending')";
+                        VALUES ('$user_name', '$email', '$hashedPassword', '$address', '$DOB', '$phone_no','Write abour yourself', 'pending')";
                 if ($conn->query($insertUserQuery) === TRUE) {
 
                     $user_id = mysqli_insert_id($conn);

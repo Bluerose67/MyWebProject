@@ -16,41 +16,51 @@
 
         </div>
 
-        <div class="form-box">
-            <div class="center-box">
-                <h2>Add Event</h2>
-                <form action="../Events/addEvents.php" method="post" enctype="multipart/form-data">
-                    <div class="text">
-                        <input type="text" id="title" name="title" required>
-                        <span> </span>
-                        <label for="event_title">Event Title</label>
-                    </div>
+        <div class="popup-container" id="popup-container">
+            <div class="form-box">
+                <div class="center-box">
+                    <h2>Add Event</h2>
+                    <form action="../Events/addEvents.php" method="post" enctype="multipart/form-data">
+                        <div class="text">
+                            <input type="text" id="title" name="title" required>
+                            <span> </span>
+                            <label for="event_title">Event Title</label>
+                        </div>
 
-                    <div class="text">
-                        <input type="text" name="description" id="description" required>
-                        <span> </span>
-                        <label for="username">Description</label>
-                    </div>
+                        <div class="text">
+                            <input type="text" name="description" id="description" required>
+                            <span> </span>
+                            <label for="username">Description</label>
+                        </div>
 
-                    <div class="textt">
-                        <input type="file" id="image" name="image" required>
-                    </div>
+                        <div class="textt">
+                            <input type="file" id="image" name="image" required>
+                        </div>
 
-                    <div class="text">
-                        <input type="date" id="DOB" name="date" required>
-                        <span> </span>
-                        <label for="DOB">Event Date</label>
-                    </div>
-                    <input type="submit" name="add_event" value="Add Event">
+                        <div class="text">
+                            <input type="date" id="DOB" name="date" required>
+                            <span> </span>
+                            <label for="DOB">Event Date</label>
+                        </div>
+                        <input type="submit" name="add_event" value="Add Event">
 
-                </form>
-            </div>
-        </div>
+                    </form>
+                </div>
+            </div> <!-- Form box -->
+        </div> <!-- Pop up Container -->
 
         <div class="message <?php echo isset($message) ? 'success' : (isset($error) ? 'error' : ''); ?>">
             <?php echo isset($message) ? $message : (isset($error) ? $error : ''); ?>
         </div>
 
+        <div class="heading">
+            <h1>All Events</h1>
+        </div>
+        <div class="addEventBtn">
+            <button class="add-button">
+                Add new Event
+            </button>
+        </div>
         <div class="event-list">
             <?php
             // Fetch all events from the database
@@ -80,6 +90,9 @@
                                 <a href="../Events/update_event_form.php?id=<?= $row['id'] ?>">Edit</a>
                             </button>
                         </div>
+                        <button class="showInterested">
+                            <a href="eventInterested.php?id=<?= $row['id'] ?>">View Interested Users</a>
+                        </button>
                     </div>
                 <?php }
             } else {
@@ -88,38 +101,48 @@
             ?>
         </div>
     </main>
+    <!-- Notification  -->
+    <?php if (isset($_SESSION['eventAdded'])) { ?>
+        <div class="notification_CRUD">
+            <p>
+                <?php
+                echo $_SESSION['eventAdded'];
 
-    <div class="notification">
-        <p>
-            <?php
-            if (isset($_SESSION["eventAdded"])) {
+                unset($_SESSION['eventAdded']);
+                ?>
+            </p>
+            <span class="notification_progress_CRUD"></span>
+        </div>
+    <?php } elseif (isset($_SESSION["eventupdated"])) { ?>
+        <div class="notification_CRUD">
+            <p>
+                <?php
+                echo $_SESSION['eventupdated'];
 
-                echo $_SESSION["eventAdded"];
-
-                unset($_SESSION["eventAdded"]);
-
-            } elseif (isset($_SESSION["eventupdated"])) {
-
-                echo $_SESSION["eventupdated"];
-
-                unset($_SESSION["eventupdated"]);
-
-            } elseif (isset($_SESSION["eventdeleted"])) {
-
+                unset($_SESSION['eventupdated']);
+                ?>
+            </p>
+            <span class="notification_progress_CRUD"></span>
+        </div>
+    <?php } elseif (isset($_SESSION["eventdeleted"])) { ?>
+        <div class="notification_CRUD">
+            <p>
+                <?php
                 echo $_SESSION['eventdeleted'];
 
-                unset($_SESSION["eventdeleted"]);
-            }
-            ?>
-        </p>
-        <span class="notification_progress"></span>
-    </div>
+                unset($_SESSION['eventdeleted']);
+                ?>
+            </p>
+            <span class="notification_progress_CRUD"></span>
+        </div>
+    <?php } ?>
 
 </section> <!-- right lower ends -->
 </section> <!-- content section ends -->
 </section> <!-- main section ends -->
 </div><!-- dashboard ends -->
 <script src="../js/sidebar.js"></script>
+<script src="../js/popupForm.js"></script>
 
 </body>
 

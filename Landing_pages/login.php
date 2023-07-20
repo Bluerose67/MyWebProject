@@ -40,11 +40,6 @@ if (isset($_SESSION['username'])) {
             <li>
               <a href="index.php#contact" class="menu-items"> Contact</a>
             </li>
-            <li>
-              <!-- <button class="login-btn">
-              <a href="login.php" style="color: #e9f4fb">Login</a>
-            </button> -->
-            </li>
           </ul>
         </div>
       </nav> <!-- nav bar ends -->
@@ -52,19 +47,24 @@ if (isset($_SESSION['username'])) {
         <div class="center">
           <h1>Login</h1>
           <form action="../login_fetch.php" method="post">
+
             <div class="text">
               <input type="text" name="username" required />
               <span> </span>
               <label>Username</label>
             </div>
+
             <div class="text">
               <input type="password" name="password" id="passwordInput" required />
               <i class="toggle-password fas fa-eye-slash"></i>
               <span> </span>
               <label>Password</label>
             </div>
-            <p class="pass">Forgot password ?</p>
+
+            <p class="pass"> <a href="forgotPassword.php">Forgot password ?</a> </p>
+
             <input type="submit" value="Login" class="login-button" />
+
             <?php
             if (isset($_SESSION["error"])) {
               $error = $_SESSION["error"];
@@ -82,14 +82,40 @@ if (isset($_SESSION['username'])) {
               unset($_SESSION['denied']);
               exit();
             }
+            if (isset($_SESSION['passwordReset'])) {
+              echo "<span class= 'error'>" . $_SESSION['passwordReset'] . "</span>";
+              unset($_SESSION['passwordReset']);
+              exit();
+            }
 
             ?>
           </form>
+
+          <div class="signup">
+            <button class="signup-btn"> Register </button>
+          </div>
+
         </div>
       </div>
     </header>
 
-    <footer class="footer"> <!-- footer starts here -->
+    <!-- Popup for register -->
+    <div id="registerinfo" class="register-info">
+      <div class="modal-content">
+        <h2>Hey! Are You New ?</h2>
+        <p> After you register, We have a procedure to verify your details for you to be able to Login.
+          So, please fill the form.
+        </p>
+        <button id="contact_btn" class="edit-button">
+          <a href="../alumni_registration/signup.php">Fill up form</a>
+        </button>
+      </div>
+    </div>
+    <!-- Popup for register -->
+
+
+    <!-- footer begins -->
+    <footer class="footer">
       <div class="footer_containerleft">
         <img src="../images/newLogo.png" alt="Logo" class="img" />
       </div>
@@ -99,10 +125,10 @@ if (isset($_SESSION['username'])) {
             <h4> Alumni Hub</h4>
             <ul>
               <li>
-                <a href="#"> About Us</a>
+                <a href="index.php#aboutus"> About Us</a>
               </li>
               <li>
-                <a href="#"> Contact</a>
+                <a href="index.php#Featuredevent"> Events</a>
               </li>
             </ul>
           </div> <!-- footer-col -->
@@ -110,8 +136,8 @@ if (isset($_SESSION['username'])) {
             <h4> Get Help </h4>
             <ul>
               <li class="register_style">
-                <p>Are you an alumni? Do you want to</p>
-                <a href="#"> register ?</a>
+                <p>Do you have any inquiries ? Feel Free to </p>
+                <button> <a href="index.php#contact">Contact Us </a></button>
               </li>
             </ul>
           </div> <!-- footer-col -->
@@ -123,7 +149,7 @@ if (isset($_SESSION['username'])) {
               <a href="#"> <i class="fab fa-linkedin-in"></i></a>
               <a href="#"> <i class="fab fa-twitter"></i></a>
             </div>
-          </div> <!-- footer-col -->
+          </div> <!-- footer-col ends -->
         </div> <!-- row -->
         <div class="copyright1">
           <p> 2023 BlueRose. All rights reserved.</p>
@@ -131,9 +157,11 @@ if (isset($_SESSION['username'])) {
           <p>The Material on this site may not be reproduced, distributed, transmitted, cached or otherwise used, except
             with the prior written permission of BlueRose.</p>
         </div>
-      </div> <!-- footer_containerright -->
+      </div> <!-- footer_container right -->
 
-    </footer> <!-- footer ends here -->
+    </footer>
+
+    <!-- Footer ends here -->
     <script>
       const eyeIcon = document.querySelector(".toggle-password");
       const passwordInput = document.querySelector("#passwordInput");
@@ -149,6 +177,32 @@ if (isset($_SESSION['username'])) {
 
       });
     </script>
+    <!-- Register Popup -->
+    <script>
+      var register = document.querySelectorAll(".signup-btn");
+      var registerinfo = document.getElementById("registerinfo");
+      var contact_btn = document.getElementById("contact_btn");
+
+      register.forEach(function (Btn) {
+        Btn.addEventListener("click", function () {
+          registerinfo.style.display = "block";
+        });
+      });
+
+
+      contact_btn.addEventListener("click", function () {
+        // Confirm and Close the modal
+        registerinfo.style.display = "none";
+      });
+
+      window.addEventListener("click", function (event) {
+        if (event.target == registerinfo) {
+          // Close the modal
+          registerinfo.style.display = "none";
+        }
+      });
+    </script>
+    <!-- Register Popup ends-->
   </body>
 
   </html>

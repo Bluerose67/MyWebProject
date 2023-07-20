@@ -148,13 +148,15 @@ if ($_POST) {
 
                         $_SESSION['alumniUpdated'] = "Alumni Updated Successfully";
 
-                        header("location: ../DB_Admin/Dashboard.php");
+                        header("location: ../DB_Admin/alumni_list.php");
                     } elseif ($_SESSION['role'] == 'super_admin') {
 
                         $_SESSION['alumniUpdated'] = "Alumni Updated Successfully";
 
-                        header("location: ../DB_Superadmin/Dashboard.php");
+                        header("location: ../DB_Superadmin/alumni_list.php");
                     } else {
+
+                        $_SESSION['alumniUpdated'] = "Profile Updated Successfully";
                         header("location: ../DB_Alumni/Dashboard_profile.php");
                     }
                 } else {

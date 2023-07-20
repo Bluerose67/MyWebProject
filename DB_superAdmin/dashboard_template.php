@@ -116,11 +116,11 @@ if (!isset($_SESSION['username'])) {
                         <img src="<?php echo "../images/profile/" . $row['image']; ?>" alt="Avatar" class="avatar">
                     </div>
 
-                    <div class="notification_icon">
+                    <!-- <div class="notification_icon">
                         <button class="notification_btn" title="Notification">
                             <a href="#"><span class="material-symbols-outlined">notifications</span></a>
                         </button>
-                    </div>
+                    </div> -->
                 </div>
             </section>
             <!-- End of right-upper section -->

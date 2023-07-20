@@ -30,7 +30,12 @@ if (!isset($_SESSION['username'])) {
                 </a>
             </div>
             <ul class="side-menu top">
-
+                <li>
+                    <a href="Dashboard.php">
+                        <i class='bx bxs-dashboard'></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
                 <li>
                     <a href="Dashboard_profile.php">
                         <i class='bx bxs-shopping-bag-alt'></i>
@@ -111,12 +116,12 @@ if (!isset($_SESSION['username'])) {
                         <img src="<?php echo "../images/profile/" . $row['image']; ?>" alt="Avatar" class="avatar">
                     </div>
 
-                    <div class="notification_icon">
+                    <!-- <div class="notification_icon">
                         <button class="notification_btn" title="Notification">
                             <a href="#"> <span class="material-symbols-outlined">notifications</span>
                             </a>
                         </button>
-                    </div>
+                    </div> -->
                 </div>
             </section> <!-- main-upper sections ends -------------------------------------------------->
 

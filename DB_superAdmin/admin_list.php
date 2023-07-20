@@ -4,52 +4,41 @@ require_once('dashboard_template.php');
 
 ?>
 
-<div class="notification_CRUD">
-    <p>
-        <?php
-        if (isset($_SESSION['adminAdded'])) {
-
+<!-- Notification -->
+<?php if (isset($_SESSION['adminAdded'])) { ?>
+    <div class="notification_CRUD">
+        <p>
+            <?php
             echo $_SESSION['adminAdded'];
 
             unset($_SESSION['adminAdded']);
-
-        } elseif (isset($_SESSION['adminUpdated'])) {
-
+            ?>
+        </p>
+        <span class="notification_progress_CRUD"></span>
+    </div>
+<?php } elseif (isset($_SESSION["adminUpdated"])) { ?>
+    <div class="notification_CRUD">
+        <p>
+            <?php
             echo $_SESSION['adminUpdated'];
 
             unset($_SESSION['adminUpdated']);
-
-        } elseif (isset($_SESSION['adminDeleted'])) {
-
+            ?>
+        </p>
+        <span class="notification_progress_CRUD"></span>
+    </div>
+<?php } elseif (isset($_SESSION["adminDeleted"])) { ?>
+    <div class="notification_CRUD">
+        <p>
+            <?php
             echo $_SESSION['adminDeleted'];
 
             unset($_SESSION['adminDeleted']);
-
-        } elseif (isset($_SESSION['alumniAdded'])) {
-
-            echo $_SESSION['alumniAdded'];
-
-            unset($_SESSION['alumniAdded']);
-
-        } elseif (isset($_SESSION['alumniUpdated'])) {
-
-            echo $_SESSION['alumniUpdated'];
-
-            unset($_SESSION['alumniUpdated']);
-
-        } elseif (isset($_SESSION['alumniDeleted'])) {
-
-            echo $_SESSION['alumniDeleted'];
-
-            unset($_SESSION['alumniDeleted']);
-
-        } else {
-            echo "Welcome, " . $_SESSION['username'];
-        }
-        ?>
-    </p>
-    <span class="notification_progress_CRUD"></span>
-</div>
+            ?>
+        </p>
+        <span class="notification_progress_CRUD"></span>
+    </div>
+<?php } ?>
 
 <section class="right-lower">
     <!-- main-lower sections begins -------------------------------------------------->
@@ -74,14 +63,7 @@ require_once('dashboard_template.php');
 
             <?php
             include "../connect.php";
-            //Display the student count 
-            // $studentQuery = "SELECT COUNT(*) as student_count FROM role 
-            // JOIN role_junction ON role_junction.role_id = role.role_id
-            // JOIN users on role_junction.user_id = users.user_id 
-            // WHERE role.role = 'student' AND users.status = 'approved'";
-            // $result = mysqli_query($conn, $studentQuery);
-            // $studentCount = $result->fetch_assoc()['student_count'];
-            
+
             //Display the Admin Count
             $adminQuery = "SELECT COUNT(*) as admin_count FROM role 
             JOIN role_junction ON role_junction.role_id = role.role_id
@@ -94,7 +76,7 @@ require_once('dashboard_template.php');
             $totalQuery = "SELECT COUNT(*) as total_count FROM users 
             JOIN role_junction ON role_junction.user_id = users.user_id
             JOIN role on role.role_id = role_junction.role_id
-            WHERE users.status = 'approved' AND role.role != 'super_admin'";
+            WHERE users.status = 'approved' AND role.role != 'super_admin' ";
             $result = mysqli_query($conn, $totalQuery);
             $totalCount = $result->fetch_assoc()['total_count'];
 

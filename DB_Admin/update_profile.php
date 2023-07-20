@@ -60,7 +60,10 @@ if (isset($_GET['d_id'])) {
                 <input type="hidden" name="user_id" value="<?php echo $record['user_id'] ?>" />
                 <input type="hidden" name="d_id" value="<?php echo $record['d_id'] ?>" />
                 <input type="hidden" name="role_id" value="<?php echo $record['role_id'] ?>" />
+                <input type="hidden" name="role" value="<?php echo $record['role'] ?>" />
                 <input type="hidden" name="status" value="<?php echo $record['status'] ?>" />
+                <input type="hidden" name="department" value="<?= $record['department'] ?>" />
+
 
                 <section class="profile-main"> <!-- profile main begins -->
 
@@ -126,15 +129,6 @@ if (isset($_GET['d_id'])) {
                                 <span>
                                     <div class="text_p">
                                         <input type="text" name="phone_no" value="<?= $record['phone_no'] ?>" required />
-                                    </div>
-                                </span>
-                            </div>
-                            <div class="field">
-                                <label>Department:</label>
-                                <span>
-                                    <div class="text_p">
-                                        <input type="text" name="department" value="<?= $record['department'] ?>"
-                                            required />
                                     </div>
                                 </span>
                             </div>

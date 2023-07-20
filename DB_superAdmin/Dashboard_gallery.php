@@ -25,32 +25,35 @@ require_once('dashboard_template.php');
                 <span class="material-symbols-outlined"> north </span>
             </button>
         </div>
-        <div class="container">
-            <div class="wrapper1">
-                <img src="../images/upload.png" alt="Choose Image" id="img">
-            </div>
-            <div class="center">
-                <h1>Upload Images</h1>
-                <form action="" method="post" enctype="multipart/form-data">
-                    <input type="hidden" value="1" name="fileupload">
-                    <div class="image-upload">
-                        <div class="label1">
-                            <label>Select a File</label>
-                        </div>
 
-                        <div>
-                            <input type="file" id="input" class="form-control" name="file" required autofocus>
-                        </div>
-                        <span> </span>
-                    </div>
-                    <input type="submit" value="Upload" class="login-button" />
-                    <input type="submit" value="Reset" id="resetBtn" class="login-button" />
+        <div class="popup-container" id="popup-container">
+            <div class="container">
+                <div class="wrapper1">
+                    <img src="../images/upload.png" alt="Choose Image" id="img">
+                </div>
+                <div class="center">
+                    <h1>Upload Images</h1>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <input type="hidden" value="1" name="fileupload">
+                        <div class="image-upload">
+                            <div class="label1">
+                                <label>Select a File</label>
+                            </div>
 
-                    <p> To upload a image, files selected must be of format</p>
-                    <p class="image_type"> .Png, .jpeg, .jpg</p>
-                </form>
-            </div>
-        </div>
+                            <div>
+                                <input type="file" id="input" class="form-control" name="file" required autofocus>
+                            </div>
+                            <span> </span>
+                        </div>
+                        <input type="submit" value="Upload" class="login-button" />
+                        <input type="submit" value="Reset" id="resetBtn" class="login-button" />
+
+                        <p> To upload a image, files selected must be of format</p>
+                        <p class="image_type"> .Png, .jpeg, .jpg</p>
+                    </form>
+                </div> <!-- center -->
+            </div><!-- container -->
+        </div> <!-- Popup container -->
 
         <!-- code to Move uploaded image to the destination folder -->
         <?php
@@ -74,6 +77,11 @@ require_once('dashboard_template.php');
                 <h1>Digital <span> Gallery </span></h1>
             </div>
         </section>
+        <div class="addPhotoBtn">
+            <button class="add-button">
+                Add new Photo
+            </button>
+        </div>
         <!-- Image section begins here -->
         <section class="wrapper_box" id="img_Gallery">
             <div id="galleryContainer">
@@ -107,22 +115,19 @@ require_once('dashboard_template.php');
             </div>
         </section>
 
-        <!-- Image Added Notification -->
+        <!-- Image Notification  -->
+        <?php if (isset($_SESSION["imageUploaded"])) { ?>
+            <div class="notification_CRUD">
+                <p>
+                    <?php
+                    echo $_SESSION['imageUploaded'];
 
-        <div class="notification">
-            <p>
-                <?php
-                if (isset($_SESSION["imageUploaded"])) {
-
-                    echo $_SESSION["imageUploaded"];
-
-                    unset($_SESSION["imageUploaded"]);
-
-                }
-                ?>
-            </p>
-            <span class="notification_progress"></span>
-        </div>
+                    unset($_SESSION['imageUploaded']);
+                    ?>
+                </p>
+                <span class="notification_progress_CRUD"></span>
+            </div>
+        <?php } ?>
 
         <!-- Image Added Notification -->
 
@@ -167,6 +172,7 @@ require_once('dashboard_template.php');
 <script src="../js/index.js"></script>
 <script src="../js/sidebar.js"></script>
 <script src="../js/pagination.js"></script>
+<script src="../js/popupForm.js"></script>
 
 </body>
 

@@ -2,6 +2,19 @@
 require_once('Dashboard_template.php');
 ?>
 
+<!-- Notification  -->
+<?php if (isset($_SESSION['interested'])) { ?>
+    <div class="notification_CRUD">
+        <p>
+            <?php
+            echo $_SESSION['interested'];
+            unset($_SESSION['interested']);
+            ?>
+        </p>
+        <span class="notification_progress_CRUD"></span>
+    </div>
+<?php } ?>
+
 <section class="right-lower">
     <main>
         <div class="head-title">
@@ -21,13 +34,32 @@ require_once('Dashboard_template.php');
         </div>
 
         <div class="event-list">
+
             <?php
+
+
             // Fetch all events from the database
             $sql = "SELECT * FROM events";
             $result = mysqli_query($conn, $sql);
 
             if ($result && mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) { ?>
+                    <?php
+                    $eventId = $row['id'];
+
+                    // Fetch the interested users for the event
+                    $sqlInterested = "SELECT users.user_name FROM interested_users 
+                                    JOIN users ON interested_users.user_id = users.user_id 
+                                    WHERE interested_users.id = '$eventId'";
+                    $resultInterested = mysqli_query($conn, $sqlInterested);
+
+                    $interestedUsers = [];
+                    if ($resultInterested && mysqli_num_rows($resultInterested) > 0) {
+                        while ($interestedRow = mysqli_fetch_assoc($resultInterested)) {
+                            $interestedUsers[] = $interestedRow['user_name'];
+                        }
+                    }
+                    ?>
                     <div class="event">
                         <h3>
                             <?= $row['title'] ?>
@@ -41,6 +73,20 @@ require_once('Dashboard_template.php');
                         <p>Date:
                             <?= $row['date'] ?>
                         </p>
+                        <!-- Interest buttons -->
+                        <?php if (in_array($_SESSION['username'], $interestedUsers)): ?>
+                            <form action="../Events/event.php?id=<?= $row['id'] ?>&title=<?= urlencode($row['title']) ?>"
+                                method="POST">
+
+                                <button type="submit" name="cancel_interest" class="edit-profile">Cancel Interest</button>
+                            </form>
+                        <?php else: ?>
+                            <form action="../Events/event.php?id=<?= $row['id'] ?>&title=<?= urlencode($row['title']) ?>"
+                                method="POST">
+                                <button type="submit" name="show_interest" class="edit-profile">Show Interest</button>
+                            </form>
+                        <?php endif; ?>
+
                     </div>
                 <?php }
             } else {
