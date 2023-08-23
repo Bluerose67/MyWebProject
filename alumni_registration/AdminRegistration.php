@@ -27,7 +27,7 @@ include('../connect.php');
             <form action="insertAdmin.php" method="post" enctype="multipart/form-data">
                 <div class="text">
 
-                    <input type="text" id="username" name="user_name" required>
+                    <input type="text" id="username" name="user_name" autocomplete="off" required>
                     <span> </span>
                     <label for="username">Username</label>
                 </div>
@@ -41,9 +41,15 @@ include('../connect.php');
 
                 <div class="text">
 
-                    <input type="text" id="password" name="password" required>
+                    <input type="text" id="password" name="password" autocomplete="off" required>
                     <span> </span>
                     <label for="address">Password</label>
+                </div>
+                <div class="text">
+
+                    <input type="text" id="re-password" autocomplete="off" required>
+                    <span> </span>
+                    <label for="address">Re-Type Password</label>
                 </div>
                 <div class="text">
 
@@ -67,7 +73,7 @@ include('../connect.php');
                 </div>
                 <div class="textt">
 
-                    <input type="file" id="image" name="image" required>
+                    <input type="file" id="image" name="image">
 
                 </div>
 
@@ -118,13 +124,14 @@ include('../connect.php');
             const username = document.getElementById('username').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const re_password = document.getElementById('re-password').value;
             const address = document.getElementById('address').value;
             const dob = document.getElementById('DOB').value;
             const phone = document.getElementById('phone').value;
             const role = document.getElementById('role').value;
 
             // Validate each field
-            if (!username || !email || !password || !address || !dob || !phone || !role) {
+            if (!username || !email || !password || !re_password || !address || !dob || !phone || !role) {
                 alert('Please fill in all fields.');
                 return false;
             }

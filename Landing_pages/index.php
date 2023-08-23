@@ -124,7 +124,7 @@ include("../connect.php");
         <div class="about_card">
           <div class="box">
             <div class="imgBx">
-              <img src="../images/alumni3.jpg" alt="Logo" id="img_align" />
+              <img src="../images/alumni2.jpg" alt="Logo" id="img_align" />
             </div>
             <div class="contentBx">
               <div>
@@ -214,9 +214,9 @@ include("../connect.php");
 
                 } else { ?>
 
-                <button class="learnMore_btn"> <a href="login.php">Learn More</a></button>
+                  <button class="learnMore_btn"> <a href="login.php">Learn More</a></button>
 
-              <?php }
+                <?php }
                 ?>
               </li>
             <?php }

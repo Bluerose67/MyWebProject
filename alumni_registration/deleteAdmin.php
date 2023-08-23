@@ -74,12 +74,12 @@ if (isset($_GET['std_id'])) {
 
                     $_SESSION['alumniDeleted'] = "Alumni Deleted Successfully";
 
-                    header("location: ../DB_Admin/alumni.php");
+                    header("location: ../DB_Admin/alumni_list.php");
                 } elseif ($_SESSION['role'] == 'super_admin') {
 
                     $_SESSION['alumniDeleted'] = "Alumni Deleted Successfully";
 
-                    header("location: ../DB_Superadmin/alumni.php");
+                    header("location: ../DB_Superadmin/alumni_list.php");
                 } else {
                     echo "Invalid Role";
                 }

@@ -38,7 +38,7 @@
                         </div>
 
                         <div class="text">
-                            <input type="date" id="DOB" name="date" required>
+                            <input type="date" id="date" name="date" required>
                             <span> </span>
                             <label for="DOB">Event Date</label>
                         </div>
@@ -141,6 +141,46 @@
 </section> <!-- content section ends -->
 </section> <!-- main section ends -->
 </div><!-- dashboard ends -->
+<script>
+    // Get form element
+    const form = document.querySelector('form');
+
+    // Add submit event listener to the form
+    form.addEventListener('submit', function (event) {
+        // Prevent form submission
+        event.preventDefault();
+
+        // Perform validation
+        if (validateForm()) {
+            // If the form is valid, submit it
+            form.submit();
+        }
+    });
+
+    // Function to validate the form
+    function validateForm() {
+        // Get form fields
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const image = document.getElementById('image').value;
+        const date = document.getElementById('date').value;
+
+        // Validate each field
+        if (!title || !description || !image || !date) {
+            alert('Please fill in all fields.');
+            return false;
+        }
+
+        if (description.length > 300) {
+            alert('Description should be less or equal to 300 characters.');
+            return false;
+        }
+
+        // Return true if all validations pass
+        return true;
+    }
+
+</script>
 <script src="../js/sidebar.js"></script>
 <script src="../js/popupForm.js"></script>
 

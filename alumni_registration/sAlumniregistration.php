@@ -29,7 +29,7 @@ include('../connect.php');
                 </h4>
                 <div class="text">
 
-                    <input type="text" id="username" name="user_name" required>
+                    <input type="text" id="username" name="user_name" autocomplete="off" required>
                     <span> </span>
                     <label for="username">Username</label>
                 </div>
@@ -43,9 +43,15 @@ include('../connect.php');
 
                 <div class="text">
 
-                    <input type="text" id="password" name="password" required>
+                    <input type="text" id="password" name="password" autocomplete="off" required>
                     <span> </span>
                     <label for="address">Password</label>
+                </div>
+                <div class="text">
+
+                    <input type="text" id="re-password" autocomplete="off" required>
+                    <span> </span>
+                    <label for="address">Re-Type Password</label>
                 </div>
                 <div class="text">
 
@@ -71,7 +77,7 @@ include('../connect.php');
                 </div>
                 <div class="textt">
 
-                    <input type="file" id="image" name="image" required>
+                    <input type="file" id="image" name="image">
 
                 </div>
 
@@ -99,7 +105,7 @@ include('../connect.php');
 
                 <div class="text">
 
-                    <input type="text" id="batch_no" name="batch_no" required>
+                    <input type="text" id="batch_no" name="batch_no" autocomplete="off" required>
                     <span> </span>
                     <label for="Batch">Batch</label>
                 </div>
@@ -171,7 +177,9 @@ include('../connect.php');
             // Get form fields
             const username = document.getElementById('username').value;
             const email = document.getElementById('email').value;
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             const password = document.getElementById('password').value;
+            const re_password = document.getElementById('re-password').value;
             const address = document.getElementById('address').value;
             const dob = document.getElementById('DOB').value;
             const phone = document.getElementById('phone').value;
@@ -181,9 +189,19 @@ include('../connect.php');
             const course = document.getElementById('course').value;
 
             // Validate each field
-            if (!username || !email || !password || !address || !dob || !phone || !role || !facultyName || !batchNo || !course) {
+            if (!username.trim() || !email.trim() || !password.trim() || !re_password.trim() || !address.trim() || !dob.trim() || !phone.trim() || !role || !facultyName || !batchNo.trim() || !course) {
                 alert('Please fill in all fields.');
                 return false;
+            }
+
+
+            if (password !== re_password) {
+                alert('Password and Re-Typed Password do not match.');
+                return false;
+            }
+
+            if (!emailRegex.test(email)) {
+                alert("Invalid email address. Please enter a valid email.");
             }
 
             if (username.includes('@') || username.includes('#') || username.includes('$') || username.includes('%')) {

@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('../connect.php');
-if (isset($_POST['add_event'])) {
+if ($_POST) {
     $title = $_POST['title'];
     $description = $_POST['description'];
     $image = $_FILES['image']['name'];
